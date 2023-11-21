@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.js": "/static/js/main.d9b3010b.js",
-    "static/js/169.fb183c7d.js": "/static/js/169.fb183c7d.js",
-    "favicon.ico": "/favicon.ico",
-    "index.html": "/index.html",
-    "favicon-32.png": "/favicon-32.png",
-    "favicon-16.png": "/favicon-16.png",
-    "manifest.json": "/manifest.json",
-    "serve.json": "/serve.json",
-    "main.d9b3010b.js.map": "/static/js/main.d9b3010b.js.map",
-    "169.fb183c7d.js.map": "/static/js/169.fb183c7d.js.map"
+    "main.js": "/worldofarkhanya/static/js/main.21bbbef5.js",
+    "static/js/283.6768878f.js": "/worldofarkhanya/static/js/283.6768878f.js",
+    "favicon.ico": "/worldofarkhanya/favicon.ico",
+    "index.html": "/worldofarkhanya/index.html",
+    "favicon-32.png": "/worldofarkhanya/favicon-32.png",
+    "favicon-16.png": "/worldofarkhanya/favicon-16.png",
+    "manifest.json": "/worldofarkhanya/manifest.json",
+    "serve.json": "/worldofarkhanya/serve.json",
+    "main.21bbbef5.js.map": "/worldofarkhanya/static/js/main.21bbbef5.js.map",
+    "283.6768878f.js.map": "/worldofarkhanya/static/js/283.6768878f.js.map"
   },
   "entrypoints": [
-    "static/js/169.fb183c7d.js",
-    "static/js/main.d9b3010b.js"
+    "static/js/283.6768878f.js",
+    "static/js/main.21bbbef5.js"
   ]
 }
