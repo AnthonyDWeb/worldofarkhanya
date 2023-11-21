@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/worldofarkhanya/static/js/main.8d910ae0.js",
+    "main.js": "/worldofarkhanya/static/js/main.becef993.js",
     "static/js/256.4d01543b.js": "/worldofarkhanya/static/js/256.4d01543b.js",
     "favicon.ico": "/worldofarkhanya/favicon.ico",
     "index.html": "/worldofarkhanya/index.html",
@@ -8,11 +8,11 @@
     "favicon-16.png": "/worldofarkhanya/favicon-16.png",
     "manifest.json": "/worldofarkhanya/manifest.json",
     "serve.json": "/worldofarkhanya/serve.json",
-    "main.8d910ae0.js.map": "/worldofarkhanya/static/js/main.8d910ae0.js.map",
+    "main.becef993.js.map": "/worldofarkhanya/static/js/main.becef993.js.map",
     "256.4d01543b.js.map": "/worldofarkhanya/static/js/256.4d01543b.js.map"
   },
   "entrypoints": [
     "static/js/256.4d01543b.js",
-    "static/js/main.8d910ae0.js"
+    "static/js/main.becef993.js"
   ]
 }
