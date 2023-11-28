@@ -23,6 +23,7 @@
         "backgroundColor": "#ffffff"
       }
     },
+    "scheme": "woa",
     "web": {
       "favicon": "./assets/favicon.png"
     }
