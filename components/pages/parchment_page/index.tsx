@@ -2,14 +2,14 @@
 import React from "react";
 import { Text, View } from "react-native";
 // STYLE
-import { styles } from "../../styles";
-import Page from "../../components/pages";
+import { styles } from "../../../styles";
+import Page from "..";
 // CONTEXT
 // VIEW
 // COMPONENT
 // OTHER
 
-export default function Index() {
+export default function ParchmentPage() {
 	// Global Constante
 	// Private Constante
 
@@ -19,7 +19,7 @@ export default function Index() {
 
 	return (
 		<Page>
-			<Text>PROFILE</Text>
+			<Text>index</Text>
 		</Page>
 	);
 }

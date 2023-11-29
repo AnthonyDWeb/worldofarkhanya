@@ -1,7 +1,6 @@
 // LIBRARY
 import React from "react";
 import * as Linking from "expo-linking";
-import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -20,6 +19,7 @@ import Loader from "../components/loader";
 // OTHER
 import { RootStack } from "../types";
 import NavigationBar from "../components/navigation_bar";
+import Page from "../components/pages";
 
 export default function Routes() {
 	// Global Constante
@@ -51,23 +51,21 @@ export default function Routes() {
 
 	return (
 		<NavigationContainer linking={linking} fallback={<Loader />}>
-			<StatusBar translucent hidden />
-			<Navigator
-				screenOptions={{
-					headerTitleAlign: "center",
-					headerTitleStyle: { fontSize: 30 },
-					headerStyle: { backgroundColor: "gray" },
-					headerShown: false,
-				}}
-			>
-				<Screen name="Homepage" component={Index} />
-				<Screen name="Authentification" component={Authentification} />
-				<Screen name="Creation" component={Creation} />
-				<Screen name="Library" component={Library} />
-				<Screen name="Profile" component={Profile} />
-				<Screen name="Menu" component={Menu} />
-			</Navigator>
-			<NavigationBar />
+				<Navigator
+					screenOptions={{
+						headerTitleAlign: "center",
+						headerTitleStyle: { fontSize: 30 },
+						headerStyle: { backgroundColor: "gray" },
+						headerShown: false,
+					}}
+				>
+					<Screen name="Homepage" component={Index} />
+					<Screen name="Authentification" component={Authentification} />
+					<Screen name="Creation" component={Creation} />
+					<Screen name="Library" component={Library} />
+					<Screen name="Profile" component={Profile} />
+					<Screen name="Menu" component={Menu} />
+				</Navigator>
 		</NavigationContainer>
 	);
 }

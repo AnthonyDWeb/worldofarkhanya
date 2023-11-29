@@ -3,6 +3,7 @@ import React from "react";
 import { Text, View } from "react-native";
 // STYLE
 import { styles } from "../../styles";
+import Page from "../../components/pages";
 // CONTEXT
 // VIEW
 // COMPONENT
@@ -17,8 +18,8 @@ export default function Index() {
     // Renders
 
 	return (
-		<View>
+		<Page>
 			<Text>CREATION</Text>
-		</View>
+		</Page>
 	);
 }

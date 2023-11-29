@@ -1,12 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React from "react";
+import { styles } from "../../styles";
+import Background from "../background";
+import NavigationBar from "../navigation_bar";
 
-export default function Pages() {
-  return (
-    <View>
-      <Text>Pages</Text>
-    </View>
-  )
+export default function Page({children}: any) {
+	return (
+		<Background>
+				{children}
+				<NavigationBar />
+		</Background>
+	);
 }
-
-const styles = StyleSheet.create({})

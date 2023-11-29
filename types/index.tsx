@@ -8,7 +8,7 @@ export type RootStack = {
 	Library: undefined,
 	Profile: undefined,
 	Menu: undefined,
-	Navigation: any,
+	useNavigation: any,
 	// Navigation: {
 	// 	navigate: () => void;
 	// },
@@ -20,5 +20,5 @@ export type CreationProps = Props<RootStack, "Creation">;
 export type LibraryProps = Props<RootStack, "Library">;
 export type ProfileProps = Props<RootStack, "Profile">;
 export type MenuProps = Props<RootStack, "Menu">;
-export type RouteProps = Props<RootStack, "Navigation">;
+export type RouteProps = Props<RootStack, "useNavigation">;
 export type PrivacyProps = Props<RootStack, "Privacy">;

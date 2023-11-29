@@ -22,7 +22,10 @@ export default function NavigationBar() {
 				display: "flex",
 				flexDirection: "row",
 				justifyContent: "space-around",
+				width: "100%",
 				padding: 10,
+				borderColor: "brown",
+				borderTopWidth: 1
 			}}
 		>
 			<Text onPress={() => navigation.navigate("Library")}>Library</Text>
