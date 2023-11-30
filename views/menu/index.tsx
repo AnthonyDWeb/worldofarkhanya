@@ -12,18 +12,24 @@ import { usePage } from "../../contexts/page";
 // OTHER
 
 export default function Menu() {
-	const {updatePage} = usePage();
+	const { updatePage } = usePage();
 	const navigation = useNavigation<any>();
-    // Global Constante
-    // Private Constante
+	// Global Constante
+	// Private Constante
 
-    // Functions
+	// Functions
 
-    // Renders
+	// Renders
 
 	return (
 		<Page>
-			<Pressable onPress={() => {navigation.navigate("Navigation"); updatePage("Profile")}} style={styles.NavButton}>
+			<Pressable
+				onPress={() => {
+					navigation.navigate("Navigation");
+					updatePage("Profile");
+				}}
+				style={styles.NavButton}
+			>
 				<Text>Menu</Text>
 			</Pressable>
 		</Page>

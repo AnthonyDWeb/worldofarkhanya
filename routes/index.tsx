@@ -5,14 +5,10 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // STYLE
-import { styles } from "../styles";
 // CONTEXT
 // VIEW
 import Navigation from "../views";
 import Authentification from "../views/auth";
-import Creation from "../views/creation";
-import Library from "../views/library";
-import Profile from "../views/profile";
 import Menu from "../views/menu";
 // COMPONENT
 import Loader from "../components/loader";
@@ -21,7 +17,7 @@ import { RootStack } from "../types";
 import { usePage } from "../contexts/page";
 
 export default function Routes() {
-	const { pageData } = usePage();
+	const { page } = usePage();
 	// Global Constante
 	// Private Constante
 	const Stack = createNativeStackNavigator<RootStack>();
@@ -31,7 +27,7 @@ export default function Routes() {
 	const config = {
 		screens: {
 			Privacy: "worldofarkhanya/privacy",
-			Navigation: `worldofarkhanya/${pageData.name}`,
+			Navigation: `worldofarkhanya/${page}`,
 			Authentification: "worldofarkhanya/auth",
 			Menu: "worldofarkhanya/menu",
 		},
@@ -43,7 +39,6 @@ export default function Routes() {
 	};
 
 	// Functions
-
 	// Renders
 
 	return (

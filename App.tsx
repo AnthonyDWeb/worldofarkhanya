@@ -6,10 +6,8 @@ import { StyleProvider } from "./contexts/style";
 export default function App() {
 	return (
 		<PageProvider>
-			<StyleProvider>
-				<StatusBar translucent hidden />
-				<Routes />
-			</StyleProvider>
+			<StatusBar translucent hidden />
+			<Routes />
 		</PageProvider>
 	);
 }

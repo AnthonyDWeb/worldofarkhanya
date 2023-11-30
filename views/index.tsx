@@ -6,16 +6,16 @@ import Profile from "./profile";
 import ParchmentPage from "../components/pages/parchment_page";
 
 export default function Index() {
-	const { pageData } = usePage();
+	const { page } = usePage();
 
 	return (
 		<ParchmentPage>
-			{pageData.name === "Creation" ? (
+			{page.name === "Creation" ? (
 				<Creation />
-			) : pageData.name === "Library" ? (
+			) : page.name === "Library" ? (
 				<Library />
 			) : (
-				pageData.name === "Profile" && <Profile />
+				page.name === "Profile" && <Profile />
 			)}
 		</ParchmentPage>
 	);
