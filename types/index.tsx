@@ -2,7 +2,7 @@ import { NativeStackScreenProps as Props } from "@react-navigation/native-stack"
 
 export type RootStack = {
 	Privacy: undefined;
-	Homepage: undefined;
+	Navigation: undefined;
 	Authentification: undefined,
 	Creation: undefined,
 	Library: undefined,
@@ -14,7 +14,7 @@ export type RootStack = {
 	// },
 };
 
-export type HomepageProps = Props<RootStack, "Homepage">;
+export type NavigationProps = Props<RootStack, "Navigation">;
 export type AuthProps = Props<RootStack, "Authentification">;
 export type CreationProps = Props<RootStack, "Creation">;
 export type LibraryProps = Props<RootStack, "Library">;

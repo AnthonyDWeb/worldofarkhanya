@@ -3,13 +3,13 @@ import React from "react";
 import { Text, View } from "react-native";
 // STYLE
 import { styles } from "../../styles";
-import Page from "../../components/pages";
+import ParchmentPage from "../../components/pages/parchment_page";
 // CONTEXT
 // VIEW
 // COMPONENT
 // OTHER
 
-export default function Index() {
+export default function Creation() {
     // Global Constante
     // Private Constante
 
@@ -18,8 +18,8 @@ export default function Index() {
     // Renders
 
 	return (
-		<Page>
+		<View>
 			<Text>CREATION</Text>
-		</Page>
+		</View>
 	);
 }

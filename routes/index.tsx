@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { styles } from "../styles";
 // CONTEXT
 // VIEW
-import Index from "../views";
+import Navigation from "../views";
 import Authentification from "../views/auth";
 import Creation from "../views/creation";
 import Library from "../views/library";
@@ -18,10 +18,10 @@ import Menu from "../views/menu";
 import Loader from "../components/loader";
 // OTHER
 import { RootStack } from "../types";
-import NavigationBar from "../components/navigation_bar";
-import Page from "../components/pages";
+import { usePage } from "../contexts/page";
 
 export default function Routes() {
+	const { pageData } = usePage();
 	// Global Constante
 	// Private Constante
 	const Stack = createNativeStackNavigator<RootStack>();
@@ -31,11 +31,8 @@ export default function Routes() {
 	const config = {
 		screens: {
 			Privacy: "worldofarkhanya/privacy",
-			Homepage: "worldofarkhanya/",
+			Navigation: `worldofarkhanya/${pageData.name}`,
 			Authentification: "worldofarkhanya/auth",
-			Creation: "worldofarkhanya/creation",
-			Library: "worldofarkhanya/library",
-			Profile: "worldofarkhanya/profile",
 			Menu: "worldofarkhanya/menu",
 		},
 	};
@@ -51,7 +48,7 @@ export default function Routes() {
 
 	return (
 		<NavigationContainer linking={linking} fallback={<Loader />}>
-				<Navigator
+				<Navigator initialRouteName="Navigation"
 					screenOptions={{
 						headerTitleAlign: "center",
 						headerTitleStyle: { fontSize: 30 },
@@ -59,11 +56,8 @@ export default function Routes() {
 						headerShown: false,
 					}}
 				>
-					<Screen name="Homepage" component={Index} />
+					<Screen name="Navigation" component={Navigation} />
 					<Screen name="Authentification" component={Authentification} />
-					<Screen name="Creation" component={Creation} />
-					<Screen name="Library" component={Library} />
-					<Screen name="Profile" component={Profile} />
 					<Screen name="Menu" component={Menu} />
 				</Navigator>
 		</NavigationContainer>
