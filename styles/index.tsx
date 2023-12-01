@@ -6,6 +6,24 @@ export const styles = StyleSheet.create({
 		height: "100%",
 		justifyContent: "space-between",
 	},
+			
+	// TEXT
+	maintitle: {
+		fontFamily: 'imf',
+		fontSize: 20,
+	},
+	title: {
+		fontFamily: 'cookie',
+		fontSize: 30,
+		textAlign: "center",
+		fontWeight: "bold",
+		textDecorationLine: "underline",
+	},
+	text: {
+		fontFamily: 'cookie',
+		fontSize: 20,
+	},
+	// NAVIGATION BAR
 	navigation: {
 		height: 40,
 		width: "100%",
@@ -14,6 +32,8 @@ export const styles = StyleSheet.create({
 		alignItems: "flex-start",
 		justifyContent: "space-around",
 	},
+	
+	// BUTTON
 	sampleButton: {
 		position: "relative",
 		justifyContent: "center",
@@ -28,21 +48,24 @@ export const styles = StyleSheet.create({
 	},
 	sampleText: {
 		fontWeight: "bold",
+		fontFamily: 'cookie',
+		fontSize: 20,
 		paddingHorizontal: 10,
-		paddingTop: 4,
-		paddingBottom: 6,
+		paddingTop: 3
 	},
 	menuButton: {
 		zIndex: 15,
 		position: "absolute",
-		top: 5,
-		right: 5,
+		top: -5,
+		right: -5,
 	},
 	NavButton: {
 		padding: 5,
 		borderRadius: 5,
 		backgroundColor: "gray",
 	},
+
+	// PARCHMENT
 	parchment: {
 		paddingVertical: 20,
 		paddingHorizontal: 25,

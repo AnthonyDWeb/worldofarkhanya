@@ -19,7 +19,7 @@ export default function Profile() {
 
 	return (
 		<View>
-			<Text>PROFILE</Text>
+			<Text style={styles.title}>Profil</Text>
 		</View>
 	);
 }

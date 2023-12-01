@@ -19,7 +19,7 @@ export default function Index() {
 
 	return (
 		<Page>
-			<Text>AUTHENTIFICATION</Text>
+			<Text style={styles.title}>AUTHENTIFICATION</Text>
 		</Page>
 	);
 }

@@ -27,7 +27,6 @@ export default function NavigationButton({ title, label }: navBtnProps) {
 					<Text style={[styles.sampleText]}>{title}</Text>
 				</SampleButton>
 			</LinearGradient>
-
 		</Pressable>
 	);
 }

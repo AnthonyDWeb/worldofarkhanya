@@ -23,7 +23,7 @@ export default function Parchment({ children }: any) {
 	const opacity = useSharedValue(0);
 	const padding = useSharedValue(0);
 
-	const config = { duration: 300, easing: Easing.linear };
+	const config = { duration: 500, easing: Easing.linear };
 	const animHeight = useAnimatedStyle(() => {
 		return {
 			height: withTiming(height.value, config),
@@ -53,10 +53,10 @@ export default function Parchment({ children }: any) {
 	return (
 		<Animated.View style={animeHeightStyle}>
 			<ImageBackground source={parchment} style={styles.parchmentpaper}>
-				<MenuButton/>
 				<Roll pos="top" />
 				<Image source={calc} style={calcUp} />
 				<Animated.ScrollView style={scrollStyle} showsVerticalScrollIndicator={false}>
+				<MenuButton/>
 					{parchmentDisplay && children}
 				</Animated.ScrollView>
 				<Image source={calc} style={calcDown}/>

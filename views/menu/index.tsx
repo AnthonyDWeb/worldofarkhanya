@@ -12,7 +12,7 @@ import { usePage } from "../../contexts/page";
 // OTHER
 
 export default function Menu() {
-	const { updatePage } = usePage();
+	const { getBack } = usePage();
 	const navigation = useNavigation<any>();
 	// Global Constante
 	// Private Constante
@@ -23,14 +23,8 @@ export default function Menu() {
 
 	return (
 		<Page>
-			<Pressable
-				onPress={() => {
-					navigation.navigate("Navigation");
-					updatePage("Profile");
-				}}
-				style={styles.NavButton}
-			>
-				<Text>Menu</Text>
+			<Pressable onPress={() => {getBack() ; navigation.navigate("Navigation")}}>
+				<Text style={styles.title}>Menu</Text>
 			</Pressable>
 		</Page>
 	);

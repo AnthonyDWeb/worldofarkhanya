@@ -14,10 +14,8 @@ import Menu from "../views/menu";
 import Loader from "../components/loader";
 // OTHER
 import { RootStack } from "../types";
-import { usePage } from "../contexts/page";
 
 export default function Routes() {
-	const { page } = usePage();
 	// Global Constante
 	// Private Constante
 	const Stack = createNativeStackNavigator<RootStack>();
@@ -26,13 +24,13 @@ export default function Routes() {
 
 	const config = {
 		screens: {
-			Privacy: "worldofarkhanya/privacy",
-			Navigation: `worldofarkhanya/${page}`,
+			Navigation: `worldofarkhanya/`,
 			Authentification: "worldofarkhanya/auth",
 			Menu: "worldofarkhanya/menu",
+			Privacy: "worldofarkhanya/privacy",
 		},
 	};
-	const prefix = Linking.createURL("/");
+	const prefix = Linking.createURL("/worldofarkhanya");
 	const linking = {
 		prefixes: [prefix, "https://anthonydweb.github.io/worldofarkhanya/"],
 		config,
@@ -43,18 +41,19 @@ export default function Routes() {
 
 	return (
 		<NavigationContainer linking={linking} fallback={<Loader />}>
-				<Navigator initialRouteName="Navigation"
-					screenOptions={{
-						headerTitleAlign: "center",
-						headerTitleStyle: { fontSize: 30 },
-						headerStyle: { backgroundColor: "gray" },
-						headerShown: false,
-					}}
-				>
-					<Screen name="Navigation" component={Navigation} />
-					<Screen name="Authentification" component={Authentification} />
-					<Screen name="Menu" component={Menu} />
-				</Navigator>
+			<Navigator
+				initialRouteName="Navigation"
+				screenOptions={{
+					headerTitleAlign: "center",
+					headerTitleStyle: { fontSize: 30 },
+					headerShown: false,
+					headerBackImageSource: require("../assets/images/background.jpg"),
+				}}
+			>
+				<Screen name="Navigation" component={Navigation} />
+				<Screen name="Authentification" component={Authentification} />
+				<Screen name="Menu" component={Menu} />
+			</Navigator>
 		</NavigationContainer>
 	);
 }

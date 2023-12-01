@@ -3,7 +3,6 @@ import React from "react";
 import { Text, View } from "react-native";
 // STYLE
 import { styles } from "../../styles";
-import ParchmentPage from "../../components/pages/parchment_page";
 // CONTEXT
 // VIEW
 // COMPONENT
@@ -19,49 +18,7 @@ export default function Library() {
 
 	return (
 		<View>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
-			<Text>LIBRARY</Text>
+			<Text style={styles.title}>Bibliothèque</Text>
 		</View>
 	);
 }
