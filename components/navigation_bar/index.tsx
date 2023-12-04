@@ -5,11 +5,13 @@ import { View } from "react-native";
 import { styles } from "../../styles";
 // CONTEXT
 import NavigationButton from "../buttons/navigation";
+import { useStyle } from "../../contexts/style";
 // VIEW
 // COMPONENT
 // OTHER
 
 export default function NavigationBar() {
+	const {styles} = useStyle();
 	// Global Constante
 	// Private Constante
 	// Functions

@@ -1,18 +1,19 @@
 // LIBRARY
 import React from "react";
 import { Text, Pressable } from "react-native";
-// STYLE
-import { styles } from "../../styles";
-import Page from "../../components/pages";
 import { useNavigation } from "@react-navigation/native";
-import { usePage } from "../../contexts/page";
+// STYLE
+import { useStyle } from "../../contexts/style";
 // CONTEXT
+import { usePage } from "../../contexts/page";
 // VIEW
 // COMPONENT
+import Page from "../../components/pages";
 // OTHER
 
 export default function Menu() {
 	const { getBack } = usePage();
+	const {styles} = useStyle();
 	const navigation = useNavigation<any>();
 	// Global Constante
 	// Private Constante

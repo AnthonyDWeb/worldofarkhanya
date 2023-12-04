@@ -1,18 +1,19 @@
 // LIBRARY
 import React from "react";
 import { Pressable, Image } from "react-native";
-// STYLE
-import { styles } from "../../../styles";
-import SampleButton from "../sample";
 import { useNavigation } from "@react-navigation/native";
-import { usePage } from "../../../contexts/page";
+// STYLE
+import { useStyle } from "../../../contexts/style";
 // CONTEXT
+import { usePage } from "../../../contexts/page";
 // VIEW
 // COMPONENT
 // OTHER
+import SampleButton from "../sample";
 
 export default function MenuButton() {
 	const { updatePage } = usePage();
+	const {styles} = useStyle();
 	// Global Constante
 	const navigation = useNavigation<any>();
 	// Private Constante
@@ -32,7 +33,7 @@ export default function MenuButton() {
 			<SampleButton rad={50} hide={true}>
 				<Image
 					source={icon}
-					style={{ height: 20, width: 20, margin: 3 }}
+					style={styles.menuButtonImage}
 				/>
 			</SampleButton>
 		</Pressable>

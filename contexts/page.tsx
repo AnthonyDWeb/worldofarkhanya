@@ -12,12 +12,12 @@ type pagePros = {
 const PageContext = createContext<any>({});
 
 export const PageProvider = (props: any) => {
-	const [page, setPage] = useState<any>({ name: "Profile" });
-	const [lastPage, setLastPage] = useState<any>({ name: "Profile" });
+	const [page, setPage] = useState<any>({ name: "" });
+	const [lastPage, setLastPage] = useState<any>({ name: "" });
 	const [parchmentDisplay, setParchmentDisplay] = useState<boolean>(false);
 
 	useEffect(() => {
-		page.name !== "Menu" && setTimeout(() => setParchmentDisplay(true), lastPage.name === "Menu" ? 0 : 500);
+		page.name !== "Menu" && setTimeout(() => setParchmentDisplay(true), lastPage.name === "Menu" ? 0 : 300);
 	}, [page]);
 
 	const closeParchment = () => {

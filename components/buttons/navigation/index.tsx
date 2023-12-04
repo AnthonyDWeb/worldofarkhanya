@@ -2,7 +2,7 @@
 import React from "react";
 import { Text, Pressable } from "react-native";
 // STYLE
-import { styles } from "../../../styles";
+import { useStyle } from "../../../contexts/style";
 // CONTEXT
 import { usePage } from "../../../contexts/page";
 // VIEW
@@ -14,6 +14,7 @@ type navBtnProps = { title: string; label: string };
 
 export default function NavigationButton({ title, label }: navBtnProps) {
 	// Global Constante
+	const {styles} = useStyle();
 	const { parchmentDisplay, updatePage } = usePage();
 	// Private Constante
 	const backgroundBorder = ["#6c3f02","#d3913a","#a35f04","#a35f04","#6c3f02",];
@@ -21,8 +22,8 @@ export default function NavigationButton({ title, label }: navBtnProps) {
 	// Renders
 
 	return (
-		<Pressable onPress={() => parchmentDisplay && updatePage(label)}>
-			<LinearGradient colors={backgroundBorder} style={{padding: 2, borderRadius: 5}}>
+		<Pressable onPress={() => parchmentDisplay && updatePage(label)} style={styles.navigationButton}>
+			<LinearGradient colors={backgroundBorder} style={styles.navigationBackgroundButton}>
 				<SampleButton>
 					<Text style={[styles.sampleText]}>{title}</Text>
 				</SampleButton>

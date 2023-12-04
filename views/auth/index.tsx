@@ -2,24 +2,25 @@
 import React from "react";
 import { Text, View } from "react-native";
 // STYLE
-import { styles } from "../../styles";
-import Page from "../../components/pages";
+import { useStyle } from "../../contexts/style";
 // CONTEXT
 // VIEW
 // COMPONENT
+import Page from "../../components/pages";
+import { Image } from "react-native";
 // OTHER
 
-export default function Index() {
-    // Global Constante
-    // Private Constante
+export default function Auth() {
+	const { styles } = useStyle();
+	// Global Constante
+	// Private Constante
+	// Functions
 
-    // Functions
-
-    // Renders
+	// Renders
 
 	return (
 		<Page>
-			<Text style={styles.title}>AUTHENTIFICATION</Text>
+			<Text>Authentification</Text>
 		</Page>
 	);
 }

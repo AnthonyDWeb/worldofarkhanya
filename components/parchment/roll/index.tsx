@@ -1,9 +1,9 @@
 // LIBRARY
 import React from "react";
-import { useWindowDimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 // STYLE
-import { styles } from "../../../styles";
+import { useStyle } from "../../../contexts/style";
+import useDevice from "../../../utils/hooks/useDevice";
 // CONTEXT
 // VIEW
 // COMPONENT
@@ -11,7 +11,9 @@ import { styles } from "../../../styles";
 
 export default function Roll({ pos }: any) {
 	// Global Constante
-	const windowWidth = useWindowDimensions().width;
+	const {styles} = useStyle();
+	const {screenSize} = useDevice();
+	const windowWidth = screenSize.width;
 	// Private Constante
 	const backgroundBorder = [
 		"#6c3f02",
@@ -22,7 +24,7 @@ export default function Roll({ pos }: any) {
 	];
 	const rollStyle = [
 		styles.parchmentRoll,
-		{ width: windowWidth - 25, [pos]: -10 },
+		{ width: windowWidth, [pos]: -10 },
 	];
 	const rollBorderLeft = [styles.parchmentRollBorder, { left: 5 }];
 	const rollBorderRight = [styles.parchmentRollBorder, { right: 5 }];

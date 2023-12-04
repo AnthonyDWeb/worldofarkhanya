@@ -2,14 +2,14 @@
 import React from "react";
 import { Text, View } from "react-native";
 // STYLE
-import { styles } from "../../styles";
-import ParchmentPage from "../../components/pages/parchment_page";
+import { useStyle } from "../../contexts/style";
 // CONTEXT
 // VIEW
 // COMPONENT
 // OTHER
 
 export default function Creation() {
+	const {styles} = useStyle();
     // Global Constante
     // Private Constante
 

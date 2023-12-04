@@ -2,13 +2,14 @@
 import React from "react";
 import { Text, View } from "react-native";
 // STYLE
-import { styles } from "../../styles";
+import { useStyle } from "../../contexts/style";
 // CONTEXT
 // VIEW
 // COMPONENT
 // OTHER
 
 export default function Library() {
+	const {styles} = useStyle();
     // Global Constante
     // Private Constante
 
