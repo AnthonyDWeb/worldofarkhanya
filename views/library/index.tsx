@@ -19,7 +19,7 @@ export default function Library() {
 
 	return (
 		<View>
-			<Text style={styles.title}>Bibliothèque</Text>
+			<Text style={styles.titlePage}>Bibliothèque</Text>
 		</View>
 	);
 }

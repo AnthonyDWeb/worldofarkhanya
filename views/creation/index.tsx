@@ -19,7 +19,7 @@ export default function Creation() {
 
 	return (
 		<View>
-			<Text style={styles.title}>Création</Text>
+			<Text style={styles.titlePage}>Création</Text>
 		</View>
 	);
 }

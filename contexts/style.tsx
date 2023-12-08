@@ -17,6 +17,12 @@ export const StyleProvider = (props: any) => {
 			justifyContent: "space-between",
 		},
 
+		// SECTION
+		section: {
+			marginTop: 20,
+			marginHorizontal: 15
+		},
+
 		// NAVIGATION BAR
 		navigation: {
 			zIndex: 5,
@@ -93,15 +99,25 @@ export const StyleProvider = (props: any) => {
 			fontFamily: "imf",
 			fontSize: 20,
 		},
-		title: {
+		titlePage: {
 			fontFamily: "cookie",
 			fontSize: device === "mobile" ? 40 : 55,
 			textAlign: "center",
 			textDecorationLine: "underline",
+			textShadowColor: "black",
+			textShadowOffset: { width: 1, height: 0 },
+			textShadowRadius: isMobile ? 3 : 5,
+		},
+		title: {
+			fontFamily: "cookie",
+			fontSize: device === "mobile" ? 30 : 55,
+			textShadowColor: "black",
+			textShadowOffset: { width: 1, height: 0 },
+			textShadowRadius: isMobile ? 3 : 5,
 		},
 		text: {
 			fontFamily: "cookie",
-			fontSize: 20,
+			fontSize: 25,
 		},
 
 		// BUTTON
