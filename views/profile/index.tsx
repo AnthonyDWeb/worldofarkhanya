@@ -19,7 +19,10 @@ export default function Profile() {
 
 	return (
 		<View>
-			<Text style={styles.title}>Profil</Text>
+			<Text style={styles.title}>Nom d'utilisateur</Text>
+			<Text>
+				
+			</Text>
 		</View>
 	);
 }

@@ -2,7 +2,6 @@
 import React, { useEffect } from "react";
 import { View } from "react-native";
 // STYLE
-import { styles } from "../../styles";
 // CONTEXT
 import NavigationButton from "../buttons/navigation";
 import { useStyle } from "../../contexts/style";
@@ -11,7 +10,7 @@ import { useStyle } from "../../contexts/style";
 // OTHER
 
 export default function NavigationBar() {
-	const {styles} = useStyle();
+	const { styles } = useStyle();
 	// Global Constante
 	// Private Constante
 	// Functions

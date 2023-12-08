@@ -9,9 +9,7 @@ import ParchmentPage from "../components/pages/parchment_page";
 export default function Index() {
 	const { page } = usePage();
 
-	return page.name === "" ? (
-		<Auth />
-	) : (
+	return (
 		<ParchmentPage>
 			{page.name === "Creation" ? (
 				<Creation />
