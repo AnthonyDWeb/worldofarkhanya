@@ -12,7 +12,7 @@ type pagePros = {
 const PageContext = createContext<any>({});
 
 export const PageProvider = (props: any) => {
-	const [page, setPage] = useState<any>({ name: "Profile" });
+	const [page, setPage] = useState<any>({ name: "login" });
 	const [lastPage, setLastPage] = useState<any>({ name: "" });
 	const [parchmentDisplay, setParchmentDisplay] = useState<boolean>(false);
 

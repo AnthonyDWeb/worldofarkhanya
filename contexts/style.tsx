@@ -17,10 +17,61 @@ export const StyleProvider = (props: any) => {
 			justifyContent: "space-between",
 		},
 
+		// TITLE - TEXT
+		maintitle: {
+			fontFamily: "imf",
+			fontSize: 20,
+		},
+		titlePage: {
+			fontFamily: "cookie",
+			fontSize: device === "mobile" ? 40 : 55,
+			textAlign: "center",
+			textDecorationLine: "underline",
+			textShadowColor: "black",
+			textShadowOffset: { width: 1, height: 0 },
+			textShadowRadius: isMobile ? 3 : 5,
+		},
+		title: {
+			fontFamily: "cookie",
+			fontSize: device === "mobile" ? 30 : 55,
+			textShadowColor: "black",
+			textShadowOffset: { width: 1, height: 0 },
+			textShadowRadius: isMobile ? 3 : 5,
+		},
+		secondaryTitle: {
+			fontSize: 25,
+			fontFamily: "cookie",
+			textShadowColor: "black",
+			textShadowOffset: { width: 1, height: 0 },
+			textShadowRadius: 2,
+			marginVertical: 5,
+		},
+		text: {
+			fontFamily: "cookie",
+			fontSize: 25,
+		},
+
+		// AUTHENTIFICATION
+		authContainer: {
+			flex: 1,
+			padding: 15,
+			alignItems: "center",
+			justifyContent: "center",
+		},
+		authTitle: {
+			textAlign: "center",
+			paddingTop: 20,
+		},
+		authTitleSelection: {
+			display: "flex",
+			flexDirection: "row",
+			alignItems: "baseline",
+			marginBottom: 20,
+		},
 		// SECTION
 		section: {
 			marginTop: 20,
-			marginHorizontal: 15
+			marginHorizontal: 15,
 		},
 
 		// NAVIGATION BAR
@@ -92,32 +143,6 @@ export const StyleProvider = (props: any) => {
 		},
 		scrollpage: {
 			paddingHorizontal: 10,
-		},
-
-		// TITLE - TEXT
-		maintitle: {
-			fontFamily: "imf",
-			fontSize: 20,
-		},
-		titlePage: {
-			fontFamily: "cookie",
-			fontSize: device === "mobile" ? 40 : 55,
-			textAlign: "center",
-			textDecorationLine: "underline",
-			textShadowColor: "black",
-			textShadowOffset: { width: 1, height: 0 },
-			textShadowRadius: isMobile ? 3 : 5,
-		},
-		title: {
-			fontFamily: "cookie",
-			fontSize: device === "mobile" ? 30 : 55,
-			textShadowColor: "black",
-			textShadowOffset: { width: 1, height: 0 },
-			textShadowRadius: isMobile ? 3 : 5,
-		},
-		text: {
-			fontFamily: "cookie",
-			fontSize: 25,
 		},
 
 		// BUTTON

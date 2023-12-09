@@ -42,7 +42,7 @@ export default function Routes() {
 	return (
 		<NavigationContainer linking={linking} fallback={<Loader />}>
 			<Navigator
-				initialRouteName="Navigation"
+				initialRouteName="Authentification"
 				screenOptions={{
 					headerTitleAlign: "center",
 					headerTitleStyle: { fontSize: 30 },
@@ -50,8 +50,8 @@ export default function Routes() {
 					headerBackImageSource: require("../assets/images/background.jpg"),
 				}}
 			>
-				<Screen name="Navigation" component={Navigation} />
 				<Screen name="Authentification" component={Authentification} />
+				<Screen name="Navigation" component={Navigation} />
 				<Screen name="Menu" component={Menu} />
 			</Navigator>
 		</NavigationContainer>
