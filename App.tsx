@@ -4,6 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import Routes from "./routes";
 import { PageProvider } from "./contexts/page";
 import { StyleProvider } from "./contexts/style";
+import { AuthProvider } from "./contexts/auth";
 
 export default function App() {
 	const [fontLoad, setFontLoad] = useState(false);
@@ -27,12 +28,14 @@ export default function App() {
 		return null;
 	} else {
 		return (
-			<PageProvider>
-				<StyleProvider>
-					<StatusBar translucent hidden />
-					<Routes />
-				</StyleProvider>
-			</PageProvider>
+			<AuthProvider>
+				<PageProvider>
+					<StyleProvider>
+						<StatusBar translucent hidden />
+						<Routes />
+					</StyleProvider>
+				</PageProvider>
+			</AuthProvider>
 		);
 	}
 }

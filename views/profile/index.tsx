@@ -1,8 +1,9 @@
 // LIBRARY
-import React from "react";
+import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 // STYLE
 import { useStyle } from "../../contexts/style";
+import { getData } from "../../utils/API";
 // CONTEXT
 // VIEW
 // COMPONENT
@@ -14,7 +15,9 @@ export default function Profile() {
 	// Private Constante
 
 	// Functions
-
+	useEffect(() => {
+		getData()
+	}, [])
 	// Renders
 	const Information = ({ field, value }: { field: string; value: any }) => {
 		return (

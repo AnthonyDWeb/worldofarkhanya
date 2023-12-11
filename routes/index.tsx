@@ -1,5 +1,5 @@
 // LIBRARY
-import React from "react";
+import React, { useEffect } from "react";
 import * as Linking from "expo-linking";
 import { NavigationContainer } from "@react-navigation/native";
 

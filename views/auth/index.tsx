@@ -9,10 +9,12 @@ import { useStyle } from "../../contexts/style";
 import Page from "../../components/pages";
 import { usePage } from "../../contexts/page";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../contexts/auth";
 // OTHER
 
 export default function Auth() {
 	// Global Constante
+	const { serverOpen } = useAuth();
 	const { styles } = useStyle();
 	const { page, setPage, updatePage } = usePage();
 	// Private Constante
@@ -55,8 +57,14 @@ export default function Auth() {
 		<Page>
 			<Text style={[styles.title, styles.authTitle]}>Authentification</Text>
 			<View style={styles.authContainer}>
-				<SelectPage />
-				{page.name === "login" ? <Login /> : <Register />}
+				{serverOpen ? (
+					<>
+						<SelectPage />
+						{page.name === "login" ? <Login /> : <Register />}
+					</>
+				) : (
+					<Text>Loading</Text>
+				)}
 			</View>
 		</Page>
 	);
