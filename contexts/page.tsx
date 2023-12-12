@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { Linking } from "react-native";
+import { getRouteFromUrl } from "../utils/other/verification";
 
 type pagePros = {
 	page: { name: string; data?: {} | [] };
@@ -19,16 +19,15 @@ export const PageProvider = (props: any) => {
 	const [parchmentDisplay, setParchmentDisplay] = useState<boolean>(false);
 
 	useEffect(() => {
-		getRouteFromUrl();
 	}, []);
 	useEffect(() => {
 		page.name !== "Menu" && setTimeout(() => setParchmentDisplay(true), lastPage.name === "Menu" ? 0 : 300);
+		updateURL();
 	}, [page]);
 
-	const getRouteFromUrl = async() => {
-		const url = `${await Linking.getInitialURL()}`
-		const url_route = url.substring(url.lastIndexOf('/') + 1);
-		setUrl(url_route);
+	const updateURL = async() => {
+		const path = await getRouteFromUrl();
+		setUrl(path);
 	}
 
 	const closeParchment = () => {

@@ -15,11 +15,22 @@ import Loader from "../components/loader";
 import { RootStack } from "../types";
 import Homepage from "../views/home";
 import { usePage } from "../contexts/page";
+import {
+	BASE_URL,
+	CREATION_URL,
+	HOMEPAGE,
+	HOMEPAGE_URL,
+	LIBRARY_URL,
+	MENU,
+	MENU_URL,
+	NAVIGATION,
+	PRIVACY_URL,
+	PROFILE_URL,
+} from "../constants";
 
 export default function Routes() {
 	// Global Constante
 	const { urlRoute } = usePage();
-	// const navigation = useNavigation<any>();
 	// Private Constante
 	const Stack = createNativeStackNavigator<RootStack>();
 	const Navigator = Stack.Navigator;
@@ -29,16 +40,16 @@ export default function Routes() {
 	const config = {
 		screens: {
 			Navigation: {
-				path: "worldofarkhanya",
+				path: BASE_URL,
 				screens: {
-					Profile: "profil",
-					Library: "bibliothèque",
-					Creation: "création",
+					Profile: PROFILE_URL,
+					Library: LIBRARY_URL,
+					Creation: CREATION_URL,
 				},
 			},
-			Homepage: "worldofarkhanya/auth",
-			Menu: "worldofarkhanya/menu",
-			Privacy: "worldofarkhanya/privacy",
+			Homepage: `${BASE_URL}/${HOMEPAGE_URL}`,
+			Menu: `${BASE_URL}/${MENU_URL}`,
+			Privacy: `${BASE_URL}/${PRIVACY_URL}`,
 		},
 	};
 	const linking = {
@@ -46,7 +57,12 @@ export default function Routes() {
 		config,
 	};
 
-	const initRoute = urlRoute === "auth" ? "Homepage" : urlRoute === "Menu" ? "Menu": "Navigation";
+	const initRoute =
+		urlRoute === HOMEPAGE_URL
+			? HOMEPAGE
+			: urlRoute === MENU_URL
+			? MENU
+			: NAVIGATION;
 	// Functions
 	// Renders
 	return (

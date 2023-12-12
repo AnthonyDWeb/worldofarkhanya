@@ -53,14 +53,14 @@ export const StyleProvider = (props: any) => {
 			textDecorationLine: "underline",
 			textShadowColor: "black",
 			textShadowOffset: { width: 1, height: 0 },
-			textShadowRadius: 3,
+			textShadowRadius: 2,
 		},
 		title: {
 			fontFamily: "cookie",
 			fontSize: device === "mobile" ? 30 : 55,
 			textShadowColor: "black",
 			textShadowOffset: { width: 1, height: 0 },
-			textShadowRadius: 3,
+			textShadowRadius: 2,
 		},
 		secondaryTitle: {
 			fontSize: 25,
@@ -232,7 +232,7 @@ export const StyleProvider = (props: any) => {
 			paddingHorizontal: 10,
 			textShadowColor: "black",
 			textShadowOffset: { width: 1, height: 0 },
-			textShadowRadius: isMobile ? 3 : 5,
+			textShadowRadius: 2.5,
 		},
 		menuButton: {
 			top: 5,

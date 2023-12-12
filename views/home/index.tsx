@@ -4,18 +4,16 @@ import { Text, View } from "react-native";
 // STYLE
 import { useStyle } from "../../contexts/style";
 // CONTEXT
+import { useAuth } from "../../contexts/auth";
 // VIEW
+import Auth from "../auth";
 // COMPONENT
 import Page from "../../components/pages";
-import { useAuth } from "../../contexts/auth";
-import { TITLE } from "../../constants";
-import Auth from "../auth";
-import useDevice from "../../utils/hooks/useDevice";
 // OTHER
+import { TITLE } from "../../constants";
 
 export default function Homepage() {
 	// Global Constante
-	const { isMobile } = useDevice();
 	const { serverOpen } = useAuth();
 	const { styles } = useStyle();
 	// Private Constante
