@@ -30,16 +30,12 @@ export default function Auth() {
 		const res = (page.name === "login") ? await login(user) : await register(user);
 		if (res) {
 			setStorage("woaUser", {user: res.user, [ACCESS_TOKEN]: res[ACCESS_TOKEN]});
-			const storage = await getStorage("woaUser");
-			console.log("authValidation res", res);
-			console.log("storage",storage);
 			handleAuthentification(res.user);
 		}
 	}
 
 
 	const handleAuthentification = (res: {}) => {
-		console.log("handleAuthentification res",res);
 		setUser(res);
 		updatePage("Profile");
 		navigation.navigate("Navigation");

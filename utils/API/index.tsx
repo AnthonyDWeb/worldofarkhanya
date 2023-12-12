@@ -1,5 +1,7 @@
 import { Alert } from "react-native";
-const URL = process.env.LOCAL_URL;
+// const URL = process.env.LOCAL_URL;
+const URL = process.env.SERVER_URL;
+// const URL = process.env.SERVER_LOCAL_URL;
 
 // ------------- Init Server ----------------------------
 export const initServer = async () => {
@@ -8,7 +10,6 @@ export const initServer = async () => {
 			method: "GET",
 		});
 		const resJson = await res.json();
-		console.log("initServer resJson", resJson);
 		return resJson;
 	} catch (error) {
 		console.log("err", error);
@@ -18,7 +19,6 @@ export const initServer = async () => {
 // ------------- Auth Request ----------------------------
 export const login = async (body:{}) => {
     try {
-		console.log("login", body)
         const res = await fetch(`${URL}/auth/login`, {
             method: "POST",
             headers: {
@@ -33,7 +33,6 @@ export const login = async (body:{}) => {
 };
 export const register = async (body:{}) => {
     try {
-		console.log("register", body)
         const res = await fetch(`${URL}/auth/register`, {
             method: "POST",
             headers: {

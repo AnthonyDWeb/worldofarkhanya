@@ -16,9 +16,6 @@ export default function Profile() {
 	// Private Constante
 
 	// Functions
-	useEffect(() => {
-		console.log("Profile user", user);
-	}, []);
 	// Renders
 	const Information = ({ field, value }: { field: string; value: any }) => {
 		return (
@@ -39,7 +36,7 @@ export default function Profile() {
 
 	return (
 		<View>
-			<Text style={styles.titlePage}>{user.username}</Text>
+			<Text style={styles.titlePage}>{user?.username}</Text>
 			<View style={styles.section}>
 				<Text style={styles.title}>Mes créations:</Text>
 			</View>
