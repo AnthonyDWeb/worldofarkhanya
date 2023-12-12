@@ -17,10 +17,34 @@ export const StyleProvider = (props: any) => {
 			justifyContent: "space-between",
 		},
 
+		// CONTAINER
+		centerContainer: {
+			flex: 1,
+			width: "100%",
+			display: "flex",
+			alignItems: "center",
+			justifyContent: "center",
+		},
+		rowContainer: {
+			display: "flex",
+			flexDirection: "row",
+			alignItems: "center"
+		},
+		columnContainer: {
+			display: "flex",
+			flexDirection: "column",
+			justifyContent: "center",
+		},
+
 		// TITLE - TEXT
-		maintitle: {
+		mainTitle: {
+			fontSize: 35,
 			fontFamily: "imf",
-			fontSize: 20,
+			textAlign: "center",
+			margin: 20,
+			textShadowRadius: 5,
+			textShadowColor: "crimson",
+			textShadowOffset: { width: 1.5, height: 0 },
 		},
 		titlePage: {
 			fontFamily: "cookie",
@@ -29,14 +53,14 @@ export const StyleProvider = (props: any) => {
 			textDecorationLine: "underline",
 			textShadowColor: "black",
 			textShadowOffset: { width: 1, height: 0 },
-			textShadowRadius: isMobile ? 3 : 5,
+			textShadowRadius: 3,
 		},
 		title: {
 			fontFamily: "cookie",
 			fontSize: device === "mobile" ? 30 : 55,
 			textShadowColor: "black",
 			textShadowOffset: { width: 1, height: 0 },
-			textShadowRadius: isMobile ? 3 : 5,
+			textShadowRadius: 3,
 		},
 		secondaryTitle: {
 			fontSize: 25,
@@ -53,20 +77,33 @@ export const StyleProvider = (props: any) => {
 
 		// AUTHENTIFICATION
 		authContainer: {
-			flex: 1,
 			padding: 15,
 			alignItems: "center",
 			justifyContent: "center",
-		},
-		authTitle: {
-			textAlign: "center",
-			paddingTop: 20,
 		},
 		authTitleSelection: {
 			display: "flex",
 			flexDirection: "row",
 			alignItems: "baseline",
 			marginBottom: 20,
+		},
+		authInput: {
+			width: 150,
+			borderWidth: 1,
+			borderRadius: 5,
+			paddingVertical: 2,
+			textAlign: "center",
+			color: "dimgray",
+			borderColor: "gray",
+			backgroundColor: "whitesmoke"
+		},
+		authButtonValidation: {
+			marginTop: 20,
+			paddingVertical: 5,
+			paddingHorizontal: 20,
+			borderWidth: 1,
+			borderRadius: 10,
+			borderColor: "black",
 		},
 		// SECTION
 		section: {

@@ -1,23 +1,22 @@
 import React from "react";
-import { usePage } from "../contexts/page";
-import Auth from "./auth";
 import Creation from "./creation";
 import Library from "./library";
 import Profile from "./profile";
 import ParchmentPage from "../components/pages/parchment_page";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { RootStack } from "../types";
 
 export default function Index() {
-	const { page } = usePage();
-
+	const Stack = createNativeStackNavigator<RootStack>();
+	const Navigator = Stack.Navigator;
+	const Screen = Stack.Screen;
 	return (
 		<ParchmentPage>
-			{page.name === "Creation" ? (
-				<Creation />
-			) : page.name === "Library" ? (
-				<Library />
-			) : (
-				page.name === "Profile" && <Profile />
-			)}
+			<Navigator screenOptions={{ headerShown: false}}>
+				<Screen name="Profile" component={Profile} />
+				<Screen name="Creation" component={Creation} />
+				<Screen name="Library" component={Library} />
+			</Navigator>
 		</ParchmentPage>
 	);
 }

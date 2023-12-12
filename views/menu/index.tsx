@@ -32,7 +32,7 @@ export default function Menu() {
 	};
 	const handleAuthentification = () => {
 		setPage({name: "login"});
-		navigation.navigate("Authentification");
+		navigation.navigate("Homepage");
 	}
 	// Renders
 	const Section = ({ name, children }: { name: string; children?: any }) => {

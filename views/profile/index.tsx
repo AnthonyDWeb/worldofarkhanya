@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 // STYLE
 import { useStyle } from "../../contexts/style";
-import { getData } from "../../utils/API";
+import { useAuth } from "../../contexts/auth";
 // CONTEXT
 // VIEW
 // COMPONENT
@@ -11,13 +11,14 @@ import { getData } from "../../utils/API";
 
 export default function Profile() {
 	// Global Constante
+	const { user } = useAuth();
 	const { styles } = useStyle();
 	// Private Constante
 
 	// Functions
 	useEffect(() => {
-		getData()
-	}, [])
+		console.log("Profile user", user);
+	}, []);
 	// Renders
 	const Information = ({ field, value }: { field: string; value: any }) => {
 		return (
@@ -38,7 +39,7 @@ export default function Profile() {
 
 	return (
 		<View>
-			<Text style={styles.titlePage}>Nom d'utilisateur</Text>
+			<Text style={styles.titlePage}>{user.username}</Text>
 			<View style={styles.section}>
 				<Text style={styles.title}>Mes créations:</Text>
 			</View>

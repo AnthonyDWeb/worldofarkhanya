@@ -1,9 +1,10 @@
 import { Alert } from "react-native";
+const URL = process.env.LOCAL_URL;
 
 // ------------- Init Server ----------------------------
 export const initServer = async () => {
 	try {
-		const res = await fetch(`${process.env.SERVER_LOCAL_URL}`, {
+		const res = await fetch(`${URL}`, {
 			method: "GET",
 		});
 		const resJson = await res.json();
@@ -13,23 +14,51 @@ export const initServer = async () => {
 		console.log("err", error);
 	}
 };
-// ------------- Auth Request ----------------------------
 
+// ------------- Auth Request ----------------------------
+export const login = async (body:{}) => {
+    try {
+		console.log("login", body)
+        const res = await fetch(`${URL}/auth/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Content-Length": "<calculated when request is sent>",
+            },
+            body: JSON.stringify(body)
+        });
+        const resJson = await res.json()
+        return resJson
+    } catch { return Alert.alert("login error") };
+};
+export const register = async (body:{}) => {
+    try {
+		console.log("register", body)
+        const res = await fetch(`${URL}/auth/register`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Content-Length": "<calculated when request is sent>",
+            },
+            body: JSON.stringify(body)
+        });
+        const resJson = res.json()
+        return resJson
+    } catch { return Alert.alert("register error") };
+};
 // ------------- CRUD Request ----------------------------
-export const getData = async (token: string) => {
-    const newToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imludml0w6kiLCJpYXQiOjE3MDIzMjIyODgsImV4cCI6MTcwNDkxNDI4OH0.6kL6JXnh0xXcCY9DSCxp72_PpXh6VmSgbyg_4hEEkYU";
+export const getData = async (route: string, token?: string) => {
 	try {
-		const res = await fetch(`${process.env.SERVER_LOCAL_URL}/users`, {
+		const res = await fetch(`${URL}/${route}`, {
 			method: "GET",
 			headers: {
-				Authorization: `Bearer ${newToken}`,
+				Authorization: `Bearer ${token}`,
 			},
 		});
-		const resJson = await res.json();
-		console.log("getData resJson", resJson);
-		return resJson;
+		return await res.json();
 	} catch (error) {
 		console.log("err", error);
 	}
 };
+
 // ------------- Upload image ----------------------------

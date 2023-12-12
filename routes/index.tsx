@@ -14,43 +14,48 @@ import Menu from "../views/menu";
 import Loader from "../components/loader";
 // OTHER
 import { RootStack } from "../types";
+import Homepage from "../views/home";
+import { useAuth } from "../contexts/auth";
+import { getStorage } from "../utils/Storage/storageCall";
+import { usePage } from "../contexts/page";
 
 export default function Routes() {
 	// Global Constante
+	const { user, setUser } = useAuth();
+	const { page } = usePage();
 	// Private Constante
 	const Stack = createNativeStackNavigator<RootStack>();
 	const Navigator = Stack.Navigator;
 	const Screen = Stack.Screen;
 
+	// const prefix = Linking.createURL("/worldofarkhanya");
+	const prefix = "http://localhost:19006/";
 	const config = {
 		screens: {
-			Navigation: `worldofarkhanya/`,
-			Authentification: "worldofarkhanya/auth",
+			Navigation: " worldofarkhanya/",
+			// {
+			// 	screens: {
+			// 		Profile: "worldofarkhanya/profil",
+			// 		Library: "worldofarkhanya/bibliothèque",
+			// 		Creation: "worldofarkhanya/création",
+			// 	}
+			// },
+			Homepage: "worldofarkhanya/auth",
 			Menu: "worldofarkhanya/menu",
 			Privacy: "worldofarkhanya/privacy",
 		},
 	};
-	const prefix = Linking.createURL("/worldofarkhanya");
 	const linking = {
-		prefixes: [prefix, "https://anthonydweb.github.io/worldofarkhanya/"],
+		prefixes: [prefix],
 		config,
 	};
 
 	// Functions
 	// Renders
-
 	return (
 		<NavigationContainer linking={linking} fallback={<Loader />}>
-			<Navigator
-				initialRouteName="Authentification"
-				screenOptions={{
-					headerTitleAlign: "center",
-					headerTitleStyle: { fontSize: 30 },
-					headerShown: false,
-					headerBackImageSource: require("../assets/images/background.jpg"),
-				}}
-			>
-				<Screen name="Authentification" component={Authentification} />
+			<Navigator initialRouteName="Homepage" screenOptions={{ headerShown: false}}>
+				<Screen name="Homepage" component={Homepage} />
 				<Screen name="Navigation" component={Navigation} />
 				<Screen name="Menu" component={Menu} />
 			</Navigator>
