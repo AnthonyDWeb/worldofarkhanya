@@ -4,6 +4,8 @@ import { Text, View } from "react-native";
 // STYLE
 import { useStyle } from "../../contexts/style";
 import { useAuth } from "../../contexts/auth";
+import ParchmentPage from "../../components/pages/parchment_page";
+import useDevice from "../../utils/hooks/useDevice";
 // CONTEXT
 // VIEW
 // COMPONENT
@@ -13,6 +15,7 @@ export default function Profile() {
 	// Global Constante
 	const { user } = useAuth();
 	const { styles } = useStyle();
+	const {isMobile} = useDevice();
 	// Private Constante
 
 	// Functions
@@ -33,6 +36,9 @@ export default function Profile() {
 			</View>
 		);
 	};
+	console.log("---------------------------------------");
+	console.log("inside Profile");
+	console.log("user",user);
 
 	return (
 		<View>

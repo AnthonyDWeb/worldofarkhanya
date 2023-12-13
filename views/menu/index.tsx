@@ -34,6 +34,7 @@ export default function Menu() {
 		setPage({name: "login"});
 		navigation.navigate("Homepage");
 	}
+	
 	// Renders
 	const Section = ({ name, children }: { name: string; children?: any }) => {
 		const sectionStyle = {

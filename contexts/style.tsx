@@ -19,6 +19,7 @@ export const StyleProvider = (props: any) => {
 
 		// CONTAINER
 		centerContainer: {
+			position: "relative",
 			flex: 1,
 			width: "100%",
 			display: "flex",
@@ -26,11 +27,13 @@ export const StyleProvider = (props: any) => {
 			justifyContent: "center",
 		},
 		rowContainer: {
+			position: "relative",
 			display: "flex",
 			flexDirection: "row",
 			alignItems: "center"
 		},
 		columnContainer: {
+			position: "relative",
 			display: "flex",
 			flexDirection: "column",
 			justifyContent: "center",
@@ -80,6 +83,7 @@ export const StyleProvider = (props: any) => {
 			padding: 15,
 			alignItems: "center",
 			justifyContent: "center",
+			
 		},
 		authTitleSelection: {
 			display: "flex",
@@ -98,11 +102,11 @@ export const StyleProvider = (props: any) => {
 			backgroundColor: "whitesmoke"
 		},
 		authButtonValidation: {
-			marginTop: 20,
+			margin: 20,
 			paddingVertical: 5,
 			paddingHorizontal: 20,
 			borderWidth: 1,
-			borderRadius: 10,
+			borderRadius: 15,
 			borderColor: "black",
 		},
 		// SECTION

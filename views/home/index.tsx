@@ -19,7 +19,7 @@ export default function Homepage() {
 	// Private Constante
 	// Functions
 	// Renders
-
+	
 	return (
 		<Page>
 			<View style={styles.centerContainer}>

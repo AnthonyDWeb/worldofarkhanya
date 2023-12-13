@@ -6,7 +6,7 @@ export const checkOnlyNumber = (value: string) => {
 };
 
 export const getRouteFromUrl = async() => {
-	const url = `${await Linking.getInitialURL()}`
+	const url = `${await Linking.getInitialURL()}`;
 	const url_route = url.substring(url.lastIndexOf('/') + 1);
 	return url_route;
 }

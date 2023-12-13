@@ -9,6 +9,7 @@ import { usePage } from "../../../contexts/page";
 // COMPONENT
 import SampleButton from "../sample";
 import { useNavigation } from "@react-navigation/native";
+import useDevice from "../../../utils/hooks/useDevice";
 // OTHER
 type navBtnProps = { title: string; label: string };
 
@@ -16,14 +17,13 @@ export default function NavigationButton({ title, label }: navBtnProps) {
 	// Global Constante
 	const { styles } = useStyle();
 	const { parchmentDisplay, updatePage } = usePage();
+	const {isMobile} = useDevice();
 	const navigation = useNavigation<any>();
 	// Private Constante
 	// Functions
 	const handle = () => {
 		updatePage(label)
-		setTimeout(() => navigation.navigate("Navigation", {
-			screen: label
-		}), 500)
+		!isMobile && navigation.navigate("Navigation")
 	}
 	// Renders
 
