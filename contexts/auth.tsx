@@ -23,8 +23,10 @@ export const AuthProvider = (props: any) => {
 	const warmUpServer = async () => {
 		try {
 			const res = await initServer();
-			setStorage("woaInit", new Date().getTime());
-			setOpen(res.message === INIT_MESSAGE);
+			if (res?.message || res === undefined) {
+				setStorage("woaInit", new Date().getTime());
+				setOpen(true);
+			}
 		} catch (error) {
 			console.log("err", error);
 		}
@@ -36,8 +38,7 @@ export const AuthProvider = (props: any) => {
 		storage.push({
 			user: data.user,
 			[ACCESS_TOKEN]: data[ACCESS_TOKEN],
-		})
-		console.log("usersStorage after",storage);
+		});
 		setStorage("woaUser", storage);
 	};
 
@@ -45,7 +46,7 @@ export const AuthProvider = (props: any) => {
 
 	const initialization = async () => {
 		const storageUser = await checkStorage();
-		console.log("storageUser",storageUser);
+		console.log("storageUser", storageUser);
 		const storageInitMessage = await getStorage("woaInit");
 		const newTime = new Date().getTime();
 		const timeDelay =
@@ -65,7 +66,7 @@ export const AuthProvider = (props: any) => {
 		initServer,
 		user,
 		setUser,
-		updateUserStorage
+		updateUserStorage,
 	};
 
 	return <AuthContext.Provider value={authContextValue} {...props} />;
