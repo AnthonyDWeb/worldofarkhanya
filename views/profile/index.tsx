@@ -36,9 +36,6 @@ export default function Profile() {
 			</View>
 		);
 	};
-	console.log("---------------------------------------");
-	console.log("inside Profile");
-	console.log("user",user);
 
 	return (
 		<View>

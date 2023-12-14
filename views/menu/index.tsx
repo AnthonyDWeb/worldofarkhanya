@@ -15,9 +15,11 @@ import { usePage } from "../../contexts/page";
 // VIEW
 // COMPONENT
 import Page from "../../components/pages";
+import { useAuth } from "../../contexts/auth";
 // OTHER
 
 export default function Menu() {
+	const { logout } = useAuth();
 	const { getBack, setPage } = usePage();
 	const { styles } = useStyle();
 	const navigation = useNavigation<any>();
@@ -32,7 +34,7 @@ export default function Menu() {
 	};
 	const handleAuthentification = () => {
 		setPage({name: "login"});
-		navigation.navigate("Homepage");
+		logout();
 	}
 	
 	// Renders

@@ -1,5 +1,7 @@
 // ----------------------- INITILIZATION ----------------------- //
 export const INIT_MESSAGE = "Hello World!";
+export const STORAGE_USER = "woaUser";
+export const STORAGE_TIME = "woaInit";
 
 // ----------------------- APP ----------------------- //
 export const APP_NAME = "Arkhanya";

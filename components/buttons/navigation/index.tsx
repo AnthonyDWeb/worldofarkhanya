@@ -17,13 +17,12 @@ export default function NavigationButton({ title, label }: navBtnProps) {
 	// Global Constante
 	const { styles } = useStyle();
 	const { parchmentDisplay, updatePage } = usePage();
-	const {isMobile} = useDevice();
 	const navigation = useNavigation<any>();
 	// Private Constante
 	// Functions
 	const handle = () => {
 		updatePage(label)
-		!isMobile && navigation.navigate("Navigation")
+		navigation.navigate("Navigation");
 	}
 	// Renders
 

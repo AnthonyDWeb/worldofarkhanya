@@ -30,7 +30,7 @@ export const StyleProvider = (props: any) => {
 			position: "relative",
 			display: "flex",
 			flexDirection: "row",
-			alignItems: "center"
+			alignItems: "center",
 		},
 		columnContainer: {
 			position: "relative",
@@ -83,7 +83,6 @@ export const StyleProvider = (props: any) => {
 			padding: 15,
 			alignItems: "center",
 			justifyContent: "center",
-			
 		},
 		authTitleSelection: {
 			display: "flex",
@@ -99,7 +98,7 @@ export const StyleProvider = (props: any) => {
 			textAlign: "center",
 			color: "dimgray",
 			borderColor: "gray",
-			backgroundColor: "whitesmoke"
+			backgroundColor: "whitesmoke",
 		},
 		authButtonValidation: {
 			margin: 20,
@@ -108,6 +107,25 @@ export const StyleProvider = (props: any) => {
 			borderWidth: 1,
 			borderRadius: 15,
 			borderColor: "black",
+		},
+
+		// AUTH STORAGE
+		profileContainer: {
+			borderColor: "Black",
+			borderTopWidth: 1,
+			borderBottomWidth: 1,
+			borderLeftWidth: 0.01,
+			borderRightWidth: 0.01,
+			marginVertical: 10,
+			borderRadius: 15,
+			width: 150,
+		},
+		profileStorageName: {
+			marginVertical: 0,
+			paddingVertical: 5,
+			textAlign: "center",
+			borderRadius: 15,
+			backgroundColor: "rgba(255,255,255,0.2)",
 		},
 		// SECTION
 		section: {

@@ -31,13 +31,16 @@ import {
 	PROFILE_URL,
 } from "../constants";
 import { capitalizeFirstLetter } from "../utils/other/transform_data";
+import { useAuth } from "../contexts/auth";
 
 export default function Routes() {
 	// Global Constante
+	const { isLogged } = useAuth();
 	const { page, urlRoute } = usePage();
 	// Private Constante
 	const Stack = createNativeStackNavigator<RootStack>();
 	const Navigator = Stack.Navigator;
+	const Group = Stack.Group;
 	const Screen = Stack.Screen;
 
 	const prefix = Linking.createURL("");
@@ -48,17 +51,13 @@ export default function Routes() {
 			: page.name === CREATION
 			? CREATION_URL
 			: PROFILE_URL;
+
 	const initRoute =
 		urlRoute === NAVIGATION_URL || urlRoute === endRoute
 			? NAVIGATION
 			: urlRoute === MENU_URL
 			? MENU
-			: urlRoute === HOMEPAGE_URL
-			? HOMEPAGE
-			: undefined;
-
-	console.log("urlRoute", urlRoute);
-	console.log("initRoute", initRoute);
+			: HOMEPAGE;
 
 	const config = {
 		screens: {
@@ -73,29 +72,22 @@ export default function Routes() {
 		config,
 	};
 
+	const navTitle = `WoA - ${capitalizeFirstLetter(endRoute)}`;
+	const menuTitle = `WoA - ${MENU}`;
+	const homeTitle = `WoA  - ${HOMEPAGE_URL}`;
 	// Functions
 	// Renders
 	return (
 		<NavigationContainer linking={linking} fallback={<Loader />}>
-			<Navigator
-				initialRouteName={initRoute ? initRoute : HOMEPAGE}
-				screenOptions={{ headerShown: false }}
-			>
-				<Screen
-					name={HOMEPAGE}
-					component={Homepage}
-					options={{ title: `WoA  - ${HOMEPAGE_URL}` }}
-				/>
-				<Screen
-					name={NAVIGATION}
-					component={Navigation}
-					options={{ title: `WoA - ${capitalizeFirstLetter(endRoute)}` }}
-				/>
-				<Screen
-					name={MENU}
-					component={Menu}
-					options={{ title: `WoA - ${MENU}` }}
-				/>
+			<Navigator initialRouteName={initRoute} screenOptions={{ headerShown: false }}>
+				{isLogged ? (
+					<Group>
+						<Screen name={NAVIGATION} component={Navigation} options={{ title: navTitle }} />
+						<Screen name={MENU} component={Menu} options={{ title: menuTitle }} />
+					</Group>
+				) : (
+					<Screen name={HOMEPAGE} component={Homepage} options={{ title: homeTitle }} />
+				)}
 			</Navigator>
 		</NavigationContainer>
 	);

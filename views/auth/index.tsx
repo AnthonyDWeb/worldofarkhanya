@@ -1,6 +1,12 @@
 // LIBRARY
-import React, { useRef, useState } from "react";
-import { Pressable, Text, View, TextInput } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import {
+	Pressable,
+	Text,
+	View,
+	TextInput,
+	ActivityIndicator,
+} from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 // STYLE
 import { useStyle } from "../../contexts/style";
@@ -18,14 +24,21 @@ import {
 	PROFILE,
 	NAVIGATION,
 	REMEMBER_ME,
+	STORAGE_USER,
 } from "../../constants";
-import { login, register } from "../../utils/API";
+import { login, loginToken, register } from "../../utils/API";
 import Checkbox from "../../components/box/checkbox";
+import {
+	getStorage,
+	getUserStorage,
+	setStorage,
+} from "../../utils/Storage/storageCall";
 // OTHER
 
 export default function Auth() {
 	// Global Constante
-	const { serverOpen, user, setUser, updateUserStorage } = useAuth();
+	const { user, setUser, authentification, load, setLoad } =
+		useAuth();
 	const { styles } = useStyle();
 	const { page, setPage, updatePage } = usePage();
 	const navigation = useNavigation<any>();
@@ -35,49 +48,59 @@ export default function Auth() {
 	const username = useRef("");
 	const password = useRef("");
 	// Functions
+
 	const authValidation = async () => {
+		setLoad(true);
 		const user = { username: username.current, password: password.current };
 		const res =
 			page.name === "login" ? await login(user) : await register(user);
 		if (res) {
-			console.log("authValidation res", res);
-			save && updateUserStorage(res);
+			save &&
+				setStorage(STORAGE_USER, {
+					user: res.user,
+					[ACCESS_TOKEN]: res[ACCESS_TOKEN],
+				});
 			handleAuthentification(res.user);
 		}
 	};
+	const tokenValidation = async (data: { user: any; access_token: string }) => {
+		setLoad(true);
+		const res = await loginToken(data.access_token);
+		res && handleAuthentification(res.user);
+	};
 
 	const handleAuthentification = (res: {}) => {
-		setUser(res);
+		authentification(res);
 		updatePage(PROFILE);
-		navigation.navigate(NAVIGATION);
+	};
+
+	const resetUser = () => {
+		setPage({ name: "login" });
+		setUser(undefined);
 	};
 
 	// Renders
 	const SelectPage = () => {
+		const opaLog = page.name === "login" ? 1 : 0.35;
+		const opaReg = page.name === "register" ? 1 : 0.35;
 		return (
 			<View style={styles.authTitleSelection}>
 				<Pressable onPress={() => setPage({ name: "login" })}>
-					<Text
-						style={{
-							...styles.secondaryTitle,
-							opacity: page.name === "login" ? 1 : 0.35,
-						}}
-					>
-						Se connecter
-					</Text>
+					<Text style={[styles.secondaryTitle, opaLog]}>Se connecter</Text>
 				</Pressable>
 				<Text style={[styles.secondaryTitle, { marginHorizontal: 10 }]}>/</Text>
 				<Pressable onPress={() => setPage({ name: "register" })}>
-					<Text
-						style={{
-							...styles.secondaryTitle,
-							opacity: page.name === "register" ? 1 : 0.35,
-						}}
-					>
-						S'enregistrer
-					</Text>
+					<Text style={[styles.secondaryTitle, opaReg]}>S'enregistrer</Text>
 				</Pressable>
 			</View>
+		);
+	};
+
+	const RegisterPart = () => {
+		return (
+			<>
+				<Text>REGISTER ADD PART</Text>
+			</>
 		);
 	};
 
@@ -119,72 +142,55 @@ export default function Auth() {
 						/>
 					)}
 				</View>
+				{page.name === "register" && <RegisterPart />}
 				<Checkbox
 					label={REMEMBER_ME}
 					action={() => setSave(!save)}
 					checked={save}
 				/>
+				<Pressable
+					style={styles.authButtonValidation}
+					onPress={() => authValidation()}
+				>
+					<Text style={{ ...styles.secondaryTitle }}>
+						{page.name === "login" ? SIGNIN : REGISTER}
+					</Text>
+				</Pressable>
 			</>
 		);
 	};
 
 	const StorageRender = () => {
-		return user?.map((d: any) => {
-			return (
-				<View key={d.user._id}
-					style={{
-						borderColor: "Black",
-						borderTopWidth: 1,
-						borderBottomWidth: 1,
-						borderLeftWidth: 0.01,
-						borderRightWidth: 0.01,
-						marginVertical: 10,
-						borderRadius: 15,
-						width: 150,
-					}}
+		const data = user.user;
+		return (
+			<>
+				<Pressable
+					style={styles.profileContainer}
+					onPress={() => tokenValidation(user)}
 				>
-					<Text
-						style={{
-							...styles.secondaryTitle,
-							marginVertical: 0,
-							paddingVertical: 5,
-							textAlign: "center",
-							borderRadius: 15,
-							backgroundColor: "rgba(255,255,255,0.2)",
-						}}
-						
-					>
-						{d.user.username}
+					<Text style={[styles.secondaryTitle, styles.profileStorageName]}>
+						{data.username}
 					</Text>
-				</View>
-			);
-		});
+				</Pressable>
+				;
+				<Pressable onPress={() => resetUser()}>
+					<Text style={styles.secondaryTitle}>Changer de compte</Text>
+				</Pressable>
+			</>
+		);
+	};
+
+	const Loading = () => {
+		return (
+			<View>
+				<ActivityIndicator size="large" />
+				<Text style={styles.text}>Chargement des données en cours...</Text>
+			</View>
+		);
 	};
 	return (
 		<View style={styles.authContainer}>
-			{user ? <StorageRender /> : <NoStorageRender />}
-			<Pressable
-				style={styles.authButtonValidation}
-				onPress={() => authValidation()}
-			>
-				<Text style={{ ...styles.secondaryTitle }}>
-					{page.name === "login" ? SIGNIN : REGISTER}
-				</Text>
-			</Pressable>
-			{user && (
-				<Pressable
-					onPress={() => (setPage({ name: "login" }), setUser(undefined))}
-				>
-					<Text
-						style={{
-							...styles.secondaryTitle,
-							opacity: page.name === "login" ? 1 : 0.35,
-						}}
-					>
-						Changer de compte
-					</Text>
-				</Pressable>
-			)}
+			{load ? <Loading /> : user ? <StorageRender /> : <NoStorageRender />}
 		</View>
 	);
 }
