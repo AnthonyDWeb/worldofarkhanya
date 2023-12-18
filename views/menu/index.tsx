@@ -1,6 +1,6 @@
 // LIBRARY
-import React, { useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import React, { useRef, useState } from "react";
+import { View, Text, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Animated, {
 	useSharedValue,
@@ -16,66 +16,127 @@ import { usePage } from "../../contexts/page";
 // COMPONENT
 import Page from "../../components/pages";
 import { useAuth } from "../../contexts/auth";
+import PressableButton from "../../components/buttons/pressable_button";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavStack } from "../../types";
+import { FontAwesome } from "@expo/vector-icons";
 // OTHER
 
 export default function Menu() {
-	const { logout } = useAuth();
-	const { getBack, setPage } = usePage();
+	// Global Constante
+	const { user, logout } = useAuth();
+	const { page, getBack, setPage } = usePage();
 	const { styles } = useStyle();
 	const navigation = useNavigation<any>();
-	const [selected, selection] = useState<string>();
-	// Global Constante
 	// Private Constante
+	const [selected, selection] = useState<string>();
+	const [hide, setDisplay] = useState(true);
+	const [editable, setEdit] = useState("");
+	const username = useRef(user.username);
+	const password = useRef("");
 
+	type sectionProps = {
+		name: string;
+		children?: any;
+	};
 	// Functions
 	const handleNavigation = () => {
 		getBack();
 		navigation.navigate("Navigation");
 	};
 	const handleAuthentification = () => {
-		setPage({name: "login"});
+		setPage({ name: "login" });
 		logout();
-	}
-	
+	};
+
 	// Renders
-	const Section = ({ name, children }: { name: string; children?: any }) => {
+	const Section = ({ name, children }: sectionProps) => {
 		const sectionStyle = {
 			padding: 10,
 			borderBottomColor: "grey",
 			borderBottomWidth: 1,
 		};
-		const isSelected = name === selected;
+		const isName = name === "Mon compte";
+		const isSelected = selected === "Mon compte";
+		const handle = () => selection(isSelected ? undefined : name);
 		return (
 			<View style={sectionStyle}>
-				<Pressable onPress={() => selection(isSelected ? undefined : name)}>
+				<PressableButton action={() => isName && handle()}>
 					<Text style={styles.secondaryTitle}>{name}</Text>
-				</Pressable>
+				</PressableButton>
 				{isSelected && children}
+			</View>
+		);
+	};
+
+	const UserInformation = () => {
+		const cStyle = { marginVertical: 10 };
+		const tStyle = [styles.text, { marginHorizontal: 5, paddingVertical: 2 }];
+		const iStyle = [styles.text, styles.authInput, { textAlign: "center" }];
+		const uName = editable === "username";
+		const pass = editable === "password";
+		return (
+			<View>
+				<View style={cStyle}>
+					<View style={styles.rowContainer}>
+						<Text style={tStyle}>Nom d'utilisateur</Text>
+						<FontAwesome name="pencil" size={20} color="black" onPress={() => setEdit(uName ? "" :"username")} />
+					</View>
+					<TextInput
+						style={iStyle}
+						onChangeText={(t) => (username.current = t)}
+						defaultValue={username.current}
+						autoFocus={uName}
+						editable={uName}
+					/>
+				</View>
+
+				<View style={cStyle}>
+				<View style={styles.rowContainer}>
+					<Text style={tStyle}>Changer de mot de passe</Text>
+					<FontAwesome name="pencil" size={20} color="black" onPress={() => setEdit(pass ? "" :"password")} />
+				</View>
+					{editable === "password" && (
+						<>
+							<Text style={tStyle}>Nouveau Mot de passe</Text>
+							<TextInput
+								style={iStyle}
+								onChangeText={(t) => (password.current = t)}
+								defaultValue={password.current}
+								secureTextEntry={hide}
+								editable={pass}
+								autoFocus={pass}
+							/>
+							<Text style={tStyle}>Nouveau Mot de passe</Text>
+							<TextInput
+								style={iStyle}
+								onChangeText={(t) => (password.current = t)}
+								defaultValue={password.current}
+								secureTextEntry={hide}
+								editable={pass}
+							/>
+						</>
+					)}
+				</View>
 			</View>
 		);
 	};
 
 	return (
 		<Page>
+			<Text style={styles.titlePage}>{page.name}</Text>
 			<View style={{ flex: 1, padding: 15 }}>
-				<Pressable onPress={() => handleNavigation()}>
-					<Text style={styles.titlePage}>Menu</Text>
-				</Pressable>
-				<Section name="Mon compte">
-					<Text style={styles.text}>Mon compte 1</Text>
-					<Text style={styles.text}>Mon compte 2</Text>
-					<Text style={styles.text}>Mon compte 3</Text>
-					<Text style={styles.text}>Mon compte 4</Text>
-				</Section>
-				<Section name="Politique de confidentialité">
-					<Text style={styles.text}>Politique de confidentialité 1</Text>
-					<Text style={styles.text}>Politique de confidentialité 2</Text>
-					<Text style={styles.text}>Politique de confidentialité 3</Text>
-					<Text style={styles.text}>Politique de confidentialité 4</Text>
-				</Section>
-				<Pressable onPress={() => handleAuthentification()}>
-					<Text style={styles.secondaryTitle}>{`-> Se déconnecter`}</Text>
-				</Pressable>
+				{selected === "Mon compte" ? (
+					<UserInformation />
+				) : (
+					<>
+						<Section name="Mon compte" />
+						<Section name="Politique de confidentialité" />
+						<PressableButton action={() => handleAuthentification()}>
+							<Text style={styles.secondaryTitle}>{`-> Se déconnecter`}</Text>
+						</PressableButton>
+					</>
+				)}
 			</View>
 		</Page>
 	);

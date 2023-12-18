@@ -7,6 +7,7 @@ const AuthContext = createContext<any>({});
 
 export const AuthProvider = (props: any) => {
 	const [user, setUser] = useState();
+	const [token, setToken] = useState();
 	const [serverOpen, setOpen] = useState(false);
 	const [isLogged, setIsLogged] = useState(false);
 	const [load, setLoad] = useState(false);
@@ -38,7 +39,8 @@ export const AuthProvider = (props: any) => {
 	};
 
 	const authentification = (res: any) => {
-		setUser(res);
+		setUser(res.user);
+		setToken(res.access_token);
 		setIsLogged(true);
 		setTimeout(() => setLoad(false), 500);
 	};
@@ -59,6 +61,8 @@ export const AuthProvider = (props: any) => {
 		setUser,
 		load,
 		setLoad,
+		token,
+		setToken,
 	};
 
 	return <AuthContext.Provider value={authContextValue} {...props} />;

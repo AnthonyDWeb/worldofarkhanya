@@ -32,9 +32,14 @@ import {
 } from "../constants";
 import { capitalizeFirstLetter } from "../utils/other/transform_data";
 import { useAuth } from "../contexts/auth";
+import { useStyle } from "../contexts/style";
+import PressableButton from "../components/buttons/pressable_button";
+import { Text } from "react-native";
+import Background from "../components/background";
 
 export default function Routes() {
 	// Global Constante
+	const { styles } = useStyle();
 	const { isLogged } = useAuth();
 	const { page, urlRoute } = usePage();
 	// Private Constante
@@ -73,17 +78,18 @@ export default function Routes() {
 	};
 
 	const navTitle = `WoA - ${capitalizeFirstLetter(endRoute)}`;
-	const menuTitle = `WoA - ${MENU}`;
+	const menuTitle = page.name;
 	const homeTitle = `WoA  - ${HOMEPAGE_URL}`;
 	// Functions
 	// Renders
+
 	return (
 		<NavigationContainer linking={linking} fallback={<Loader />}>
 			<Navigator initialRouteName={initRoute} screenOptions={{ headerShown: false }}>
 				{isLogged ? (
 					<Group>
-						<Screen name={NAVIGATION} component={Navigation} options={{ title: navTitle }} />
-						<Screen name={MENU} component={Menu} options={{ title: menuTitle }} />
+						<Screen name={NAVIGATION} component={Navigation} options={{ title: navTitle }}/>
+						<Screen name={MENU} component={Menu} options={{ title: menuTitle }}/>
 					</Group>
 				) : (
 					<Screen name={HOMEPAGE} component={Homepage} options={{ title: homeTitle }} />

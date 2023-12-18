@@ -33,11 +33,12 @@ import {
 	getUserStorage,
 	setStorage,
 } from "../../utils/Storage/storageCall";
+import PressableButton from "../../components/buttons/pressable_button";
 // OTHER
 
 export default function Auth() {
 	// Global Constante
-	const { user, setUser, authentification, load, setLoad } =
+	const { user, setUser, setToken, authentification, load, setLoad } =
 		useAuth();
 	const { styles } = useStyle();
 	const { page, setPage, updatePage } = usePage();
@@ -60,13 +61,13 @@ export default function Auth() {
 					user: res.user,
 					[ACCESS_TOKEN]: res[ACCESS_TOKEN],
 				});
-			handleAuthentification(res.user);
+			handleAuthentification(res);
 		}
 	};
 	const tokenValidation = async (data: { user: any; access_token: string }) => {
 		setLoad(true);
 		const res = await loginToken(data.access_token);
-		res && handleAuthentification(res.user);
+		res && handleAuthentification(res);
 	};
 
 	const handleAuthentification = (res: {}) => {
@@ -85,13 +86,13 @@ export default function Auth() {
 		const opaReg = page.name === "register" ? 1 : 0.35;
 		return (
 			<View style={styles.authTitleSelection}>
-				<Pressable onPress={() => setPage({ name: "login" })}>
+				<PressableButton action={() => setPage({ name: "login" })}>
 					<Text style={[styles.secondaryTitle, opaLog]}>Se connecter</Text>
-				</Pressable>
+				</PressableButton>
 				<Text style={[styles.secondaryTitle, { marginHorizontal: 10 }]}>/</Text>
-				<Pressable onPress={() => setPage({ name: "register" })}>
+				<PressableButton action={() => setPage({ name: "register" })}>
 					<Text style={[styles.secondaryTitle, opaReg]}>S'enregistrer</Text>
-				</Pressable>
+				</PressableButton>
 			</View>
 		);
 	};
@@ -105,61 +106,42 @@ export default function Auth() {
 	};
 
 	const NoStorageRender = () => {
+		const cStyle = {marginVertical: 5};
+		const tStyle = [styles.text,{marginLeft: 5, paddingVertical: 2}]
+		const iStyle = [styles.text, styles.authInput, {textAlign: "center"}];
+		const validationTitle = page.name === "login" ? SIGNIN : REGISTER;
+		const validationBtnStyle ={ ...styles.secondaryTitle, textAlign: "center" };
 		return (
-			<>
+			<View>
 				<SelectPage />
-				<View style={{ ...styles.rowContainer, marginVertical: 5 }}>
-					<Text style={styles.text}>Nom d'utilisateur : </Text>
-					<TextInput
-						style={[styles.text, styles.authInput]}
-						onChangeText={(t) => (username.current = t)}
-						defaultValue={username.current}
-					/>
+
+				<View style={cStyle}>
+					<Text style={tStyle}>Nom d'utilisateur</Text>
+					<TextInput style={iStyle} onChangeText={(t) => (username.current = t)} defaultValue={username.current}/>
 				</View>
-				<View style={{ ...styles.rowContainer, marginVertical: 5 }}>
-					<Text style={styles.text}>Mot de passe : </Text>
-					<TextInput
-						style={[styles.text, styles.authInput]}
+
+				<View style={cStyle}>
+					<Text style={tStyle}>Mot de passe</Text>
+					<TextInput 
+						style={iStyle} 
+						onChangeText={(t) => (password.current = t)} 
+						defaultValue={password.current} 
 						secureTextEntry={hide}
-						onChangeText={(p) => (password.current = p)}
-						defaultValue={password.current}
 					/>
-					{hide ? (
-						<MaterialIcons
-							style={{ marginLeft: 5 }}
-							name="visibility-off"
-							size={24}
-							color="black"
-							onPress={() => setDisplay(false)}
-						/>
-					) : (
-						<MaterialIcons
-							style={{ marginLeft: 5 }}
-							name="visibility"
-							size={24}
-							color="black"
-							onPress={() => setDisplay(true)}
-						/>
-					)}
 				</View>
+
 				{page.name === "register" && <RegisterPart />}
-				<Checkbox
-					label={REMEMBER_ME}
-					action={() => setSave(!save)}
-					checked={save}
-				/>
-				<Pressable
-					style={styles.authButtonValidation}
-					onPress={() => authValidation()}
-				>
-					<Text style={{ ...styles.secondaryTitle }}>
-						{page.name === "login" ? SIGNIN : REGISTER}
-					</Text>
+
+				<View style={{alignItems: "center"}}>
+					<Checkbox label={REMEMBER_ME} action={() => setSave(!save)} checked={save} />
+				</View>
+
+				<Pressable style={styles.authButtonValidation} onPress={() => authValidation()} >
+					<Text style={validationBtnStyle}>{validationTitle}</Text>
 				</Pressable>
-			</>
+			</View>
 		);
 	};
-
 	const StorageRender = () => {
 		const data = user.user;
 		return (
@@ -172,10 +154,9 @@ export default function Auth() {
 						{data.username}
 					</Text>
 				</Pressable>
-				;
-				<Pressable onPress={() => resetUser()}>
+				<PressableButton action={() => resetUser()}>
 					<Text style={styles.secondaryTitle}>Changer de compte</Text>
-				</Pressable>
+				</PressableButton>
 			</>
 		);
 	};

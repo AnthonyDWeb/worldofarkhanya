@@ -19,3 +19,6 @@ export type ProfileProps = Props<RootStack, "Profile">;
 export type MenuProps = Props<RootStack, "Menu">;
 export type RouteProps = Props<RootStack, "useNavigation">;
 export type PrivacyProps = Props<RootStack, "Privacy">;
+
+export type NavStack = { "Mon compte": undefined };
+export type NavProps = Props<NavStack, "Mon compte">;

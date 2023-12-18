@@ -66,7 +66,7 @@ export const StyleProvider = (props: any) => {
 			textShadowRadius: 2,
 		},
 		secondaryTitle: {
-			fontSize: 25,
+			fontSize: 30,
 			fontFamily: "cookie",
 			textShadowColor: "black",
 			textShadowOffset: { width: 1, height: 0 },
@@ -80,28 +80,25 @@ export const StyleProvider = (props: any) => {
 
 		// AUTHENTIFICATION
 		authContainer: {
-			padding: 15,
+			width: "80%",
 			alignItems: "center",
-			justifyContent: "center",
 		},
 		authTitleSelection: {
 			display: "flex",
 			flexDirection: "row",
 			alignItems: "baseline",
+			justifyContent: "center",
 			marginBottom: 20,
 		},
 		authInput: {
-			width: 150,
-			borderWidth: 1,
-			borderRadius: 5,
-			paddingVertical: 2,
-			textAlign: "center",
+			borderWidth: 0.1,
+			borderRadius: 10,
+			paddingVertical: 5,
+			paddingHorizontal: 15,
 			color: "dimgray",
-			borderColor: "gray",
-			backgroundColor: "whitesmoke",
+			backgroundColor: "#F3EEEA",
 		},
 		authButtonValidation: {
-			margin: 20,
 			paddingVertical: 5,
 			paddingHorizontal: 20,
 			borderWidth: 1,

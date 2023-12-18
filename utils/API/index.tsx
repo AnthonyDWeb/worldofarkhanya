@@ -1,6 +1,6 @@
 import { Alert } from "react-native";
-// const URL = process.env.LOCAL_URL;
 const URL = process.env.LOCAL_URL;
+// const URL = process.env.SERVER_URL;
 // const URL = process.env.SERVER_LOCAL_URL;
 
 // ------------- Init Server ----------------------------
@@ -19,10 +19,10 @@ export const initServer = async () => {
 // ------------- Auth Request ----------------------------
 export const login = async (body: {}) => {
 	try {
-        const res = await fetch(`${URL}/auth/login`, {
-            method: "POST",
+		const res = await fetch(`${URL}/auth/login`, {
+			method: "POST",
 			headers: {
-                "Content-Type": "application/json",
+				"Content-Type": "application/json",
 				"Content-Length": "<calculated when request is sent>",
 			},
 			body: JSON.stringify(body),
@@ -40,7 +40,7 @@ export const loginToken = async (token: string) => {
 			headers: {
 				"Content-Type": "application/json",
 				"Content-Length": "<calculated when request is sent>",
-                'Authorization': `Bearer ${token}`,
+				Authorization: `Bearer ${token}`,
 			},
 		});
 		const resJson = await res.json();
@@ -49,7 +49,6 @@ export const loginToken = async (token: string) => {
 		return Alert.alert("login error");
 	}
 };
-
 export const register = async (body: {}) => {
 	try {
 		const res = await fetch(`${URL}/auth/register`, {
@@ -66,6 +65,7 @@ export const register = async (body: {}) => {
 		return Alert.alert("register error");
 	}
 };
+
 // ------------- CRUD Request ----------------------------
 export const getData = async (route: string, token?: string) => {
 	try {
@@ -79,6 +79,49 @@ export const getData = async (route: string, token?: string) => {
 	} catch (error) {
 		console.log("err", error);
 	}
+};
+
+export const setData = async (body: any, route: string, token: string, id?: string) => {
+	try {
+		const res = await fetch(`${URL}/${route}/${id}`, {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization": `Bearer ${token}`,
+			},
+			body: JSON.stringify(body),
+		});
+		return await res.json();
+	} catch (error) {
+		console.log("err", error);
+	}
+};
+
+export const postData = async (body: {}, route: string, token: string, id?: string) => {
+	const res = await fetch(`${URL}/${route}/${id}`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			"Content-Length": "<calculated when request is sent>",
+			Authorization: `Bearer ${token}`,
+		},
+		body: JSON.stringify(body),
+	});
+	const resJson = await res.json();
+	return resJson;
+};
+
+export const deleteData = async (route: string, token: string, id?: string) => {
+	const res = await fetch(`${URL}/${route}/${id}`, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+			"Content-Length": "<calculated when request is sent>",
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	const resJson = await res.json();
+	return resJson;
 };
 
 // ------------- Upload image ----------------------------
