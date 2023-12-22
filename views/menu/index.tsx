@@ -33,9 +33,10 @@ export default function Menu() {
 	const navigation = useNavigation<any>();
 	// Private Constante
 	const [selected, selection] = useState<string>();
+	const [editable, setEdit] = useState<string[]>([]);
 	const [showPass, setHide] = useState<string[]>([]);
-	const [editable, setEdit] = useState("");
-	const [errorMessage, setErrorMessage] = useState(false);
+	const [error, setError] = useState<{}[]>([]);
+
 	const username = useRef(user.username);
 	const oldPassword = useRef("");
 	const newPassword = useRef("");
@@ -45,6 +46,10 @@ export default function Menu() {
 		name: string;
 		children?: any;
 	};
+	type errorProps = {
+		key?: string;
+		message?: string;
+	};
 	type fieldProps = {
 		title: string;
 		label: string;
@@ -52,7 +57,7 @@ export default function Menu() {
 		focus?: boolean;
 		sub?: string;
 		secure?: boolean;
-		error?: boolean;
+		error?: errorProps[];
 	};
 	type titlefieldProps = {
 		title: string;
@@ -69,30 +74,13 @@ export default function Menu() {
 		logout();
 	};
 
-	const handleCheck = () => {
-		const v1: string = newPassword.current;
-		const v2: string = ConfirmNewPassword.current;
-		const isEqual = v1 === v2;
-		if (v1 !== "") {
-			isEqual
-				? updateData()
-				: (setErrorMessage(true), console.log("is not equal"));
-		}
-	};
-
-	const updateData = async () => {
-		console.log("updateData is equal");
-		// const body = {};
-		// const res = await setData(body, "users", token, user._id);
-		// res &&
-		// 	setStorage(STORAGE_USER, {
-		// 		user: res.user,
-		// 		[ACCESS_TOKEN]: res[ACCESS_TOKEN],
-		// 	});
-		// console.log("res", res);
-		// if (res) {
-		// 	setUser(res.user);
-		// }
+	const handleEdit = (value: any) => {
+		const exist = editable.includes(value);
+		const editClone = deepClone(editable);
+		const newEdit = exist
+			? editClone.filter((e: string) => e !== value)
+			: [...editClone, value];
+		setEdit(newEdit);
 	};
 
 	const handleHide = (value: any) => {
@@ -102,6 +90,67 @@ export default function Menu() {
 			? showClone.filter((e: string) => e !== value)
 			: [...showClone, value];
 		setHide(newShowPass);
+	};
+
+	const handleCheck = () => {
+		const body: any = {};
+		const newError: {}[] = [];
+		const p1: string = newPassword.current;
+		const p2: string = ConfirmNewPassword.current;
+		const vIsEqual = p1 === p2;
+		const hasPass = p1 !== "" || p2 !== "";
+		const hasOld = oldPassword.current !== "";
+		const hasUsername = username.current !== user.username;
+		const passChange = hasPass && vIsEqual && hasOld;
+
+		if (hasUsername) {
+			body.username = username.current;
+		}
+		if (passChange) {
+			body.currentPassword = oldPassword.current;
+			body.newPassword = newPassword.current;
+		}
+
+		switch (true) {
+			case hasPass:
+				!hasOld &&
+					newError.push({
+						key: "password",
+						message: "Champ vide !",
+					});
+				!vIsEqual &&
+					newError.push({
+						key: "newPassword",
+						message: "Mot de passe non identique !",
+					});
+				break;
+
+			case hasOld && !hasPass:
+				newError.push({
+					key: "newPassword",
+					message: "Champ vide !",
+				});
+				break;
+
+			default:
+				break;
+		}
+		setError(newError);
+		const needUpdate = newError.length === 0 && Object.keys(body).length !== 0;
+		needUpdate && updateData(body);
+	};
+
+	const updateData = async (body: {}) => {
+		const res = await setData(body, "users", token, user._id);
+		res &&
+			setStorage(STORAGE_USER, {
+				user: res.user,
+				[ACCESS_TOKEN]: res[ACCESS_TOKEN],
+			});
+		console.log("res", res);
+		if (res) {
+			setUser(res.user);
+		}
 	};
 
 	// Renders
@@ -145,35 +194,36 @@ export default function Menu() {
 				<FieldInformation
 					title="Nom d'utilisateur"
 					label="username"
-					focus={editable === "username"}
+					focus={editable.includes("username")}
 					value={username}
 				/>
 				<TitleField title="Changer de mot de passe" label="password" />
-				{editable === "password" && (
+				{editable.includes("password") && (
 					<>
 						<FieldInformation
 							title="Mot de passe actuel"
-							label="username"
-							focus={editable === "password"}
+							label="currentPassword"
+							focus={true}
 							value={oldPassword}
 							secure={!showPass.includes("old")}
 							sub="old"
+							error={error}
 						/>
 						<FieldInformation
 							title="Nouveau mot de passe"
-							label="username"
+							label="newPassword"
 							value={newPassword}
 							secure={!showPass.includes("new")}
 							sub="new"
-							error={errorMessage}
+							error={error}
 						/>
 						<FieldInformation
 							title="Confirmer le mot de passe"
-							label="username"
+							label="newPassword"
 							value={ConfirmNewPassword}
 							secure={!showPass.includes("confirm")}
 							sub="confirm"
-							error={errorMessage}
+							error={error}
 						/>
 					</>
 				)}
@@ -196,6 +246,9 @@ export default function Menu() {
 		secure,
 		error,
 	}: fieldProps) => {
+		const err = error?.filter((e: any) => e.key === label)[0];
+		const currentError: errorProps = err ? err : {};
+		const key = currentError.key;
 		const cStyle = { marginVertical: sub ? 5 : 10 };
 		const iStyle = [
 			styles.text,
@@ -204,12 +257,13 @@ export default function Menu() {
 				textAlign: "center",
 				width: "100%",
 				marginHorizontal: 10,
-				borderColor: error && "crimson",
+				borderColor: key && "crimson",
 			},
 		];
 		const eStyle = [styles.text, { color: "crimson", marginLeft: 15 }];
-		const uName = editable === label;
+		const uName = editable.includes(label);
 		const hasSub = sub ? true : false;
+		const icon = secure ? "visibility-off" : "visibility";
 		return (
 			<View style={cStyle}>
 				<TitleField title={title} label={label} sub={hasSub} />
@@ -224,29 +278,26 @@ export default function Menu() {
 					/>
 					{sub && (
 						<PressableButton action={() => handleHide(sub)}>
-							<MaterialIcons
-								name={secure ? "visibility-off" : "visibility"}
-								size={24}
-								color="black"
-							/>
+							<MaterialIcons name={icon} size={24} color="black" />
 						</PressableButton>
 					)}
 				</View>
-				{sub && error && <Text style={eStyle}>Mot de passe non identique</Text>}
+				{currentError.key === label && (
+					<Text style={eStyle}>{currentError.message}</Text>
+				)}
 			</View>
 		);
 	};
 
 	const TitleField = ({ title, label, sub }: titlefieldProps) => {
-		const uName = editable === label;
 		const tStyle = [
 			styles.text,
 			{
-				marginVertical: sub ? 0 : 10,
+				width: "100%",
 				marginLeft: 5,
 				paddingVertical: 2,
+				marginVertical: sub ? 0 : 10,
 				borderBottomWidth: sub ? 0 : 1,
-				width: "100%",
 			},
 		];
 		return (
@@ -257,7 +308,7 @@ export default function Menu() {
 						name="pencil"
 						size={20}
 						color="black"
-						onPress={() => setEdit(uName ? "" : label)}
+						onPress={() => handleEdit(label)}
 					/>
 				)}
 			</View>

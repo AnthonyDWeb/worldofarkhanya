@@ -18,52 +18,40 @@ export const initServer = async () => {
 
 // ------------- Auth Request ----------------------------
 export const login = async (body: {}) => {
-	try {
-		const res = await fetch(`${URL}/auth/login`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				"Content-Length": "<calculated when request is sent>",
-			},
-			body: JSON.stringify(body),
-		});
-		const resJson = await res.json();
-		return resJson;
-	} catch {
-		return Alert.alert("login error");
-	}
+	const res = await fetch(`${URL}/auth/login`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			"Content-Length": "<calculated when request is sent>",
+		},
+		body: JSON.stringify(body),
+	});
+	const resJson = await res.json();
+	return resJson;
 };
 export const loginToken = async (token: string) => {
-	try {
-		const res = await fetch(`${URL}/auth/logintoken`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				"Content-Length": "<calculated when request is sent>",
-				Authorization: `Bearer ${token}`,
-			},
-		});
-		const resJson = await res.json();
-		return resJson;
-	} catch {
-		return Alert.alert("login error");
-	}
+	const res = await fetch(`${URL}/auth/logintoken`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			"Content-Length": "<calculated when request is sent>",
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	const resJson = await res.json();
+	return resJson;
 };
 export const register = async (body: {}) => {
-	try {
-		const res = await fetch(`${URL}/auth/register`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-				"Content-Length": "<calculated when request is sent>",
-			},
-			body: JSON.stringify(body),
-		});
-		const resJson = res.json();
-		return resJson;
-	} catch {
-		return Alert.alert("register error");
-	}
+	const res = await fetch(`${URL}/auth/register`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			"Content-Length": "<calculated when request is sent>",
+		},
+		body: JSON.stringify(body),
+	});
+	const resJson = res.json();
+	return resJson;
 };
 
 // ------------- CRUD Request ----------------------------
@@ -81,13 +69,18 @@ export const getData = async (route: string, token?: string) => {
 	}
 };
 
-export const setData = async (body: any, route: string, token: string, id?: string) => {
+export const setData = async (
+	body: any,
+	route: string,
+	token: string,
+	id?: string
+) => {
 	try {
 		const res = await fetch(`${URL}/${route}/${id}`, {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
-				"Authorization": `Bearer ${token}`,
+				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify(body),
 		});
@@ -97,8 +90,13 @@ export const setData = async (body: any, route: string, token: string, id?: stri
 	}
 };
 
-export const postData = async (body: {}, route: string, token: string, id?: string) => {
-	const res = await fetch(`${URL}/${route}/${id}`, {
+export const postData = async (
+	body: {},
+	route: string,
+	token: string,
+	id?: string
+) => {
+	const res = await fetch(`${URL}/${route}${id ? `/${id}` : "/"}`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -125,3 +123,15 @@ export const deleteData = async (route: string, token: string, id?: string) => {
 };
 
 // ------------- Upload image ----------------------------
+export const uploadImage = async (image: any, token: string) => {
+	const res = await fetch(`${URL}/upload`, {
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "multipart/form-data",
+			Authorization: `Bearer ${token}`,
+		},
+		body: image,
+	});
+	return await res.json();
+};

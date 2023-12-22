@@ -30,7 +30,7 @@ export default function SampleButton({ children, action, rad, hide }: btnProps) 
 			<Pressable
 				style={({ pressed }) => [
 					styles.sampleBtnContainer,
-					{ opacity: (pressed || !active) ? 0.5 : 1, },
+					{ opacity: (pressed || !active) ? 0.5 : 1},
 				]}
 				onPress={() => active && (action(), setActivation(false))}
 			>

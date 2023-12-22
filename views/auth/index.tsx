@@ -34,6 +34,7 @@ import {
 	setStorage,
 } from "../../utils/Storage/storageCall";
 import PressableButton from "../../components/buttons/pressable_button";
+import { Alert } from "react-native";
 // OTHER
 
 export default function Auth() {
@@ -55,13 +56,16 @@ export default function Auth() {
 		const user = { username: username.current, password: password.current };
 		const res =
 			page.name === "login" ? await login(user) : await register(user);
-		if (res) {
+		if (res?.user) {
 			save &&
 				setStorage(STORAGE_USER, {
 					user: res.user,
 					[ACCESS_TOKEN]: res[ACCESS_TOKEN],
 				});
 			handleAuthentification(res);
+		} else {
+			alert(res.message);
+			setLoad(false);
 		}
 	};
 	const tokenValidation = async (data: { user: any; access_token: string }) => {
