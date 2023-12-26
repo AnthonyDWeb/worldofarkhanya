@@ -1,8 +1,9 @@
 import React, { createContext } from "react";
 import { StyleSheet } from "react-native";
 import useDevice from "../utils/hooks/useDevice";
+import { StyleContextProps } from "../types";
 
-const StyleContext = createContext<any>({});
+const StyleContext = createContext<StyleContextProps>({ styles: {} });
 
 export const StyleProvider = (props: any) => {
 	const { device, isMobile, screenSize } = useDevice();
@@ -72,6 +73,7 @@ export const StyleProvider = (props: any) => {
 			textShadowOffset: { width: 1, height: 0 },
 			textShadowRadius: 2,
 			marginVertical: 5,
+			textAlign: "center",
 		},
 		text: {
 			fontFamily: "cookie",
@@ -90,7 +92,17 @@ export const StyleProvider = (props: any) => {
 			justifyContent: "center",
 			marginBottom: 20,
 		},
+		authInputContainer: {
+			marginVertical: 5 
+		},
+		authLabel: {
+			fontFamily: "cookie",
+			fontSize: 25,
+			marginHorizontal: 5,
+			paddingVertical: 2,
+		},
 		authInput: {
+			textAlign: "center",
 			borderWidth: 0.1,
 			borderRadius: 10,
 			paddingVertical: 5,
@@ -124,8 +136,16 @@ export const StyleProvider = (props: any) => {
 			borderRadius: 15,
 			backgroundColor: "rgba(255,255,255,0.2)",
 		},
-		// SECTION
-		section: {
+
+		// MENU
+		menuSection: {
+			padding: 10,
+			borderBottomColor: "grey",
+			borderBottomWidth: 1,
+		},
+
+		// PROFILE
+		profileCreation: {
 			marginTop: 20,
 			marginHorizontal: 15,
 		},
@@ -195,7 +215,7 @@ export const StyleProvider = (props: any) => {
 			width: "100%",
 			zIndex: 0,
 			bottom: 0,
-			transform: [{ rotate: "180deg" }],
+			transform: "rotate(180deg)",
 		},
 		scrollpage: {
 			paddingHorizontal: 10,
@@ -237,7 +257,7 @@ export const StyleProvider = (props: any) => {
 			borderRadius: defaultButtonRadius,
 			left: 0,
 			bottom: 0.1,
-			transform: [{ rotate: "180deg" }],
+			transform: "rotate(180deg)",
 			height: isMobile ? 34 : 40,
 			width: "100%",
 			opacity: isMobile ? 0.9 : 0.5,
@@ -253,6 +273,21 @@ export const StyleProvider = (props: any) => {
 			textShadowOffset: { width: 1, height: 0 },
 			textShadowRadius: 2.5,
 		},
+		addImageButton: {
+			position: "relative",
+			height: 200,
+			width: 200,
+			borderRadius: 200,
+			justifyContent: "center",
+			alignItems: "center",
+            padding: 10,
+			borderWidth: 0.5,
+			shadowColor: "#000",
+			shadowOpacity: 1,
+			shadowRadius: 10,
+			shadowOffset: { width: 0, height: 8 },
+			borderColor: isMobile ? "rgba(0,0,0,0.9)" : "rgba(0,0,0,0.2)",
+		},
 		menuButton: {
 			top: 5,
 			right: 0,
@@ -267,6 +302,8 @@ export const StyleProvider = (props: any) => {
 		},
 	});
 
-	return <StyleContext.Provider value={{ styles }} {...props} />;
+	const styleContextValue: StyleContextProps = { styles };
+
+	return <StyleContext.Provider value={styleContextValue} {...props} />;
 };
 export const useStyle = () => React.useContext(StyleContext);

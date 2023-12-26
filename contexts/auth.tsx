@@ -1,13 +1,37 @@
 import React, { createContext, useEffect, useState } from "react";
 import { ACCESS_TOKEN, STORAGE_TIME, STORAGE_USER } from "../constants";
 import { initServer } from "../utils/API";
-import { getStorage, setStorage } from "../utils/Storage/storageCall";
+import { getStorage, setStorage } from "../utils/Storage.Upload/storage";
+import { AuthContextProps, UserProps, resProps } from "../types";
 
-const AuthContext = createContext<any>({});
+const defaultValue = {
+	user: {
+		_id: undefined,
+		username: undefined,
+		token: undefined,
+		profileImage: undefined,
+	},
+	setUser: (value: UserProps) => void {},
+	userStorage: false,
+	setUserStorage: (value: boolean) => void {},
+	token: "",
+	setToken: () => void {},
+	serverOpen: false,
+	setOpen: () => void {},
+	isLogged: false,
+	setIsLogged: () => void {},
+	load: false,
+	setLoad: () => void {},
+	logout: () => void {},
+	authentification: () => void {},
+	initServer: () => void {},
+};
+const AuthContext = createContext<AuthContextProps>(defaultValue);
 
-export const AuthProvider = (props: any) => {
-	const [user, setUser] = useState();
-	const [token, setToken] = useState();
+export const AuthProvider = (children: any) => {
+	const [user, setUser] = useState<UserProps>();
+	const [userStorage, setUserStorage] = useState(false);
+	const [token, setToken] = useState("");
 	const [serverOpen, setOpen] = useState(false);
 	const [isLogged, setIsLogged] = useState(false);
 	const [load, setLoad] = useState(false);
@@ -17,13 +41,17 @@ export const AuthProvider = (props: any) => {
 	}, []);
 
 	const initialization = async () => {
-		const storageUser = await getStorage(STORAGE_USER);
+		const storageUser: resProps = await getStorage(STORAGE_USER);
 		const storageInitMessage = await getStorage(STORAGE_TIME);
 		const newTime = new Date().getTime();
 		const timeDelay =
 			storageInitMessage && (newTime - storageInitMessage) / 1000;
 		timeDelay > 3600 || !storageInitMessage ? warmUpServer() : setOpen(true);
-		storageUser && setUser(storageUser);
+		if (storageUser) {
+			setUser(storageUser.user);
+			setToken(storageUser.access_token);
+			setUserStorage(true);
+		}
 	};
 
 	const warmUpServer = async () => {
@@ -34,13 +62,14 @@ export const AuthProvider = (props: any) => {
 				setOpen(true);
 			}
 		} catch (error) {
+			setOpen(true);
 			console.log("err", error);
 		}
 	};
 
-	const authentification = (res: any) => {
+	const authentification = (res: resProps) => {
 		setUser(res.user);
-		setToken(res.access_token);
+		setToken(res[ACCESS_TOKEN]);
 		setIsLogged(true);
 		setTimeout(() => setLoad(false), 500);
 	};
@@ -51,7 +80,7 @@ export const AuthProvider = (props: any) => {
 		setUser(users);
 	};
 
-	const authContextValue: any = {
+	const authContextValue: AuthContextProps = {
 		isLogged,
 		logout,
 		authentification,
@@ -63,8 +92,10 @@ export const AuthProvider = (props: any) => {
 		setLoad,
 		token,
 		setToken,
+		userStorage,
+		setUserStorage,
 	};
 
-	return <AuthContext.Provider value={authContextValue} {...props} />;
+	return <AuthContext.Provider value={authContextValue} {...children} />;
 };
 export const useAuth = () => React.useContext(AuthContext);

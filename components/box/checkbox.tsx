@@ -4,15 +4,11 @@ import { View, Text, StyleSheet } from 'react-native';
 import CheckBox from 'expo-checkbox';
 // CONTEXT
 import { useStyle } from '../../contexts/style'; 
+import { checktype } from '../../types';
 // VIEWS
 // COMPONENTS
 // UTILS
 // OTHER
-type checktype = {
-    label: string,
-    action: () => void,
-    checked: boolean
-}
 
 export default function Checkbox({ label, action, checked }: checktype) {
     // Contexts constantes

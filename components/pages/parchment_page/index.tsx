@@ -1,10 +1,10 @@
 // LIBRARY
 import React from "react";
+import { Text } from "react-native";
 // STYLE
 import Parchment from "../../parchment";
 import NavigationBar from "../../navigation_bar";
 import Background from "../../background";
-import { Text } from "react-native";
 // CONTEXT
 // VIEW
 // COMPONENT

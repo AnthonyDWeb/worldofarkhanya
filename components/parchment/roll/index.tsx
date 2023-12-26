@@ -22,20 +22,14 @@ export default function Roll({ pos }: any) {
 		"#a35f04",
 		"#6c3f02",
 	];
-	const rollStyle = [
-		styles.parchmentRoll,
-		{ width: windowWidth, [pos]: -10 },
-	];
-	const rollBorderLeft = [styles.parchmentRollBorder, { left: 5 }];
-	const rollBorderRight = [styles.parchmentRollBorder, { right: 5 }];
 	// Functions
 
 	// Renders
 
 	return (
-		<LinearGradient colors={backgroundBorder} style={rollStyle}>
-			<LinearGradient colors={backgroundBorder} style={rollBorderLeft}/>
-			<LinearGradient colors={backgroundBorder} style={rollBorderRight}/>
+		<LinearGradient colors={backgroundBorder} style={[styles.parchmentRoll, { width: windowWidth, [pos]: -10 }]}>
+			<LinearGradient colors={backgroundBorder} style={[styles.parchmentRollBorder, { left: 5 }]}/>
+			<LinearGradient colors={backgroundBorder} style={[styles.parchmentRollBorder, { right: 5 }]}/>
 		</LinearGradient>
 	);
 }

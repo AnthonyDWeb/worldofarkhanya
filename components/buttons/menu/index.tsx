@@ -10,12 +10,13 @@ import { usePage } from "../../../contexts/page";
 // COMPONENT
 // OTHER
 import SampleButton from "../sample";
+import { NavigationProps } from "../../../types";
 
 export default function MenuButton() {
+	// Global Constante
 	const { updatePage } = usePage();
 	const { styles } = useStyle();
-	// Global Constante
-	const navigation = useNavigation<any>();
+	const navigation = useNavigation<NavigationProps>();
 	// Private Constante
 	const icon = require("../../../assets/images/parameter.png");
 	// Functions
@@ -27,7 +28,7 @@ export default function MenuButton() {
 
 	return (
 		<View style={styles.menuButton}>
-			<SampleButton rad={50} action={() => handle()}>
+			<SampleButton rad={50} action={handle}>
 				<Image source={icon} style={styles.menuButtonImage} />
 			</SampleButton>
 		</View>

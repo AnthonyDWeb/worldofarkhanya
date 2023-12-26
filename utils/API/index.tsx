@@ -1,6 +1,6 @@
 import { Alert } from "react-native";
-const URL = process.env.LOCAL_URL;
-// const URL = process.env.SERVER_URL;
+// const URL = process.env.LOCAL_URL;
+const URL = process.env.SERVER_URL;
 // const URL = process.env.SERVER_LOCAL_URL;
 
 // ------------- Init Server ----------------------------
@@ -120,18 +120,4 @@ export const deleteData = async (route: string, token: string, id?: string) => {
 	});
 	const resJson = await res.json();
 	return resJson;
-};
-
-// ------------- Upload image ----------------------------
-export const uploadImage = async (image: any, token: string) => {
-	const res = await fetch(`${URL}/upload`, {
-		method: "POST",
-		headers: {
-			Accept: "application/json",
-			"Content-Type": "multipart/form-data",
-			Authorization: `Bearer ${token}`,
-		},
-		body: image,
-	});
-	return await res.json();
 };

@@ -10,8 +10,8 @@ import { useStyle } from "../../contexts/style";
 // OTHER
 
 export default function NavigationBar() {
-	const { styles } = useStyle();
 	// Global Constante
+	const { styles } = useStyle();
 	// Private Constante
 	// Functions
 	// Renders

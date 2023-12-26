@@ -9,21 +9,20 @@ import { usePage } from "../../../contexts/page";
 // COMPONENT
 import SampleButton from "../sample";
 import { useNavigation } from "@react-navigation/native";
-import useDevice from "../../../utils/hooks/useDevice";
+import { NavigationProps, NavigationBtnProps } from "../../../types";
 // OTHER
-type navBtnProps = { title: string; label: string };
 
-export default function NavigationButton({ title, label }: navBtnProps) {
+export default function NavigationButton({ title, label }: NavigationBtnProps) {
 	// Global Constante
 	const { styles } = useStyle();
 	const { parchmentDisplay, updatePage } = usePage();
-	const navigation = useNavigation<any>();
+	const navigation = useNavigation<NavigationProps>();
 	// Private Constante
 	// Functions
 	const handle = () => {
-		updatePage(label)
+		updatePage(label);
 		navigation.navigate("Navigation");
-	}
+	};
 	// Renders
 
 	return (

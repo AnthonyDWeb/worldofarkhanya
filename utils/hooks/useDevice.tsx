@@ -2,19 +2,22 @@ import { useState, useEffect } from "react";
 import { useWindowDimensions } from "react-native";
 
 export default function useDevice() {
-	const [screenSize, setDimensions] = useState({
+	const defaultValue = {
 		width: useWindowDimensions().width,
 		height: useWindowDimensions().height,
-	});
+	};
+	const [screenSize, setDimensions] = useState(defaultValue);
 	const height = screenSize.height;
 	const isMobile = screenSize.width < 764;
 	const isTablet = screenSize.width >= 764 && screenSize.width < 1024;
 	const isDesktop = screenSize.width >= 1024;
+
 	const device = isMobile
 		? "mobile"
 		: isTablet
 		? "tablet"
 		: isDesktop && "desktop";
+
 	const deviceContextValue = {
 		screenSize,
 		height,
@@ -25,11 +28,7 @@ export default function useDevice() {
 	};
 
 	useEffect(() => {
-		const handleResize = () =>
-			setDimensions({
-				width: useWindowDimensions().width,
-				height: useWindowDimensions().height,
-			});
+		const handleResize = () => setDimensions({ width: useWindowDimensions().width, height: useWindowDimensions().height });
 		window?.addEventListener?.("resize", handleResize);
 		return () => window?.removeEventListener?.("resize", handleResize);
 	}, []);

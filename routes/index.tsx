@@ -32,15 +32,10 @@ import {
 } from "../constants";
 import { capitalizeFirstLetter } from "../utils/other/transform_data";
 import { useAuth } from "../contexts/auth";
-import { useStyle } from "../contexts/style";
-import PressableButton from "../components/buttons/pressable_button";
-import { Text } from "react-native";
-import Background from "../components/background";
 
 export default function Routes() {
 	// Global Constante
-	const { styles } = useStyle();
-	const { isLogged } = useAuth();
+	const { isLogged, serverOpen } = useAuth();
 	const { page, urlRoute } = usePage();
 	// Private Constante
 	const Stack = createNativeStackNavigator<RootStack>();
@@ -82,7 +77,6 @@ export default function Routes() {
 	const homeTitle = `WoA  - ${HOMEPAGE_URL}`;
 	// Functions
 	// Renders
-
 	return (
 		<NavigationContainer linking={linking} fallback={<Loader />}>
 			<Navigator initialRouteName={initRoute} screenOptions={{ headerShown: false }}>

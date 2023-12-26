@@ -1,51 +1,45 @@
-import { Image, Pressable } from "react-native";
+import { Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { usePage } from "../../contexts/page";
 import { useStyle } from "../../contexts/style";
+import { SampleBtnProps } from "../../types";
+import PressableButton from "./pressable_button";
 
-type btnProps = {
-	children: any;
-	action: () => void;
-	rad?: number;
-	hide?: boolean;
-};
-export default function SampleButton({ children, action, rad, hide }: btnProps) {
+export default function SampleButton({ children, action, rad, hide, style }: SampleBtnProps) {
 	const { styles } = useStyle();
 	const { parchmentDisplay } = usePage();
 	const [active, setActivation] = useState(true);
 
 	useEffect(() => {
 		parchmentDisplay && setTimeout(() => setActivation(true), 450);
-	}, [parchmentDisplay])
+	}, [parchmentDisplay]);
 
 	const bgBtnColors = ["#6c3f02", "#9f6913", "#fbcd76", "#9f6913", "#6c3f02"];
-
 	const calc = require("../../assets/images/parchment/calc-parchment.png");
-	const calcUp = [styles.sampleCalcUp, rad && { borderRadius: rad }];
-	const calcDown = [styles.sampleCalcDown, rad && { borderRadius: rad }];
 
-	const HandleButton = ({children}: any) => {
-		return (
-			<Pressable
-				style={({ pressed }) => [
-					styles.sampleBtnContainer,
-					{ opacity: (pressed || !active) ? 0.5 : 1},
-				]}
-				onPress={() => active && (action(), setActivation(false))}
-			>
-				{children}
-			</Pressable>
-		);
+	const handle = () => {
+		action();
+		setActivation(false);
 	};
 
 	return (
-		<HandleButton>
+		<PressableButton style={[styles.sampleBtnContainer, style && style]} action={() => active && handle()}>
 			<LinearGradient colors={bgBtnColors} style={styles.sampleBtnBg}>
-				{!hide && <Image source={calc} style={calcUp} />}
+				{!hide && (
+					<Image
+						source={calc}
+						style={[styles.sampleCalcUp, rad && { borderRadius: rad }]}
+					/>
+				)}
 				{children}
-				{!hide && <Image source={calc} style={calcDown} />}
+				{!hide && (
+					<Image
+						source={calc}
+						style={[styles.sampleCalcDown, rad && { borderRadius: rad }]}
+					/>
+				)}
 			</LinearGradient>
-		</HandleButton>
+		</PressableButton>
 	);
 }

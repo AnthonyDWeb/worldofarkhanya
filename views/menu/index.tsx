@@ -2,79 +2,60 @@
 import React, { useRef, useState } from "react";
 import { View, Text, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { MaterialIcons } from "@expo/vector-icons";
-import Animated, {
-	useSharedValue,
-	withTiming,
-	useAnimatedStyle,
-	Easing,
-} from "react-native-reanimated";
+import { MaterialIcons,FontAwesome } from "@expo/vector-icons";
 // STYLE
 import { useStyle } from "../../contexts/style";
 // CONTEXT
 import { usePage } from "../../contexts/page";
+import { useAuth } from "../../contexts/auth";
 // VIEW
 // COMPONENT
 import Page from "../../components/pages";
-import { useAuth } from "../../contexts/auth";
 import PressableButton from "../../components/buttons/pressable_button";
-import { FontAwesome } from "@expo/vector-icons";
+// OTHER
+import { ACCESS_TOKEN, STORAGE_USER } from "../../constants";
 import { deepClone } from "../../utils/other/transform_data";
 import { setData } from "../../utils/API";
-import { ACCESS_TOKEN, STORAGE_USER } from "../../constants";
-import { setStorage } from "../../utils/Storage/storageCall";
-// OTHER
+import { setStorage } from "../../utils/Storage.Upload/storage";
+import {
+	NavigationProps,
+	MenuErrorProps,
+	MenuFieldProps,
+	MenuSectionProps,
+	MenuTitleFieldProps,
+	UserProps,
+	UserCheckProps,
+} from "../../types";
 
 export default function Menu() {
 	// Global Constante
 	const { user, setUser, logout, token } = useAuth();
 	const { page, getBack, setPage } = usePage();
 	const { styles } = useStyle();
-	const navigation = useNavigation<any>();
+	const navigation = useNavigation<NavigationProps>();
 	// Private Constante
 	const [selected, selection] = useState<string>();
 	const [editable, setEdit] = useState<string[]>([]);
 	const [showPass, setHide] = useState<string[]>([]);
 	const [error, setError] = useState<{}[]>([]);
 
-	const username = useRef(user.username);
+	const username = useRef(user?.username);
 	const oldPassword = useRef("");
 	const newPassword = useRef("");
 	const ConfirmNewPassword = useRef("");
 
-	type sectionProps = {
-		name: string;
-		children?: any;
-	};
-	type errorProps = {
-		key?: string;
-		message?: string;
-	};
-	type fieldProps = {
-		title: string;
-		label: string;
-		value?: any;
-		focus?: boolean;
-		sub?: string;
-		secure?: boolean;
-		error?: errorProps[];
-	};
-	type titlefieldProps = {
-		title: string;
-		label: string;
-		sub?: boolean;
-	};
 	// Functions
 	const handleNavigation = () => {
 		getBack();
 		navigation.navigate("Navigation");
 	};
+	
 	const handleAuthentification = () => {
 		setPage({ name: "login" });
 		logout();
 	};
 
-	const handleEdit = (value: any) => {
+	const handleEdit = (value: string) => {
 		const exist = editable.includes(value);
 		const editClone = deepClone(editable);
 		const newEdit = exist
@@ -83,7 +64,7 @@ export default function Menu() {
 		setEdit(newEdit);
 	};
 
-	const handleHide = (value: any) => {
+	const handleHide = (value: string) => {
 		const exist = showPass.includes(value);
 		const showClone = deepClone(showPass);
 		const newShowPass = exist
@@ -93,14 +74,14 @@ export default function Menu() {
 	};
 
 	const handleCheck = () => {
-		const body: any = {};
+		const body: UserCheckProps = {};
 		const newError: {}[] = [];
 		const p1: string = newPassword.current;
 		const p2: string = ConfirmNewPassword.current;
 		const vIsEqual = p1 === p2;
 		const hasPass = p1 !== "" || p2 !== "";
 		const hasOld = oldPassword.current !== "";
-		const hasUsername = username.current !== user.username;
+		const hasUsername = username.current !== user?.username;
 		const passChange = hasPass && vIsEqual && hasOld;
 
 		if (hasUsername) {
@@ -140,8 +121,8 @@ export default function Menu() {
 		needUpdate && updateData(body);
 	};
 
-	const updateData = async (body: {}) => {
-		const res = await setData(body, "users", token, user._id);
+	const updateData = async (body: UserProps) => {
+		const res = await setData(body, "users", token, user?._id);
 		res &&
 			setStorage(STORAGE_USER, {
 				user: res.user,
@@ -168,17 +149,12 @@ export default function Menu() {
 		);
 	};
 
-	const Section = ({ name, children }: sectionProps) => {
-		const sectionStyle = {
-			padding: 10,
-			borderBottomColor: "grey",
-			borderBottomWidth: 1,
-		};
+	const Section = ({ name, children }: MenuSectionProps) => {
 		const isName = name === "Mon compte";
 		const isSelected = selected === "Mon compte";
 		const handle = () => selection(isSelected ? undefined : name);
 		return (
-			<View style={sectionStyle}>
+			<View style={styles.menuSection}>
 				<PressableButton action={() => isName && handle()}>
 					<Text style={styles.secondaryTitle}>{name}</Text>
 				</PressableButton>
@@ -244,17 +220,15 @@ export default function Menu() {
 		value,
 		sub,
 		secure,
-		error,
-	}: fieldProps) => {
-		const err = error?.filter((e: any) => e.key === label)[0];
-		const currentError: errorProps = err ? err : {};
+	}: MenuFieldProps) => {
+		const err = error?.filter((e: MenuErrorProps) => e.key === label)[0];
+		const currentError: MenuErrorProps = err ? err : {};
 		const key = currentError.key;
 		const cStyle = { marginVertical: sub ? 5 : 10 };
 		const iStyle = [
 			styles.text,
 			styles.authInput,
 			{
-				textAlign: "center",
 				width: "100%",
 				marginHorizontal: 10,
 				borderColor: key && "crimson",
@@ -289,7 +263,7 @@ export default function Menu() {
 		);
 	};
 
-	const TitleField = ({ title, label, sub }: titlefieldProps) => {
+	const TitleField = ({ title, label, sub }: MenuTitleFieldProps) => {
 		const tStyle = [
 			styles.text,
 			{
@@ -317,7 +291,9 @@ export default function Menu() {
 
 	return (
 		<Page>
-			<Text style={styles.titlePage}>{page.name}</Text>
+			<PressableButton action={handleNavigation}>
+				<Text style={styles.titlePage}>{page.name}</Text>
+			</PressableButton>
 			{selected === "Mon compte" ? <UserInformation /> : <MenuInformation />}
 		</Page>
 	);

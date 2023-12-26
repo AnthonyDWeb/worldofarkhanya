@@ -1,20 +1,21 @@
 // LIBRARY
 import React from "react";
 import { Text, View } from "react-native";
+import { useStyle } from "../contexts/style";
 // STYLE
-import { styles } from "../styles";
 // CONTEXT
 // VIEW
 // COMPONENT
 // OTHER
 
 export default function index() {
-    // Global Constante
-    // Private Constante
+	const { styles } = useStyle();
+	// Global Constante
+	// Private Constante
 
-    // Functions
+	// Functions
 
-    // Renders
+	// Renders
 
 	return (
 		<View>

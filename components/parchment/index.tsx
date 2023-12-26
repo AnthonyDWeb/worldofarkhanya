@@ -1,12 +1,7 @@
 // LIBRARY
 import React, { useEffect } from "react";
 import { Image, ImageBackground } from "react-native";
-import Animated, {
-	useSharedValue,
-	withTiming,
-	useAnimatedStyle,
-	Easing,
-} from "react-native-reanimated";
+import Animated, { useSharedValue, withTiming, useAnimatedStyle, Easing } from "react-native-reanimated";
 // STYLEs
 import { useStyle } from "../../contexts/style";
 // CONTEXT
@@ -52,6 +47,7 @@ export default function Parchment({ children }: any) {
 		height.value = parchmentDisplay ? windowHeight : 0;
 		opacity.value = parchmentDisplay ? 1 : 0;
 	};
+	
 	// Renders
 	return (
 		<Animated.View style={[styles.parchment, animHeight]}>

@@ -1,24 +1,115 @@
-import { NativeStackScreenProps as Props } from "@react-navigation/native-stack";
-
 export type RootStack = {
-	Privacy: undefined;
 	Navigation: undefined;
-	Homepage: undefined,
-	Creation: undefined,
-	Library: undefined,
-	Profile: undefined,
-	Menu: undefined,
-	useNavigation: any,
+	Homepage: undefined;
+	Menu: undefined;
 };
 
-export type NavigationProps = Props<RootStack, "Navigation">;
-export type HomepageProps = Props<RootStack, "Homepage">;
-export type CreationProps = Props<RootStack, "Creation">;
-export type LibraryProps = Props<RootStack, "Library">;
-export type ProfileProps = Props<RootStack, "Profile">;
-export type MenuProps = Props<RootStack, "Menu">;
-export type RouteProps = Props<RootStack, "useNavigation">;
-export type PrivacyProps = Props<RootStack, "Privacy">;
+export type NavigationProps = {
+	navigate: (screen: string) => void;
+};
+export type NavigationBtnProps = { title: string; label: string };
 
-export type NavStack = { "Mon compte": undefined };
-export type NavProps = Props<NavStack, "Mon compte">;
+// ---------------- USER ------------------------
+export type UserProps = {
+	_id?: string;
+	username?: string;
+	token?: string;
+	profileImage?: string;
+};
+export type UserCheckProps = {
+	username?: string;
+	currentPassword?: string;
+	newPassword?: string;
+};
+
+// ---------------- Context ------------------------
+export type resProps = {
+	user: UserProps;
+	access_token: string;
+};
+
+// ---------------- Context ------------------------
+export type AuthContextProps = {
+	user: UserProps | undefined;
+	setUser: (user: UserProps) => void;
+	userStorage: boolean;
+	setUserStorage: (value: boolean) => void;
+	token: string;
+	setToken: (value: string) => void;
+	serverOpen: boolean;
+	setOpen?: (value: boolean) => void;
+	isLogged: boolean;
+	setIsLogged?: (value: boolean) => void;
+	load: boolean;
+	setLoad: (value: boolean) => void;
+	logout: () => void;
+	initServer: () => void;
+	authentification: (value: resProps) => void;
+};
+export type PageContextProps = {
+	page: { name: string; data?: {} };
+	setPage: ({ name, data }: { name: string; data?: {} }) => void;
+	lastPage: { name: string; data?: {} };
+	setLastPage: ({ name, data }: { name: string; data?: {} }) => void;
+	parchmentDisplay: boolean;
+	setParchmentDisplay: (value: boolean) => void;
+	updatePage: (pageName: string, data?: {}) => void;
+	getBack: () => void;
+	urlRoute: string;
+};
+export type SetPageProps = {
+	name: string;
+	data?: {};
+};
+export type UpadatePageProps = {
+	name: string;
+	data?: {};
+};
+export type StyleContextProps = {
+	styles: any;
+};
+// ---------------- MENU ------------------------
+export type MenuSectionProps = {
+	name: string;
+	children?: any;
+};
+export type MenuErrorProps = {
+	key?: string;
+	message?: string;
+};
+export type MenuFieldProps = {
+	title: string;
+	label: string;
+	value?: any;
+	focus?: boolean;
+	sub?: string;
+	secure?: boolean;
+	error?: MenuErrorProps[];
+};
+export type MenuTitleFieldProps = {
+	title: string;
+	label: string;
+	sub?: boolean;
+};
+
+// ---------------- UTILS ------------------------
+
+// ---------------- COMPONENT ------------------------
+export type checktype = {
+	label: string;
+	action: () => void;
+	checked: boolean;
+};
+export type SampleBtnProps = {
+	children: any;
+	action: () => void;
+	rad?: number;
+	hide?: boolean;
+	style?: any
+};
+export type PressableBtnProps = {
+	children: any;
+	action: () => void;
+    style?: {}
+};
+

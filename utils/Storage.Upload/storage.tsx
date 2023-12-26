@@ -11,9 +11,7 @@ export const getStorage = async (name: string) => {
 
 export const getUserStorage = async (data: any) => {
 	const storage = await getStorage(STORAGE_USER);
-	const userStorage = await storage.filter(
-		(s: any) => s.user._id === data._id
-	)[0];
+	const userStorage = await storage.filter( (s: any) => s.user._id === data._id )[0];
 	return userStorage;
 };
 export const setStorage = (name: string, value: any) => {
