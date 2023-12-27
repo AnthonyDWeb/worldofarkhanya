@@ -25,6 +25,7 @@ import {
 	MenuTitleFieldProps,
 	UserProps,
 	UserCheckProps,
+	resProps,
 } from "../../types";
 
 export default function Menu() {
@@ -56,8 +57,8 @@ export default function Menu() {
 	};
 
 	const handleEdit = (value: string) => {
-		const exist = editable.includes(value);
-		const editClone = deepClone(editable);
+		const exist: boolean = editable.includes(value);
+		const editClone: string[] = deepClone(editable);
 		const newEdit = exist
 			? editClone.filter((e: string) => e !== value)
 			: [...editClone, value];
@@ -65,8 +66,8 @@ export default function Menu() {
 	};
 
 	const handleHide = (value: string) => {
-		const exist = showPass.includes(value);
-		const showClone = deepClone(showPass);
+		const exist: boolean = showPass.includes(value);
+		const showClone: string[] = deepClone(showPass);
 		const newShowPass = exist
 			? showClone.filter((e: string) => e !== value)
 			: [...showClone, value];
@@ -78,11 +79,11 @@ export default function Menu() {
 		const newError: {}[] = [];
 		const p1: string = newPassword.current;
 		const p2: string = ConfirmNewPassword.current;
-		const vIsEqual = p1 === p2;
-		const hasPass = p1 !== "" || p2 !== "";
-		const hasOld = oldPassword.current !== "";
-		const hasUsername = username.current !== user?.username;
-		const passChange = hasPass && vIsEqual && hasOld;
+		const vIsEqual: boolean = p1 === p2;
+		const hasPass: boolean = p1 !== "" || p2 !== "";
+		const hasOld: boolean = oldPassword.current !== "";
+		const hasUsername: boolean = username.current !== user?.username;
+		const passChange: boolean = hasPass && vIsEqual && hasOld;
 
 		if (hasUsername) {
 			body.username = username.current;
@@ -117,18 +118,17 @@ export default function Menu() {
 				break;
 		}
 		setError(newError);
-		const needUpdate = newError.length === 0 && Object.keys(body).length !== 0;
+		const needUpdate: boolean = newError.length === 0 && Object.keys(body).length !== 0;
 		needUpdate && updateData(body);
 	};
 
 	const updateData = async (body: UserProps) => {
-		const res = await setData(body, "users", token, user?._id);
+		const res: resProps = await setData(body, "users", token, user?._id);
 		res &&
 			setStorage(STORAGE_USER, {
 				user: res.user,
 				[ACCESS_TOKEN]: res[ACCESS_TOKEN],
 			});
-		console.log("res", res);
 		if (res) {
 			setUser(res.user);
 		}

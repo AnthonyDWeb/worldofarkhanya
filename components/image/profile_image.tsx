@@ -11,8 +11,9 @@ export default function ProfileImage({ d }: { d: number }) {
 	const [uploading, setUploading] = useState(false);
 
 	const pickImage = async () => {
-		const uri = await pickFile();
-		if (uri && user) {
+		const uri: string = await pickFile();
+		if (uri === "error") alert("une erreur est survenue, veuillez essayer à nouveau");
+		if (uri !== "error" && user) {
 			const upadatedUser: UserProps = await uploadImage(uri, user, token, setUploading);
 			setUser(upadatedUser);
 			setImage(upadatedUser.profileImage);

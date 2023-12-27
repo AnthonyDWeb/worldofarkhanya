@@ -1,4 +1,5 @@
 import { Alert } from "react-native";
+import { resProps } from "../../types";
 // const URL = process.env.LOCAL_URL;
 const URL = process.env.SERVER_URL;
 // const URL = process.env.SERVER_LOCAL_URL;
@@ -26,8 +27,7 @@ export const login = async (body: {}) => {
 		},
 		body: JSON.stringify(body),
 	});
-	const resJson = await res.json();
-	return resJson;
+	return await res.json();
 };
 export const loginToken = async (token: string) => {
 	const res = await fetch(`${URL}/auth/logintoken`, {
@@ -38,8 +38,7 @@ export const loginToken = async (token: string) => {
 			Authorization: `Bearer ${token}`,
 		},
 	});
-	const resJson = await res.json();
-	return resJson;
+	return await res.json();
 };
 export const register = async (body: {}) => {
 	const res = await fetch(`${URL}/auth/register`, {
@@ -50,8 +49,7 @@ export const register = async (body: {}) => {
 		},
 		body: JSON.stringify(body),
 	});
-	const resJson = res.json();
-	return resJson;
+	return await res.json();
 };
 
 // ------------- CRUD Request ----------------------------
@@ -105,8 +103,7 @@ export const postData = async (
 		},
 		body: JSON.stringify(body),
 	});
-	const resJson = await res.json();
-	return resJson;
+	return await res.json();
 };
 
 export const deleteData = async (route: string, token: string, id?: string) => {
@@ -118,6 +115,5 @@ export const deleteData = async (route: string, token: string, id?: string) => {
 			Authorization: `Bearer ${token}`,
 		},
 	});
-	const resJson = await res.json();
-	return resJson;
+	return await res.json();
 };

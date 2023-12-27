@@ -42,11 +42,10 @@ export const AuthProvider = (children: any) => {
 
 	const initialization = async () => {
 		const storageUser: resProps = await getStorage(STORAGE_USER);
-		const storageInitMessage = await getStorage(STORAGE_TIME);
+		const storageTime: number = await getStorage(STORAGE_TIME);
 		const newTime = new Date().getTime();
-		const timeDelay =
-			storageInitMessage && (newTime - storageInitMessage) / 1000;
-		timeDelay > 3600 || !storageInitMessage ? warmUpServer() : setOpen(true);
+		const timeDelay = storageTime && (newTime - storageTime) / 1000;
+		timeDelay > 3600 || !storageTime ? warmUpServer() : setOpen(true);
 		if (storageUser) {
 			setUser(storageUser.user);
 			setToken(storageUser.access_token);
@@ -75,9 +74,7 @@ export const AuthProvider = (children: any) => {
 	};
 
 	const logout = async () => {
-		const users = await getStorage(STORAGE_USER);
 		setIsLogged(false);
-		setUser(users);
 	};
 
 	const authContextValue: AuthContextProps = {

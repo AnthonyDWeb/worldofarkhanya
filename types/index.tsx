@@ -13,6 +13,7 @@ export type NavigationBtnProps = { title: string; label: string };
 export type UserProps = {
 	_id?: string;
 	username?: string;
+	password?: string;
 	token?: string;
 	profileImage?: string;
 };
@@ -22,10 +23,11 @@ export type UserCheckProps = {
 	newPassword?: string;
 };
 
-// ---------------- Context ------------------------
+// ---------------- Other ------------------------
 export type resProps = {
-	user: UserProps;
-	access_token: string;
+	user?: UserProps;
+	access_token?: string;
+	message?: string,
 };
 
 // ---------------- Context ------------------------

@@ -36,7 +36,7 @@ export const PageProvider = (props: any) => {
 	}, [page]);
 
 	const updateURL = async () => {
-		const path = await getRouteFromUrl();
+		const path: string = await getRouteFromUrl();
 		setUrl(path);
 	};
 
