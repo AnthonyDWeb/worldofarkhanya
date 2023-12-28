@@ -93,7 +93,7 @@ export const StyleProvider = (props: any) => {
 			marginBottom: 20,
 		},
 		authInputContainer: {
-			marginVertical: 5 
+			marginVertical: 5,
 		},
 		authLabel: {
 			fontFamily: "cookie",
@@ -142,6 +142,16 @@ export const StyleProvider = (props: any) => {
 			padding: 10,
 			borderBottomColor: "grey",
 			borderBottomWidth: 1,
+		},
+		menuBack: {
+			display: "flex",
+			flexDirection: "row",
+			alignItems: "center",
+			position: "absolute",
+			top: 10,
+			left: 10,
+			height: 20,
+			zIndex: 25,
 		},
 
 		// PROFILE
@@ -280,7 +290,7 @@ export const StyleProvider = (props: any) => {
 			borderRadius: 200,
 			justifyContent: "center",
 			alignItems: "center",
-            padding: 10,
+			padding: 10,
 			borderWidth: 0.5,
 			shadowColor: "#000",
 			shadowOpacity: 1,

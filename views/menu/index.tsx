@@ -1,8 +1,8 @@
 // LIBRARY
 import React, { useRef, useState } from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { MaterialIcons,FontAwesome } from "@expo/vector-icons";
+import { MaterialIcons, FontAwesome, AntDesign } from "@expo/vector-icons";
 // STYLE
 import { useStyle } from "../../contexts/style";
 // CONTEXT
@@ -27,6 +27,9 @@ import {
 	UserCheckProps,
 	resProps,
 } from "../../types";
+import AddImage from "../../components/buttons/image/add_image";
+import ProfileImage from "../../components/image/profile_image";
+import { Modal } from "../../components/modal";
 
 export default function Menu() {
 	// Global Constante
@@ -39,6 +42,7 @@ export default function Menu() {
 	const [editable, setEdit] = useState<string[]>([]);
 	const [showPass, setHide] = useState<string[]>([]);
 	const [error, setError] = useState<{}[]>([]);
+	const [alertDelete, setAlert] = useState(false);
 
 	const username = useRef(user?.username);
 	const oldPassword = useRef("");
@@ -47,10 +51,14 @@ export default function Menu() {
 
 	// Functions
 	const handleNavigation = () => {
-		getBack();
-		navigation.navigate("Navigation");
+		if (selected === "Mon compte") {
+			selection(undefined);
+		} else {
+			getBack();
+			navigation.navigate("Navigation");
+		}
 	};
-	
+
 	const handleAuthentification = () => {
 		setPage({ name: "login" });
 		logout();
@@ -118,30 +126,37 @@ export default function Menu() {
 				break;
 		}
 		setError(newError);
-		const needUpdate: boolean = newError.length === 0 && Object.keys(body).length !== 0;
+		const needUpdate: boolean =
+			newError.length === 0 && Object.keys(body).length !== 0;
 		needUpdate && updateData(body);
 	};
 
 	const updateData = async (body: UserProps) => {
 		const res: resProps = await setData(body, "users", token, user?._id);
-		res &&
+		if (res.user) {
 			setStorage(STORAGE_USER, {
 				user: res.user,
 				[ACCESS_TOKEN]: res[ACCESS_TOKEN],
 			});
-		if (res) {
 			setUser(res.user);
 		}
 	};
 
+	const deletUser = async () => {
+		const message = "Vous allez surprimer votre compte, en ête vous sur ?";
+		setAlert(true);
+		console.log(message);
+	};
 	// Renders
 
 	// ---------------------- Menu Information --------------------------------
 	const MenuInformation = () => {
 		return (
-			<View style={{ flex: 1, padding: 15 }}>
-				<Section name="Mon compte" />
-				<Section name="Politique de confidentialité" />
+			<View style={{ flex: 1, padding: 15, justifyContent: "space-between" }}>
+				<View>
+					<Section name="Mon compte" />
+					<Section name="Politique de confidentialité" />
+				</View>
 				<PressableButton action={() => handleAuthentification()}>
 					<Text style={styles.secondaryTitle}>{`-> Se déconnecter`}</Text>
 				</PressableButton>
@@ -166,48 +181,58 @@ export default function Menu() {
 	// ---------------------- User Information --------------------------------
 	const UserInformation = () => {
 		return (
-			<View style={{ flex: 1, padding: 15 }}>
-				<FieldInformation
-					title="Nom d'utilisateur"
-					label="username"
-					focus={editable.includes("username")}
-					value={username}
-				/>
-				<TitleField title="Changer de mot de passe" label="password" />
-				{editable.includes("password") && (
-					<>
-						<FieldInformation
-							title="Mot de passe actuel"
-							label="currentPassword"
-							focus={true}
-							value={oldPassword}
-							secure={!showPass.includes("old")}
-							sub="old"
-							error={error}
-						/>
-						<FieldInformation
-							title="Nouveau mot de passe"
-							label="newPassword"
-							value={newPassword}
-							secure={!showPass.includes("new")}
-							sub="new"
-							error={error}
-						/>
-						<FieldInformation
-							title="Confirmer le mot de passe"
-							label="newPassword"
-							value={ConfirmNewPassword}
-							secure={!showPass.includes("confirm")}
-							sub="confirm"
-							error={error}
-						/>
-					</>
-				)}
-				<PressableButton
-					style={[styles.authButtonValidation, { marginTop: 20 }]}
-					action={() => handleCheck()}
-				>
-					<Text style={[styles.text, { textAlign: "center" }]}>Valider</Text>
+			<View style={{ flex: 1, padding: 15, justifyContent: "space-between" }}>
+				<View>
+					<ProfileImage d={200} />
+					<FieldInformation
+						title="Nom d'utilisateur"
+						label="username"
+						focus={editable.includes("username")}
+						value={username}
+					/>
+					<TitleField title="Changer de mot de passe" label="password" />
+					{editable.includes("password") && (
+						<>
+							<FieldInformation
+								title="Mot de passe actuel"
+								label="currentPassword"
+								focus={true}
+								value={oldPassword}
+								secure={!showPass.includes("old")}
+								sub="old"
+								error={error}
+							/>
+							<FieldInformation
+								title="Nouveau mot de passe"
+								label="newPassword"
+								value={newPassword}
+								secure={!showPass.includes("new")}
+								sub="new"
+								error={error}
+							/>
+							<FieldInformation
+								title="Confirmer le mot de passe"
+								label="newPassword"
+								value={ConfirmNewPassword}
+								secure={!showPass.includes("confirm")}
+								sub="confirm"
+								error={error}
+							/>
+						</>
+					)}
+					<PressableButton
+						style={[styles.authButtonValidation, { marginTop: 20 }]}
+						action={() => handleCheck()}
+					>
+						<Text style={[styles.text, { textAlign: "center" }]}>
+							Valider les modifications
+						</Text>
+					</PressableButton>
+				</View>
+				<PressableButton action={deletUser}>
+					<Text style={[styles.secondaryTitle, { color: "red" }]}>
+						Suprimer le compte
+					</Text>
 				</PressableButton>
 			</View>
 		);
@@ -291,10 +316,13 @@ export default function Menu() {
 
 	return (
 		<Page>
-			<PressableButton action={handleNavigation}>
-				<Text style={styles.titlePage}>{page.name}</Text>
-			</PressableButton>
+			<Pressable onPress={handleNavigation} style={styles.menuBack}>
+				<AntDesign name="arrowleft" size={24} color="black" />
+				<Text style={styles.text}>Retour</Text>
+			</Pressable>
+			<Text style={styles.titlePage}>{page.name}</Text>
 			{selected === "Mon compte" ? <UserInformation /> : <MenuInformation />}
+			{alertDelete && <Modal />}
 		</Page>
 	);
 }

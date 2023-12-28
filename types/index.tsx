@@ -25,9 +25,9 @@ export type UserCheckProps = {
 
 // ---------------- Other ------------------------
 export type resProps = {
-	user?: UserProps;
-	access_token?: string;
-	message?: string,
+	user: UserProps;
+	access_token: string;
+	message: string,
 };
 
 // ---------------- Context ------------------------
