@@ -191,13 +191,14 @@ export const StyleProvider = (props: any) => {
 		// PARCHMENT
 		parchment: {
 			maxHeight: windowHeight,
-			paddingBottom: 0,
 			paddingHorizontal: 15,
-			paddingTop: device === "mobile" ? 20 : 40,
+			alignSelf: "center",
+			paddingTop: isMobile ? 20 : 40
 		},
 		parchmentpaper: {
 			flex: 1,
 			position: "relative",
+			
 		},
 		parchmentRoll: {
 			height: 10,

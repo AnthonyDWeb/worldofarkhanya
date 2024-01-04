@@ -1,6 +1,6 @@
 // LIBRARY
 import React, { useRef, useState } from "react";
-import { View, Text, TextInput, Pressable } from "react-native";
+import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { MaterialIcons, FontAwesome, AntDesign } from "@expo/vector-icons";
 // STYLE
@@ -15,7 +15,7 @@ import PressableButton from "../../components/buttons/pressable_button";
 // OTHER
 import { ACCESS_TOKEN, STORAGE_USER } from "../../constants";
 import { deepClone } from "../../utils/other/transform_data";
-import { setData } from "../../utils/API";
+import { deleteData, setData } from "../../utils/API";
 import { setStorage } from "../../utils/Storage.Upload/storage";
 import {
 	NavigationProps,
@@ -27,14 +27,14 @@ import {
 	UserCheckProps,
 	resProps,
 } from "../../types";
-import AddImage from "../../components/buttons/image/add_image";
 import ProfileImage from "../../components/image/profile_image";
 import { Modal } from "../../components/modal";
+import SampleButton from "../../components/buttons/sample";
 
 export default function Menu() {
 	// Global Constante
 	const { user, setUser, logout, token } = useAuth();
-	const { page, getBack, setPage } = usePage();
+	const { page, getBack, setPage, setParchmentDisplay } = usePage();
 	const { styles } = useStyle();
 	const navigation = useNavigation<NavigationProps>();
 	// Private Constante
@@ -42,12 +42,14 @@ export default function Menu() {
 	const [editable, setEdit] = useState<string[]>([]);
 	const [showPass, setHide] = useState<string[]>([]);
 	const [error, setError] = useState<{}[]>([]);
-	const [alertDelete, setAlert] = useState(false);
+	const [alertMessage, setAlert] = useState("");
+	const [showButton, setShow] = useState(true);
 
 	const username = useRef(user?.username);
 	const oldPassword = useRef("");
 	const newPassword = useRef("");
 	const ConfirmNewPassword = useRef("");
+	const message = "Attention, votre compte va être définitivement supprimé !";
 
 	// Functions
 	const handleNavigation = () => {
@@ -143,10 +145,27 @@ export default function Menu() {
 	};
 
 	const deletUser = async () => {
-		const message = "Vous allez surprimer votre compte, en ête vous sur ?";
-		setAlert(true);
+		setAlert(message);
+		setParchmentDisplay(true);
 		console.log(message);
 	};
+
+	const cancelDeleteUser = () => {
+		setAlert("");
+		setParchmentDisplay(false);
+	};
+
+	const validateDeleteUser = async () => {
+		setShow(false);
+		const res = await deleteData("users",token,user?._id)
+		if (res.message) {
+			setAlert(res.message);
+			setTimeout(()=> setAlert("Retour à la page d'acceuil en cours . . ."), 1000)
+			setTimeout(()=> logout(), 1500);
+		}
+	};
+
+
 	// Renders
 
 	// ---------------------- Menu Information --------------------------------
@@ -181,7 +200,7 @@ export default function Menu() {
 	// ---------------------- User Information --------------------------------
 	const UserInformation = () => {
 		return (
-			<View style={{ flex: 1, padding: 15, justifyContent: "space-between" }}>
+			<ScrollView style={{ flex: 1, padding: 15 }}>
 				<View>
 					<ProfileImage d={200} />
 					<FieldInformation
@@ -234,7 +253,7 @@ export default function Menu() {
 						Suprimer le compte
 					</Text>
 				</PressableButton>
-			</View>
+			</ScrollView>
 		);
 	};
 
@@ -314,6 +333,19 @@ export default function Menu() {
 		);
 	};
 
+	const ValidationButtonContainer = () => {
+		return (
+			<View style={[styles.rowContainer,{justifyContent: "space-around", marginTop: 10}]}>
+				<SampleButton action={cancelDeleteUser}  style={{alignSelf: "center"}}>
+					<Text style={styles.sampleTextButtons}>Annuler</Text>
+				</SampleButton>
+				<SampleButton action={validateDeleteUser}  style={{alignSelf: "center"}}>
+					<Text style={styles.sampleTextButtons}>Valider</Text>
+				</SampleButton>
+			</View>
+		);
+	};
+
 	return (
 		<Page>
 			<Pressable onPress={handleNavigation} style={styles.menuBack}>
@@ -322,7 +354,12 @@ export default function Menu() {
 			</Pressable>
 			<Text style={styles.titlePage}>{page.name}</Text>
 			{selected === "Mon compte" ? <UserInformation /> : <MenuInformation />}
-			{alertDelete && <Modal />}
+			{alertMessage && (
+				<Modal>
+					<Text style={[styles.text, {textAlign: "center"}]}>{alertMessage}</Text>
+					{showButton && <ValidationButtonContainer />}
+				</Modal>
+			)}
 		</Page>
 	);
 }
