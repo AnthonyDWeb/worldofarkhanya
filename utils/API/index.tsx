@@ -1,19 +1,19 @@
 import { Alert } from "react-native";
 import { resProps } from "../../types";
-const URL = process.env.LOCAL_URL;
-// const URL = process.env.SERVER_URL;
+// const URL = process.env.LOCAL_URL;
+const URL = process.env.SERVER_URL;
 // const URL = process.env.SERVER_LOCAL_URL;
 
 // ------------- Init Server ----------------------------
 export const initServer = async () => {
-	try {
-		const res = await fetch(`${URL}`, {
-			method: "GET",
-		});
+	const res = await fetch(`${URL}`, {
+		method: "GET",
+	});
+	if (res) {
 		const resJson = await res.json();
 		return resJson;
-	} catch (error) {
-		console.log("err", error);
+	} else {
+		console.log("no res", res);
 	}
 };
 

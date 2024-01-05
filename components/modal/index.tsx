@@ -4,8 +4,8 @@ import Parchment from "../parchment";
 import useDevice from "../../utils/hooks/useDevice";
 
 export const Modal = ({ children }: any) => {
-  const { screenSize } = useDevice();
-  const width = screenSize.width*0.7;
+	const { screenSize } = useDevice();
+	const width = screenSize.width * 0.7;
 	return (
 		<View
 			style={{
@@ -16,11 +16,11 @@ export const Modal = ({ children }: any) => {
 				padding: 20,
 				alignSelf: "center",
 				justifyContent: "center",
-        backgroundColor: "rgba(0,0,0,0.3)"
+				backgroundColor: "rgba(0,0,0,0.3)",
 			}}
 		>
 			<Parchment modal wSize={width}>
-        {children}
+				{children}
 			</Parchment>
 		</View>
 	);

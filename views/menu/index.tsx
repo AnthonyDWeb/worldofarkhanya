@@ -147,7 +147,6 @@ export default function Menu() {
 	const deletUser = async () => {
 		setAlert(message);
 		setParchmentDisplay(true);
-		console.log(message);
 	};
 
 	const cancelDeleteUser = () => {
@@ -157,18 +156,30 @@ export default function Menu() {
 
 	const validateDeleteUser = async () => {
 		setShow(false);
-		const res = await deleteData("users",token,user?._id)
+		const res = await deleteData("users", token, user?._id);
 		if (res.message) {
 			setAlert(res.message);
-			setTimeout(()=> setAlert("Retour à la page d'acceuil en cours . . ."), 1000)
-			setTimeout(()=> logout(), 1500);
+			setTimeout(
+				() => setAlert("Retour à la page d'acceuil en cours . . ."),
+				1000
+			);
+			setTimeout(() => logout(), 1500);
 		}
 	};
 
-
 	// Renders
+	const Header = () => {
+		return (
+			<>
+				<Pressable onPress={handleNavigation} style={styles.menuBack}>
+					<AntDesign name="arrowleft" size={24} color="black" />
+					<Text style={styles.text}>Retour</Text>
+				</Pressable>
+				<Text style={styles.titlePage}>{page.name}</Text>
+			</>
+		);
+	};
 
-	// ---------------------- Menu Information --------------------------------
 	const MenuInformation = () => {
 		return (
 			<View style={{ flex: 1, padding: 15, justifyContent: "space-between" }}>
@@ -194,6 +205,17 @@ export default function Menu() {
 				</PressableButton>
 				{isSelected && children}
 			</View>
+		);
+	};
+
+	const DeleteModal = () => {
+		return (
+			<Modal>
+				<Text style={[styles.text, { textAlign: "center" }]}>
+					{alertMessage}
+				</Text>
+				{showButton && <ValidationButtonContainer />}
+			</Modal>
 		);
 	};
 
@@ -335,11 +357,19 @@ export default function Menu() {
 
 	const ValidationButtonContainer = () => {
 		return (
-			<View style={[styles.rowContainer,{justifyContent: "space-around", marginTop: 10}]}>
-				<SampleButton action={cancelDeleteUser}  style={{alignSelf: "center"}}>
+			<View
+				style={[
+					styles.rowContainer,
+					{ justifyContent: "space-around", marginTop: 10 },
+				]}
+			>
+				<SampleButton action={cancelDeleteUser} style={{ alignSelf: "center" }}>
 					<Text style={styles.sampleTextButtons}>Annuler</Text>
 				</SampleButton>
-				<SampleButton action={validateDeleteUser}  style={{alignSelf: "center"}}>
+				<SampleButton
+					action={validateDeleteUser}
+					style={{ alignSelf: "center" }}
+				>
 					<Text style={styles.sampleTextButtons}>Valider</Text>
 				</SampleButton>
 			</View>
@@ -348,18 +378,9 @@ export default function Menu() {
 
 	return (
 		<Page>
-			<Pressable onPress={handleNavigation} style={styles.menuBack}>
-				<AntDesign name="arrowleft" size={24} color="black" />
-				<Text style={styles.text}>Retour</Text>
-			</Pressable>
-			<Text style={styles.titlePage}>{page.name}</Text>
+			<Header />
 			{selected === "Mon compte" ? <UserInformation /> : <MenuInformation />}
-			{alertMessage && (
-				<Modal>
-					<Text style={[styles.text, {textAlign: "center"}]}>{alertMessage}</Text>
-					{showButton && <ValidationButtonContainer />}
-				</Modal>
-			)}
+			{alertMessage.length && <DeleteModal />}
 		</Page>
 	);
 }
