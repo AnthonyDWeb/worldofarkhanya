@@ -1,6 +1,6 @@
 // LIBRARY
 import React from "react";
-import { View, Image } from "react-native";
+import { View, Image, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 // STYLE
 import { useStyle } from "../../../contexts/style";
@@ -9,7 +9,7 @@ import { usePage } from "../../../contexts/page";
 // VIEW
 // COMPONENT
 // OTHER
-import SampleButton from "../sample";
+import BackgroundButton from "../background";
 import { NavigationProps } from "../../../types";
 
 export default function MenuButton() {
@@ -27,10 +27,10 @@ export default function MenuButton() {
 	// Renders
 
 	return (
-		<View style={styles.menuButton}>
-			<SampleButton rad={50} action={handle}>
+		<Pressable onPress={handle} style={styles.menuButton}>
+			<BackgroundButton rad={50}>
 				<Image source={icon} style={styles.menuButtonImage} />
-			</SampleButton>
-		</View>
+			</BackgroundButton>
+		</Pressable>
 	);
 }

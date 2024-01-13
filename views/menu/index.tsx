@@ -2,7 +2,7 @@
 import React, { useRef, useState } from "react";
 import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { MaterialIcons, FontAwesome, AntDesign } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 // STYLE
 import { useStyle } from "../../contexts/style";
 // CONTEXT
@@ -11,7 +11,7 @@ import { useAuth } from "../../contexts/auth";
 // VIEW
 // COMPONENT
 import Page from "../../components/pages";
-import PressableButton from "../../components/buttons/pressable_button";
+import PressableButton from "../../components/buttons/pressable/pressable_button";
 // OTHER
 import { ACCESS_TOKEN, STORAGE_USER } from "../../constants";
 import { deepClone } from "../../utils/other/transform_data";
@@ -29,7 +29,7 @@ import {
 } from "../../types";
 import ProfileImage from "../../components/image/profile_image";
 import { Modal } from "../../components/modal";
-import SampleButton from "../../components/buttons/sample";
+import BackgroundButton from "../../components/buttons/background";
 
 export default function Menu() {
 	// Global Constante
@@ -172,7 +172,7 @@ export default function Menu() {
 		return (
 			<>
 				<Pressable onPress={handleNavigation} style={styles.menuBack}>
-					<AntDesign name="arrowleft" size={24} color="black" />
+					<MaterialIcons name="arrow-back" size={24} color="black" />
 					<Text style={styles.text}>Retour</Text>
 				</Pressable>
 				<Text style={styles.titlePage}>{page.name}</Text>
@@ -222,54 +222,55 @@ export default function Menu() {
 	// ---------------------- User Information --------------------------------
 	const UserInformation = () => {
 		return (
-			<ScrollView style={{ flex: 1, padding: 15 }}>
-				<View>
-					<ProfileImage d={200} />
-					<FieldInformation
-						title="Nom d'utilisateur"
-						label="username"
-						focus={editable.includes("username")}
-						value={username}
-					/>
-					<TitleField title="Changer de mot de passe" label="password" />
-					{editable.includes("password") && (
-						<>
-							<FieldInformation
-								title="Mot de passe actuel"
-								label="currentPassword"
-								focus={true}
-								value={oldPassword}
-								secure={!showPass.includes("old")}
-								sub="old"
-								error={error}
-							/>
-							<FieldInformation
-								title="Nouveau mot de passe"
-								label="newPassword"
-								value={newPassword}
-								secure={!showPass.includes("new")}
-								sub="new"
-								error={error}
-							/>
-							<FieldInformation
-								title="Confirmer le mot de passe"
-								label="newPassword"
-								value={ConfirmNewPassword}
-								secure={!showPass.includes("confirm")}
-								sub="confirm"
-								error={error}
-							/>
-						</>
-					)}
-					<PressableButton
-						style={[styles.authButtonValidation, { marginTop: 20 }]}
-						action={() => handleCheck()}
-					>
-						<Text style={[styles.text, { textAlign: "center" }]}>
-							Valider les modifications
-						</Text>
-					</PressableButton>
-				</View>
+			<ScrollView
+				style={{ flex: 1, padding: 15 }}
+				contentContainerStyle={{ alignItems: "center" }}
+			>
+				<ProfileImage />
+				<FieldInformation
+					title="Nom d'utilisateur"
+					label="username"
+					focus={editable.includes("username")}
+					value={username}
+				/>
+				<TitleField title="Changer de mot de passe" label="password" />
+				{editable.includes("password") && (
+					<>
+						<FieldInformation
+							title="Mot de passe actuel"
+							label="currentPassword"
+							focus={true}
+							value={oldPassword}
+							secure={!showPass.includes("old")}
+							sub="old"
+							error={error}
+						/>
+						<FieldInformation
+							title="Nouveau mot de passe"
+							label="newPassword"
+							value={newPassword}
+							secure={!showPass.includes("new")}
+							sub="new"
+							error={error}
+						/>
+						<FieldInformation
+							title="Confirmer le mot de passe"
+							label="newPassword"
+							value={ConfirmNewPassword}
+							secure={!showPass.includes("confirm")}
+							sub="confirm"
+							error={error}
+						/>
+					</>
+				)}
+				<PressableButton
+					style={[styles.authButtonValidation, { marginTop: 20 }]}
+					action={() => handleCheck()}
+				>
+					<Text style={[styles.text, { textAlign: "center" }]}>
+						Valider les modifications
+					</Text>
+				</PressableButton>
 				<PressableButton action={deletUser}>
 					<Text style={[styles.secondaryTitle, { color: "red" }]}>
 						Suprimer le compte
@@ -344,9 +345,9 @@ export default function Menu() {
 			<View style={styles.rowContainer}>
 				<Text style={tStyle}>{title}</Text>
 				{!sub && (
-					<FontAwesome
-						name="pencil"
-						size={20}
+					<MaterialIcons
+						name="edit"
+						size={24}
 						color="black"
 						onPress={() => handleEdit(label)}
 					/>
@@ -357,21 +358,17 @@ export default function Menu() {
 
 	const ValidationButtonContainer = () => {
 		return (
-			<View
-				style={[
-					styles.rowContainer,
-					{ justifyContent: "space-around", marginTop: 10 },
-				]}
-			>
-				<SampleButton action={cancelDeleteUser} style={{ alignSelf: "center" }}>
-					<Text style={styles.sampleTextButtons}>Annuler</Text>
-				</SampleButton>
-				<SampleButton
-					action={validateDeleteUser}
-					style={{ alignSelf: "center" }}
-				>
-					<Text style={styles.sampleTextButtons}>Valider</Text>
-				</SampleButton>
+			<View style={[styles.rowContainer,{ justifyContent: "space-around", marginTop: 10 }]}>
+				<PressableButton action={cancelDeleteUser}>
+					<BackgroundButton style={{ alignSelf: "center" }}>
+						<Text style={styles.sampleTextButtons}>Annuler</Text>
+					</BackgroundButton>
+				</PressableButton>
+				<PressableButton action={validateDeleteUser}>
+					<BackgroundButton style={{ alignSelf: "center" }}>
+						<Text style={styles.sampleTextButtons}>Valider</Text>
+					</BackgroundButton>
+				</PressableButton>
 			</View>
 		);
 	};
@@ -380,7 +377,7 @@ export default function Menu() {
 		<Page>
 			<Header />
 			{selected === "Mon compte" ? <UserInformation /> : <MenuInformation />}
-			{alertMessage.length && <DeleteModal />}
+			{alertMessage.length !== 0 && <DeleteModal />}
 		</Page>
 	);
 }

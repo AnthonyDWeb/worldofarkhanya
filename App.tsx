@@ -5,6 +5,7 @@ import Routes from "./routes";
 import { PageProvider } from "./contexts/page";
 import { StyleProvider } from "./contexts/style";
 import { AuthProvider } from "./contexts/auth";
+import { LanguageProvider } from "./contexts/language";
 
 export default function App() {
 	const [fontLoad, setFontLoad] = useState(false);
@@ -31,8 +32,10 @@ export default function App() {
 			<AuthProvider>
 				<PageProvider>
 					<StyleProvider>
-						<StatusBar translucent hidden />
-						<Routes />
+						<LanguageProvider>
+							<StatusBar translucent hidden />
+							<Routes />
+						</LanguageProvider>
 					</StyleProvider>
 				</PageProvider>
 			</AuthProvider>

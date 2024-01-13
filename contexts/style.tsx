@@ -247,31 +247,38 @@ export const StyleProvider = (props: any) => {
 		},
 		sampleBtnBg: {
 			borderRadius: defaultButtonRadius,
-			borderWidth: 0.5,
+			borderWidth: 3,
 			shadowColor: "#000",
 			shadowOpacity: 1,
 			shadowRadius: 10,
 			shadowOffset: { width: 0, height: 8 },
 			borderColor: isMobile ? "rgba(0,0,0,0.9)" : "rgba(0,0,0,0.2)",
+			position: "relative",
+			display: "flex",
+			alignItems: "center",
+			justifyContent: "center",
+			padding: 1
 		},
 		sampleCalcUp: {
 			position: "absolute",
 			borderRadius: defaultButtonRadius,
 			left: 0,
-			top: 0.1,
+			top: 0,
 			height: isMobile ? 34 : 40,
 			width: "100%",
-			opacity: isMobile ? 0.9 : 0.5,
+			opacity: 0.9,
+			zIndex: 0
 		},
 		sampleCalcDown: {
 			position: "absolute",
 			borderRadius: defaultButtonRadius,
 			left: 0,
-			bottom: 0.1,
+			bottom: 0,
 			transform: "rotate(180deg)",
 			height: isMobile ? 34 : 40,
 			width: "100%",
-			opacity: isMobile ? 0.9 : 0.5,
+			opacity: 0.9,
+			zIndex: 0
 		},
 		sampleTextButtons: {
 			zIndex: 10,

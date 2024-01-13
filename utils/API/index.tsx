@@ -1,5 +1,3 @@
-import { Alert } from "react-native";
-import { resProps } from "../../types";
 // const URL = process.env.LOCAL_URL;
 const URL = process.env.SERVER_URL;
 // const URL = process.env.SERVER_LOCAL_URL;

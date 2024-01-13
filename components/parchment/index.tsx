@@ -24,7 +24,7 @@ export default function Parchment({ children, modal, wSize }: any) {
 	const { styles } = useStyle();
 	const { screenSize, isMobile } = useDevice();
 	const windowHeight = modal ? 0 : screenSize.height - (isMobile ? 60 : 70);
-	const windowWidth = modal ? wSize : screenSize.width * 0.95;
+	const windowWidth = modal ? wSize : screenSize.width * 0.90;
 	// Private Constante
 	const parchment = require("../../assets/images/parchment/parchment.jpg");
 	const calc = require("../../assets/images/parchment/calc-parchment.png");
@@ -79,7 +79,7 @@ export default function Parchment({ children, modal, wSize }: any) {
 		>
 			<ImageBackground
 				source={parchment}
-				style={[styles.parchmentpaper, { minWidth: windowWidth }]}
+				style={[styles.parchmentpaper, { width: windowWidth }]}
 			>
 				<Roll pos="top" wSize={windowWidth} />
 				<Image source={calc} style={[styles.parchmentCalcUp]} />

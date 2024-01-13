@@ -26,7 +26,7 @@ import {
 import { login, loginToken, register } from "../../utils/API";
 import Checkbox from "../../components/box/checkbox";
 import { setStorage } from "../../utils/Storage.Upload/storage";
-import PressableButton from "../../components/buttons/pressable_button";
+import PressableButton from "../../components/buttons/pressable/pressable_button";
 import { UserProps, resProps } from "../../types";
 // OTHER
 
@@ -54,7 +54,10 @@ export default function Auth() {
 
 	const authValidation = async () => {
 		setLoad(true);
-		const user: UserProps = { username: username.current, password: password.current };
+		const user: UserProps = {
+			username: username.current,
+			password: password.current,
+		};
 		const res: resProps =
 			page.name === "login" ? await login(user) : await register(user);
 		if (res?.user) {

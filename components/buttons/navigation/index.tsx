@@ -1,13 +1,13 @@
 // LIBRARY
 import React from "react";
-import { Text } from "react-native";
+import { Pressable, Text } from "react-native";
 // STYLE
 import { useStyle } from "../../../contexts/style";
 // CONTEXT
 import { usePage } from "../../../contexts/page";
 // VIEW
 // COMPONENT
-import SampleButton from "../sample";
+import BackgroundButton from "../background";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProps, NavigationBtnProps } from "../../../types";
 // OTHER
@@ -26,8 +26,10 @@ export default function NavigationButton({ title, label }: NavigationBtnProps) {
 	// Renders
 
 	return (
-		<SampleButton action={() => parchmentDisplay && handle()}>
-			<Text style={[styles.sampleTextButtons]}>{title}</Text>
-		</SampleButton>
+		<Pressable onPress={() => parchmentDisplay && handle()}>
+			<BackgroundButton>
+				<Text style={[styles.sampleTextButtons]}>{title}</Text>
+			</BackgroundButton>
+		</Pressable>
 	);
 }

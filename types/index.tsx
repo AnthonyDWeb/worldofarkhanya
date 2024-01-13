@@ -16,7 +16,16 @@ export type UserProps = {
 	password?: string;
 	token?: string;
 	profileImage?: string;
+	creations?: UserCreationsProps;
 };
+
+export type UserCreationsProps = {
+	characters: [];
+	classes: [];
+	races: [];
+	stats: [];
+};
+
 export type UserCheckProps = {
 	username?: string;
 	currentPassword?: string;
@@ -27,7 +36,7 @@ export type UserCheckProps = {
 export type resProps = {
 	user: UserProps;
 	access_token: string;
-	message: string,
+	message: string;
 };
 
 // ---------------- Context ------------------------
@@ -104,14 +113,13 @@ export type checktype = {
 };
 export type SampleBtnProps = {
 	children: any;
-	action: () => void;
+	action?: () => void;
 	rad?: number;
 	hide?: boolean;
-	style?: any
+	style?: any;
 };
 export type PressableBtnProps = {
 	children: any;
 	action: () => void;
-    style?: {}
+	style?: {};
 };
-

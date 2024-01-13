@@ -18,8 +18,10 @@ export default function Creation() {
     // Renders
 	
 	return (
-		<View>
+		<View style={{backgroundColor: "red"}}>
 			<Text style={styles.titlePage}>Création</Text>
+			<Text style={styles.secondaryTitle}>Creér +</Text>
+			<Text style={styles.secondaryTitle}>Mes Créations</Text>
 		</View>
 	);
 }
