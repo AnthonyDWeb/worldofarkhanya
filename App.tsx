@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { loadAsync } from "expo-font";
 import { StatusBar } from "expo-status-bar";
-import Routes from "./routes";
 import { PageProvider } from "./contexts/page";
 import { StyleProvider } from "./contexts/style";
 import { AuthProvider } from "./contexts/auth";
 import { LanguageProvider } from "./contexts/language";
+import Routes from "./routes";
 
 export default function App() {
 	const [fontLoad, setFontLoad] = useState(false);
@@ -24,7 +24,6 @@ export default function App() {
 				console.log("error", err);
 			});
 	};
-
 	if (!fontLoad) {
 		return null;
 	} else {

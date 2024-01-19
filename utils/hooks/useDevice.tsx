@@ -7,10 +7,11 @@ export default function useDevice() {
 		height: useWindowDimensions().height,
 	};
 	const [screenSize, setDimensions] = useState(defaultValue);
-	const height = screenSize.height;
 	const isMobile = screenSize.width < 764;
 	const isTablet = screenSize.width >= 764 && screenSize.width < 1024;
 	const isDesktop = screenSize.width >= 1024;
+	const parchmentWidth = screenSize.width*0.9;
+	const parchmentHeight = screenSize.height - 85;
 
 	const device = isMobile
 		? "mobile"
@@ -20,11 +21,12 @@ export default function useDevice() {
 
 	const deviceContextValue = {
 		screenSize,
-		height,
 		isMobile,
 		isTablet,
 		isDesktop,
 		device,
+		parchmentWidth,
+		parchmentHeight
 	};
 
 	useEffect(() => {

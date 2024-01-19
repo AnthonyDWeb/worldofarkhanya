@@ -93,13 +93,18 @@ export type MenuFieldProps = {
 	label: string;
 	value?: any;
 	focus?: boolean;
-	sub?: string;
+	sub?: boolean;
 	secure?: boolean;
 	error?: MenuErrorProps[];
 };
 export type MenuTitleFieldProps = {
 	title: string;
 	label: string;
+	sub?: boolean;
+};
+export type MenuTInputFieldProps = {
+	label: string;
+	value?: any;
 	sub?: boolean;
 };
 
@@ -114,12 +119,20 @@ export type checktype = {
 export type SampleBtnProps = {
 	children: any;
 	action?: () => void;
-	rad?: number;
+	size?: number;
 	hide?: boolean;
 	style?: any;
+	addStyle?: {};
 };
 export type PressableBtnProps = {
-	children: any;
 	action: () => void;
+	text?: string;
+	textStyle?: [] | {};
+	icon?: any;
+	iconStyle?: [] | {};
+	size?: number;
 	style?: {};
+	bgStyle?: {};
+	color?: string;
+	children?: any;
 };

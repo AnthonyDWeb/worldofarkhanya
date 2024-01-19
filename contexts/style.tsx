@@ -6,165 +6,102 @@ import { StyleContextProps } from "../types";
 const StyleContext = createContext<StyleContextProps>({ styles: {} });
 
 export const StyleProvider = (props: any) => {
-	const { device, isMobile, screenSize } = useDevice();
-	const windowHeight = screenSize.height - (isMobile ? 60 : 70);
+	const { device, isMobile, screenSize, parchmentWidth, parchmentHeight } =
+		useDevice();
 	const defaultButtonRadius = 25;
-
 	const styles = StyleSheet.create({
 		// BACKGROUND
 		background: {
-			width: "100%",
-			height: "100%",
+			flex: 1,
 			justifyContent: "space-between",
 		},
 
 		// CONTAINER
-		centerContainer: {
-			position: "relative",
+		fullscreen: {
 			flex: 1,
-			width: "100%",
+		},
+		centerContainer: {
 			display: "flex",
+			position: "relative",
 			alignItems: "center",
 			justifyContent: "center",
 		},
 		rowContainer: {
-			position: "relative",
 			display: "flex",
+			position: "relative",
 			flexDirection: "row",
 			alignItems: "center",
 		},
 		columnContainer: {
-			position: "relative",
 			display: "flex",
+			position: "relative",
 			flexDirection: "column",
 			justifyContent: "center",
 		},
 
 		// TITLE - TEXT
 		mainTitle: {
-			fontSize: 35,
+			zIndex: 1,
 			fontFamily: "imf",
 			textAlign: "center",
-			margin: 20,
+			fontSize: screenSize.width / 9,
+			fontWeight: "600",
+			marginBottom: 20,
 			textShadowRadius: 5,
 			textShadowColor: "crimson",
 			textShadowOffset: { width: 1.5, height: 0 },
 		},
-		titlePage: {
-			fontFamily: "cookie",
-			fontSize: device === "mobile" ? 40 : 55,
-			textAlign: "center",
-			textDecorationLine: "underline",
-			textShadowColor: "black",
-			textShadowOffset: { width: 1, height: 0 },
-			textShadowRadius: 2,
-		},
-		title: {
-			fontFamily: "cookie",
-			fontSize: device === "mobile" ? 30 : 55,
-			textShadowColor: "black",
-			textShadowOffset: { width: 1, height: 0 },
-			textShadowRadius: 2,
-		},
 		secondaryTitle: {
+			zIndex: 1,
 			fontSize: 30,
+			marginVertical: 5,
+			marginHorizontal: 10,
+			textAlign: "center",
 			fontFamily: "cookie",
+			textShadowRadius: 2,
 			textShadowColor: "black",
 			textShadowOffset: { width: 1, height: 0 },
-			textShadowRadius: 2,
-			marginVertical: 5,
+		},
+		titlePage: {
+			marginTop: 15,
 			textAlign: "center",
+			fontFamily: "cookie",
+			textShadowRadius: 2,
+			textShadowColor: "black",
+			textDecorationLine: "underline",
+			fontSize: device === "mobile" ? 40 : 55,
+			textShadowOffset: { width: 1, height: 0 },
 		},
 		text: {
+			zIndex: 1,
 			fontFamily: "cookie",
-			fontSize: 25,
+			fontSize: screenSize.width / 15,
 		},
-
-		// AUTHENTIFICATION
-		authContainer: {
-			width: "80%",
-			alignItems: "center",
-		},
-		authTitleSelection: {
-			display: "flex",
-			flexDirection: "row",
-			alignItems: "baseline",
-			justifyContent: "center",
-			marginBottom: 20,
-		},
-		authInputContainer: {
-			marginVertical: 5,
-		},
-		authLabel: {
+		textButton: {
+			zIndex: 1,
 			fontFamily: "cookie",
-			fontSize: 25,
-			marginHorizontal: 5,
-			paddingVertical: 2,
-		},
-		authInput: {
-			textAlign: "center",
-			borderWidth: 0.1,
-			borderRadius: 10,
 			paddingVertical: 5,
-			paddingHorizontal: 15,
-			color: "dimgray",
-			backgroundColor: "#F3EEEA",
-		},
-		authButtonValidation: {
-			paddingVertical: 5,
-			paddingHorizontal: 20,
-			borderWidth: 1,
-			borderRadius: 15,
-			borderColor: "black",
+			marginHorizontal: 10,
+			fontSize: screenSize.width / 15,
+			textShadowRadius: 2,
+			textShadowColor: "black",
+			textShadowOffset: { width: 1, height: 0 },
 		},
 
-		// AUTH STORAGE
-		profileContainer: {
-			borderColor: "Black",
-			borderTopWidth: 1,
-			borderBottomWidth: 1,
-			borderLeftWidth: 0.01,
-			borderRightWidth: 0.01,
-			marginVertical: 10,
-			borderRadius: 15,
-			width: 150,
-		},
-		profileStorageName: {
-			marginVertical: 0,
-			paddingVertical: 5,
-			textAlign: "center",
-			borderRadius: 15,
-			backgroundColor: "rgba(255,255,255,0.2)",
-		},
-
-		// MENU
-		menuSection: {
-			padding: 10,
-			borderBottomColor: "grey",
-			borderBottomWidth: 1,
-		},
-		menuBack: {
-			display: "flex",
-			flexDirection: "row",
-			alignItems: "center",
-			position: "absolute",
-			top: 10,
-			left: 10,
-			height: 20,
-			zIndex: 25,
-		},
-
-		// PROFILE
-		profileCreation: {
-			marginTop: 20,
-			marginHorizontal: 15,
+		// BUTTON
+		background_button: {
+			minHeight: 30,
+			borderWidth: 2,
+			borderColor: "rgba(0,0,0,0.9)",
+			borderRadius: defaultButtonRadius,
+			overflow: "hidden",
 		},
 
 		// NAVIGATION BAR
 		navigation: {
-			zIndex: 5,
-			bottom: 0,
-			position: "absolute",
+			// zIndex: 5,
+			// bottom: 0,
+			// position: "absolute",
 			width: "100%",
 			display: "flex",
 			flexDirection: "row",
@@ -172,33 +109,17 @@ export const StyleProvider = (props: any) => {
 			justifyContent: "space-around",
 			height: isMobile ? 55 : 60,
 		},
-		navigationBackgroundButton: {
-			padding: 0.7,
-			borderRadius: defaultButtonRadius,
-		},
-		navigationButton: {
-			marginHorizontal: 15,
-			marginVertical: device === "mobile" ? 5 : 10,
-			borderRadius: defaultButtonRadius,
-			borderWidth: 0.5,
-			borderColor: device === "mobile" ? "rgba(0,0,0,0.9)" : "rgba(0,0,0,0.2)",
-			shadowColor: "#000",
-			shadowOpacity: 1,
-			shadowRadius: 10,
-			shadowOffset: { width: 0, height: 8 },
-		},
-
 		// PARCHMENT
 		parchment: {
-			maxHeight: windowHeight,
-			paddingHorizontal: 15,
+			width: parchmentWidth,
+			maxHeight: parchmentHeight,
 			alignSelf: "center",
-			paddingTop: isMobile ? 20 : 40
+			marginTop: isMobile ? 20 : 40,
 		},
 		parchmentpaper: {
 			flex: 1,
+			alignSelf: "center",
 			position: "relative",
-			
 		},
 		parchmentRoll: {
 			height: 10,
@@ -213,73 +134,80 @@ export const StyleProvider = (props: any) => {
 			height: 20,
 			borderRadius: 10,
 		},
-		parchmentCalcUp: {
-			position: "absolute",
-			height: "15%",
-			width: "100%",
-			zIndex: 0,
-			top: 0,
+
+		// AUTHENTIFICATION
+		authContainer: {
+			width: "90%",
+			marginTop: 15,
 		},
-		parchmentCalcDown: {
-			position: "absolute",
-			height: "15%",
-			width: "100%",
-			zIndex: 0,
-			bottom: 0,
-			transform: "rotate(180deg)",
+		authLabel: {
+			paddingVertical: 2,
+			marginHorizontal: 5,
+			fontFamily: "cookie",
+			fontSize: screenSize.width / 12,
 		},
-		scrollpage: {
-			paddingHorizontal: 10,
+		authInput: {
+			color: "dimgray",
+			borderWidth: 0.1,
+			borderRadius: defaultButtonRadius,
+			textAlign: "center",
+			paddingHorizontal: 15,
+			backgroundColor: "rgba(255,255,255,0.4)",
+		},
+		storageUser: {
+			width: 120,
+			marginTop: 100,
+			alignSelf: "center",
+			borderColor: "Black",
+			borderTopWidth: 2,
+			borderBottomWidth: 2,
+			borderLeftWidth: 0.5,
+			borderRightWidth: 0.5,
+			borderRadius: defaultButtonRadius,
 		},
 
-		// BUTTON
-		sampleBtnContainer: {
-			position: "relative",
-			display: "flex",
-			alignItems: "center",
-			borderColor: "rgba(0,0,0,0.7)",
-			borderTopWidth: 0.5,
-			borderRightWidth: 0.5,
-			borderLeftWidth: 2,
-			borderBottomWidth: 2,
-			borderRadius: defaultButtonRadius,
-			justifyContent: "center",
-		},
-		sampleBtnBg: {
-			borderRadius: defaultButtonRadius,
-			borderWidth: 3,
-			shadowColor: "#000",
-			shadowOpacity: 1,
-			shadowRadius: 10,
-			shadowOffset: { width: 0, height: 8 },
-			borderColor: isMobile ? "rgba(0,0,0,0.9)" : "rgba(0,0,0,0.2)",
-			position: "relative",
-			display: "flex",
-			alignItems: "center",
-			justifyContent: "center",
-			padding: 1
-		},
-		sampleCalcUp: {
+		// AUTH STORAGE
+
+		// MENU
+		menuButton: {
 			position: "absolute",
-			borderRadius: defaultButtonRadius,
-			left: 0,
-			top: 0,
-			height: isMobile ? 34 : 40,
-			width: "100%",
-			opacity: 0.9,
-			zIndex: 0
+			top: 5,
+			right: 5,
+			zIndex: 10,
 		},
-		sampleCalcDown: {
+		menuButtonImage: {
+			zIndex: 1,
+			width: 30,
+			height: 30,
+		},
+		menuSection: {
+			padding: 10,
+			borderBottomWidth: 1,
+			borderBottomColor: "grey",
+		},
+		menuBack: {
+			display: "flex",
+			flexDirection: "row",
+			alignItems: "center",
 			position: "absolute",
-			borderRadius: defaultButtonRadius,
-			left: 0,
-			bottom: 0,
-			transform: "rotate(180deg)",
-			height: isMobile ? 34 : 40,
-			width: "100%",
-			opacity: 0.9,
-			zIndex: 0
+			top: 10,
+			left: 10,
+			height: 20,
+			zIndex: 25,
 		},
+
+		// Modal
+		modalContainer: {
+			zIndex: 100,
+			padding: 20,
+			height: "100%",
+			alignSelf: "center",
+			position: "absolute",
+			justifyContent: "center",
+			backgroundColor: "rgba(0,0,0,0.3)",
+		},
+
+		// OTHER
 		sampleTextButtons: {
 			zIndex: 10,
 			fontFamily: "cookie",
@@ -287,36 +215,53 @@ export const StyleProvider = (props: any) => {
 			marginRight: 3,
 			paddingVertical: 2,
 			paddingHorizontal: 10,
+			textShadowRadius: 2.5,
 			textShadowColor: "black",
 			textShadowOffset: { width: 1, height: 0 },
-			textShadowRadius: 2.5,
 		},
-		addImageButton: {
-			position: "relative",
-			height: 200,
-			width: 200,
-			borderRadius: 200,
-			justifyContent: "center",
-			alignItems: "center",
-			padding: 10,
-			borderWidth: 0.5,
-			shadowColor: "#000",
+		shadow: {
 			shadowOpacity: 1,
 			shadowRadius: 10,
+			shadowColor: "#000",
 			shadowOffset: { width: 0, height: 8 },
-			borderColor: isMobile ? "rgba(0,0,0,0.9)" : "rgba(0,0,0,0.2)",
 		},
-		menuButton: {
-			top: 5,
-			right: 0,
-			zIndex: 20,
+		textShadow: {
+			textShadowRadius: 5,
+			textShadowColor: "dimgrey",
+			textShadowOffset: { width: 1, height: 0 },
+		},
+		calc: {
+			left: 0,
+			zIndex: 0,
+			maxHeight: 60,
+			width: "100%",
 			position: "absolute",
+			borderRadius: defaultButtonRadius - 2,
 		},
-		menuButtonImage: {
-			margin: 3,
-			zIndex: 20,
-			width: device === "mobile" ? 20 : 30,
-			height: device === "mobile" ? 20 : 30,
+		scrollpage: {
+			height: parchmentHeight,
+			paddingHorizontal: 10,
+		},
+		rot_90: {
+			transform: [{ rotate: "90deg" }],
+		},
+		_rot_90: {
+			transform: [{ rotate: "-90deg" }],
+		},
+		rot_180: {
+			transform: [{ rotate: "180deg" }],
+		},
+		t_0: {
+			top: 0,
+		},
+		b_0: {
+			bottom: 0,
+		},
+		l_0: {
+			left: 0,
+		},
+		r_0: {
+			right: 0,
 		},
 	});
 

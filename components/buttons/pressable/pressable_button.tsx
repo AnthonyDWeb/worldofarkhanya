@@ -8,10 +8,7 @@ export default function PressableButton({
 	style,
 }: PressableBtnProps) {
 	return (
-		<Pressable
-			style={({ pressed }) => [style && style, { opacity: pressed ? 0.5 : 1 }]}
-			onPress={() => action()}
-		>
+		<Pressable style={({ pressed }) => [style && style, { opacity: pressed ? 0.5 : 1 }]} onPress={action}>
 			{children}
 		</Pressable>
 	);

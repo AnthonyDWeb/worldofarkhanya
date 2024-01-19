@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { ACCESS_TOKEN, STORAGE_TIME, STORAGE_USER } from "../constants";
 import { initServer } from "../utils/API";
-import { getStorage, setStorage } from "../utils/Storage.Upload/storage";
+import { clearStorage, getStorage, setStorage } from "../utils/Storage.Upload/storage";
 import { AuthContextProps, UserProps, resProps } from "../types";
 
 const defaultValue = {
@@ -60,10 +60,7 @@ export const AuthProvider = (children: any) => {
 				setStorage(STORAGE_TIME, new Date().getTime());
 				setOpen(true);
 			}
-		} catch (error) {
-			setOpen(true);
-			console.log("err", error);
-		}
+		} catch (error) { warmUpServer(); console.log("err", error); }
 	};
 
 	const authentification = (res: resProps) => {

@@ -7,7 +7,6 @@ const defaultValue = {
 const LanguageContext = createContext(defaultValue);
 export const LanguageProvider = (children: any) => {
 	const variable = require("../data/translate.json");
-	console.log("variable", variable);
 	const translate = (word: any, option?: string) => {
 		const translation = variable?.[word] ? variable[word] : word;
 		return option === "maj" ? capitalizeFirstLetter(translation) : translation;

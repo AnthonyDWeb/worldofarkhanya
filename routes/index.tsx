@@ -78,9 +78,9 @@ export default function Routes() {
 	// Functions
 	// Renders
 	return (
-		<NavigationContainer linking={linking} fallback={<Loader />}>
+		<NavigationContainer linking={linking}>
 			<Navigator initialRouteName={initRoute} screenOptions={{ headerShown: false }}>
-				{isLogged ? (
+			{isLogged ? (
 					<Group>
 						<Screen name={NAVIGATION} component={Navigation} options={{ title: navTitle }}/>
 						<Screen name={MENU} component={Menu} options={{ title: menuTitle }}/>

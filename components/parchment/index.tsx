@@ -1,6 +1,6 @@
 // LIBRARY
 import React, { useEffect } from "react";
-import { Image, ImageBackground, View } from "react-native";
+import { ImageBackground, View } from "react-native";
 import Animated, {
 	useSharedValue,
 	withTiming,
@@ -18,13 +18,13 @@ import MenuButton from "../buttons/menu";
 import useDevice from "../../utils/hooks/useDevice";
 // OTHER
 
-export default function Parchment({ children, modal, wSize }: any) {
+export default function Parchment({ children, modal, hSize, wSize }: any) {
 	// Global Constante
 	const { parchmentDisplay } = usePage();
 	const { styles } = useStyle();
-	const { screenSize, isMobile } = useDevice();
-	const windowHeight = modal ? 0 : screenSize.height - (isMobile ? 60 : 70);
-	const windowWidth = modal ? wSize : screenSize.width * 0.90;
+	const { parchmentHeight, parchmentWidth } = useDevice();
+	const windowHeight = hSize ? hSize : parchmentHeight;
+	const windowWidth = wSize ? wSize : parchmentWidth;
 	// Private Constante
 	const parchment = require("../../assets/images/parchment/parchment.jpg");
 	const calc = require("../../assets/images/parchment/calc-parchment.png");
@@ -35,7 +35,7 @@ export default function Parchment({ children, modal, wSize }: any) {
 
 	const animHeight = useAnimatedStyle(() => {
 		return {
-			minHeight: withTiming(height.value, config),
+			height: withTiming(height.value, config),
 		};
 	});
 	const animOpacity = useAnimatedStyle(() => {
@@ -45,9 +45,7 @@ export default function Parchment({ children, modal, wSize }: any) {
 	});
 
 	// Functions
-	useEffect(() => {
-		update();
-	}, [parchmentDisplay]);
+	useEffect(() => { update(); }, [parchmentDisplay]);
 
 	const update = () => {
 		height.value = parchmentDisplay ? windowHeight : 0;
@@ -63,28 +61,21 @@ export default function Parchment({ children, modal, wSize }: any) {
 	};
 	const DefaultRender = () => {
 		return (
-			<Animated.ScrollView
-				style={[styles.scrollpage, animOpacity]}
-				showsVerticalScrollIndicator={false}
-			>
-				{<MenuButton />}
+			<Animated.ScrollView style={[styles.scrollpage, animOpacity]} showsVerticalScrollIndicator={false}>
 				{parchmentDisplay && children}
 			</Animated.ScrollView>
 		);
 	};
+
 	// Renders
 	return (
-		<Animated.View
-			style={[styles.parchment, animHeight, modal && { paddingTop: 0 }]}
-		>
-			<ImageBackground
-				source={parchment}
-				style={[styles.parchmentpaper, { width: windowWidth }]}
-			>
+		<Animated.View style={[styles.parchment, animHeight, modal && { paddingTop: 0 }]}>
+			<ImageBackground source={parchment} style={[styles.parchmentpaper, {width: windowWidth}]}>
+				{!modal && <MenuButton opacity={animOpacity}/>}
 				<Roll pos="top" wSize={windowWidth} />
-				<Image source={calc} style={[styles.parchmentCalcUp]} />
+				<Animated.Image source={calc} style={[styles.calc, {borderRadius: 0}, animOpacity]} />
 				{modal ? <ModalRender /> : <DefaultRender />}
-				<Image source={calc} style={styles.parchmentCalcDown} />
+				<Animated.Image source={calc} style={[styles.calc, styles.rot_180, styles.b_0, {borderRadius: 0}, animOpacity]} />
 				<Roll pos="bottom" wSize={windowWidth} />
 			</ImageBackground>
 		</Animated.View>

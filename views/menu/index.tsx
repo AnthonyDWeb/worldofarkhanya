@@ -10,13 +10,11 @@ import { usePage } from "../../contexts/page";
 import { useAuth } from "../../contexts/auth";
 // VIEW
 // COMPONENT
-import Page from "../../components/pages";
+import { Modal } from "../../components/modal";
+import Background from "../../components/background";
+import ProfileImage from "../../components/image/profile_image";
 import PressableButton from "../../components/buttons/pressable/pressable_button";
 // OTHER
-import { ACCESS_TOKEN, STORAGE_USER } from "../../constants";
-import { deepClone } from "../../utils/other/transform_data";
-import { deleteData, setData } from "../../utils/API";
-import { setStorage } from "../../utils/Storage.Upload/storage";
 import {
 	NavigationProps,
 	MenuErrorProps,
@@ -26,10 +24,12 @@ import {
 	UserProps,
 	UserCheckProps,
 	resProps,
+	MenuTInputFieldProps,
 } from "../../types";
-import ProfileImage from "../../components/image/profile_image";
-import { Modal } from "../../components/modal";
-import BackgroundButton from "../../components/buttons/background";
+import { ACCESS_TOKEN, STORAGE_USER } from "../../constants";
+import { deleteData, setData } from "../../utils/API";
+import { deepClone } from "../../utils/other/transform_data";
+import { setStorage } from "../../utils/Storage.Upload/storage";
 
 export default function Menu() {
 	// Global Constante
@@ -43,7 +43,6 @@ export default function Menu() {
 	const [showPass, setHide] = useState<string[]>([]);
 	const [error, setError] = useState<{}[]>([]);
 	const [alertMessage, setAlert] = useState("");
-	const [showButton, setShow] = useState(true);
 
 	const username = useRef(user?.username);
 	const oldPassword = useRef("");
@@ -51,7 +50,7 @@ export default function Menu() {
 	const ConfirmNewPassword = useRef("");
 	const message = "Attention, votre compte va être définitivement supprimé !";
 
-	// Functions
+	// -------------------------------- Functions --------------------------------
 	const handleNavigation = () => {
 		if (selected === "Mon compte") {
 			selection(undefined);
@@ -66,6 +65,13 @@ export default function Menu() {
 		logout();
 	};
 
+	const resetPassField = () => {
+		oldPassword.current = "";
+		newPassword.current = "";
+		ConfirmNewPassword.current = "";
+		setError([]);
+	}
+
 	const handleEdit = (value: string) => {
 		const exist: boolean = editable.includes(value);
 		const editClone: string[] = deepClone(editable);
@@ -73,6 +79,7 @@ export default function Menu() {
 			? editClone.filter((e: string) => e !== value)
 			: [...editClone, value];
 		setEdit(newEdit);
+		resetPassField();
 	};
 
 	const handleHide = (value: string) => {
@@ -155,19 +162,15 @@ export default function Menu() {
 	};
 
 	const validateDeleteUser = async () => {
-		setShow(false);
 		const res = await deleteData("users", token, user?._id);
 		if (res.message) {
 			setAlert(res.message);
-			setTimeout(
-				() => setAlert("Retour à la page d'acceuil en cours . . ."),
-				1000
-			);
+			setTimeout(() => setAlert("Retour à la page d'acceuil en cours . . ."), 1000);
 			setTimeout(() => logout(), 1500);
 		}
 	};
 
-	// Renders
+	// -------------------------------- Renders --------------------------------
 	const Header = () => {
 		return (
 			<>
@@ -188,7 +191,9 @@ export default function Menu() {
 					<Section name="Politique de confidentialité" />
 				</View>
 				<PressableButton action={() => handleAuthentification()}>
-					<Text style={styles.secondaryTitle}>{`-> Se déconnecter`}</Text>
+					<Text style={[styles.textButton, { color: "crimson" }]}>
+						Se déconnecter
+					</Text>
 				</PressableButton>
 			</View>
 		);
@@ -208,66 +213,23 @@ export default function Menu() {
 		);
 	};
 
-	const DeleteModal = () => {
-		return (
-			<Modal>
-				<Text style={[styles.text, { textAlign: "center" }]}>
-					{alertMessage}
-				</Text>
-				{showButton && <ValidationButtonContainer />}
-			</Modal>
-		);
-	};
-
 	// ---------------------- User Information --------------------------------
 	const UserInformation = () => {
+		const isPass = editable.includes("password");
 		return (
-			<ScrollView
-				style={{ flex: 1, padding: 15 }}
-				contentContainerStyle={{ alignItems: "center" }}
-			>
+			<ScrollView style={{ flex: 1, padding: 15 }} contentContainerStyle={{ alignItems: "center" }}>
 				<ProfileImage />
-				<FieldInformation
-					title="Nom d'utilisateur"
-					label="username"
-					focus={editable.includes("username")}
-					value={username}
-				/>
+				<FieldInformation title="Nom d'utilisateur" label="username" value={username}/>
 				<TitleField title="Changer de mot de passe" label="password" />
-				{editable.includes("password") && (
+				{isPass && (
 					<>
-						<FieldInformation
-							title="Mot de passe actuel"
-							label="currentPassword"
-							focus={true}
-							value={oldPassword}
-							secure={!showPass.includes("old")}
-							sub="old"
-							error={error}
-						/>
-						<FieldInformation
-							title="Nouveau mot de passe"
-							label="newPassword"
-							value={newPassword}
-							secure={!showPass.includes("new")}
-							sub="new"
-							error={error}
-						/>
-						<FieldInformation
-							title="Confirmer le mot de passe"
-							label="newPassword"
-							value={ConfirmNewPassword}
-							secure={!showPass.includes("confirm")}
-							sub="confirm"
-							error={error}
-						/>
+						<FieldInformation title="Mot de passe actuel" label="currentPassword" focus={true} value={oldPassword} sub/>
+						<FieldInformation title="Nouveau mot de passe" label="newPassword" value={newPassword} sub/>
+						<FieldInformation title="Confirmer le mot de passe" label="newPassword" value={ConfirmNewPassword} sub/>
 					</>
 				)}
-				<PressableButton
-					style={[styles.authButtonValidation, { marginTop: 20 }]}
-					action={() => handleCheck()}
-				>
-					<Text style={[styles.text, { textAlign: "center" }]}>
+				<PressableButton style={{ marginTop: 20 }} action={handleCheck}>
+					<Text style={[styles.textButton, { textAlign: "center" }]}>
 						Valider les modifications
 					</Text>
 				</PressableButton>
@@ -280,104 +242,57 @@ export default function Menu() {
 		);
 	};
 
-	const FieldInformation = ({
-		title,
-		label,
-		focus,
-		value,
-		sub,
-		secure,
-	}: MenuFieldProps) => {
+	const FieldInformation = ({ title, label, value, sub }: MenuFieldProps) => {
 		const err = error?.filter((e: MenuErrorProps) => e.key === label)[0];
 		const currentError: MenuErrorProps = err ? err : {};
-		const key = currentError.key;
-		const cStyle = { marginVertical: sub ? 5 : 10 };
-		const iStyle = [
-			styles.text,
-			styles.authInput,
-			{
-				width: "100%",
-				marginHorizontal: 10,
-				borderColor: key && "crimson",
-			},
-		];
-		const eStyle = [styles.text, { color: "crimson", marginLeft: 15 }];
-		const uName = editable.includes(label);
-		const hasSub = sub ? true : false;
-		const icon = secure ? "visibility-off" : "visibility";
+		const isKey = currentError.key === label;
+
 		return (
-			<View style={cStyle}>
-				<TitleField title={title} label={label} sub={hasSub} />
-				<View style={[styles.rowContainer, { width: "100%" }]}>
-					<TextInput
-						style={iStyle}
-						onChangeText={(t) => (value.current = t)}
-						defaultValue={value.current}
-						autoFocus={focus}
-						editable={hasSub || uName}
-						secureTextEntry={secure}
-					/>
-					{sub && (
-						<PressableButton action={() => handleHide(sub)}>
-							<MaterialIcons name={icon} size={24} color="black" />
-						</PressableButton>
-					)}
-				</View>
-				{currentError.key === label && (
-					<Text style={eStyle}>{currentError.message}</Text>
-				)}
+			<View style={{ marginBottom: sub ? 5 : 20, width: "100%" }}>
+				<TitleField title={title} label={label} sub={sub}/>
+				<InputField label={label} value={value} sub={sub}/>
+				 {isKey && <Text style={[styles.text,{color: "crimson"}]}>{currentError.message}</Text>}
 			</View>
-		);
-	};
+		)
+	}
 
 	const TitleField = ({ title, label, sub }: MenuTitleFieldProps) => {
-		const tStyle = [
-			styles.text,
-			{
-				width: "100%",
-				marginLeft: 5,
-				paddingVertical: 2,
-				marginVertical: sub ? 0 : 10,
-				borderBottomWidth: sub ? 0 : 1,
-			},
-		];
 		return (
-			<View style={styles.rowContainer}>
-				<Text style={tStyle}>{title}</Text>
-				{!sub && (
-					<MaterialIcons
-						name="edit"
-						size={24}
-						color="black"
-						onPress={() => handleEdit(label)}
-					/>
-				)}
+			<View style={[styles.rowContainer, {width: "100%",justifyContent: "space-between", borderBottomWidth: sub ? 0 : 1,marginBottom: sub ? 0 : 10}]}>
+				<Text style={[styles.text, {marginLeft: sub && 20}]}>{title}</Text>
+				{!sub && <MaterialIcons name="edit" size={24} onPress={() => handleEdit(label)} />}
 			</View>
 		);
 	};
 
-	const ValidationButtonContainer = () => {
+	const InputField = ({ label, value, sub }: MenuTInputFieldProps) => {
+		const focus = editable.includes(label);
+		const secure = showPass.includes(label)
+		const icon = secure ? "visibility-off" : "visibility";
+		const err = error?.filter((e: MenuErrorProps) => e.key === label)[0];
+		const currentError: MenuErrorProps = err ? err : {};
+		const isKey = currentError.key === label;
+		const iStyle = [ styles.text, styles.authInput, {width: "100%", borderColor: isKey ? "crimson" : "transparent", borderWidth: 1} ];
 		return (
-			<View style={[styles.rowContainer,{ justifyContent: "space-around", marginTop: 10 }]}>
-				<PressableButton action={cancelDeleteUser}>
-					<BackgroundButton style={{ alignSelf: "center" }}>
-						<Text style={styles.sampleTextButtons}>Annuler</Text>
-					</BackgroundButton>
-				</PressableButton>
-				<PressableButton action={validateDeleteUser}>
-					<BackgroundButton style={{ alignSelf: "center" }}>
-						<Text style={styles.sampleTextButtons}>Valider</Text>
-					</BackgroundButton>
-				</PressableButton>
-			</View>
-		);
-	};
+			<View style={[styles.rowContainer, { width: "100%", marginTop: sub ? 5 : 0 }]}>
+	 				<TextInput 
+						style={iStyle} onChangeText={(t) => (value.current = t)} defaultValue={value.current} 
+						autoFocus={focus}  editable={focus || sub} secureTextEntry={secure} 
+					/>
+	 				{sub && (
+	 					<PressableButton action={() => handleHide(label)}>
+	 						<MaterialIcons name={icon} size={24} />
+	 					</PressableButton>
+	 				)}
+	 			</View>
+		)
+	}
 
 	return (
-		<Page>
+		<Background>
 			<Header />
 			{selected === "Mon compte" ? <UserInformation /> : <MenuInformation />}
-			{alertMessage.length !== 0 && <DeleteModal />}
-		</Page>
+			{alertMessage.length !== 0 && <Modal message={alertMessage} validate={() => validateDeleteUser()} cancel={() => cancelDeleteUser()}/>}
+		</Background>
 	);
 }

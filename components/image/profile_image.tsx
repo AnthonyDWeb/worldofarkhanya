@@ -1,4 +1,4 @@
-import { Image, ActivityIndicator,} from "react-native";
+import { Image, ActivityIndicator, View } from "react-native";
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/auth";
 import { pickFile, uploadImage } from "../../utils/Storage.Upload/upload";
@@ -16,28 +16,20 @@ export default function ProfileImage() {
 		if (uri === "error")
 			alert("une erreur est survenue, veuillez essayer à nouveau");
 		if (uri !== "error" && user) {
-			const upadatedUser: UserProps | undefined = await uploadImage(
-				uri,
-				user,
-				token,
-				setUploading
-			);
-			upadatedUser &&
-				(setUser(upadatedUser), setImage(upadatedUser.profileImage));
+			const upadatedUser: UserProps | undefined = await uploadImage(uri, user, token, setUploading);
+			upadatedUser && (setUser(upadatedUser), setImage(upadatedUser.profileImage));
 		}
 	};
 
-	const imgStyle = { width: 145, height: 145, borderRadius: 145, zIndex: 1 };
+	const cStyle = { width: 145, height: 145, borderRadius: 145/2 };
+	const imgStyle = { ...cStyle, zIndex: 10 };
+	
 	return (
-		<BackgroundButton rad={150}>
-			{(image && !uploading) ? (
-				<>
-					<Image source={{ uri: image }} style={imgStyle} />
-					<Add action={pickImage} />
-				</>
-			) : (
-				<ActivityIndicator size="large" />
-			)}
-		</BackgroundButton>
+		<View style={{position: "relative"}}>
+			<BackgroundButton addStyle={cStyle}>
+				{image && !uploading ?  <Image source={{ uri: image }} style={imgStyle} /> :  <ActivityIndicator size="large" /> }
+			</BackgroundButton>
+			<Add action={pickImage} />
+		</View>
 	);
 }

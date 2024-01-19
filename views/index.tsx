@@ -2,13 +2,9 @@ import React from "react";
 import Creation from "./creation";
 import Library from "./library";
 import Profile from "./profile";
-import ParchmentPage from "../components/pages/parchment_page";
+import ParchmentPage from "../components/parchment_page";
 import { usePage } from "../contexts/page";
-import {
-	CREATION,
-	LIBRARY,
-	PROFILE,
-} from "../constants";
+import { CREATION, LIBRARY, PROFILE } from "../constants";
 
 export default function Index() {
 	const { page } = usePage();
@@ -19,5 +15,5 @@ export default function Index() {
 			{page.name === CREATION && <Creation />}
 			{page.name === LIBRARY && <Library />}
 		</ParchmentPage>
-	)
+	);
 }

@@ -10,6 +10,7 @@ import { usePage } from "../../../contexts/page";
 import BackgroundButton from "../background";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProps, NavigationBtnProps } from "../../../types";
+import TextButton from "../TextButton";
 // OTHER
 
 export default function NavigationButton({ title, label }: NavigationBtnProps) {
@@ -26,10 +27,6 @@ export default function NavigationButton({ title, label }: NavigationBtnProps) {
 	// Renders
 
 	return (
-		<Pressable onPress={() => parchmentDisplay && handle()}>
-			<BackgroundButton>
-				<Text style={[styles.sampleTextButtons]}>{title}</Text>
-			</BackgroundButton>
-		</Pressable>
+		<TextButton action={() => parchmentDisplay && handle()} text={title} textStyle={styles.textButton} bgStyle={{borderRadius: 20}}/>
 	);
 }

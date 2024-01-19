@@ -19,7 +19,7 @@ import { CREATION } from "../../constants";
 
 export default function Profile() {
 	// Global Constante
-	const { isMobile, height } = useDevice();
+	const { isMobile, parchmentHeight } = useDevice();
 	const { updatePage } = usePage();
 	const { user } = useAuth();
 	const { styles } = useStyle();
@@ -35,21 +35,11 @@ export default function Profile() {
 
 	// Renders
 	const Title = () => {
-		console.info("user", user);
+		// console.info("user", user);
 		return (
-			<View
-				style={[
-					!isMobile && styles.rowContainer,
-					{ alignItems: "center",justifyContent: "center", marginTop: 20 },
-				]}
-			>
+			<View style={[ !isMobile && styles.rowContainer, { alignItems: "center",justifyContent: "center", marginTop: 10 } ]}>
 				<ProfileImage />
-				<Text
-					style={[
-						styles.titlePage,
-						{ marginHorizontal: 20, marginTop: isMobile ? 10 : 0 },
-					]}
-				>
+				<Text style={[styles.titlePage, { marginTop: isMobile ? 10 : 0 }]}>
 					{user?.username}
 				</Text>
 			</View>
@@ -67,24 +57,19 @@ export default function Profile() {
 		const totalCreations = getTotalCreations(userCopy.creations);
 		return (
 			<View style={styles.profileCreation}>
-				<PressableButton
-					action={() => setShow(!showCreation)}
-					style={styles.rowContainer}
-				>
+				<PressableButton action={() => setShow(!showCreation)} style={styles.rowContainer}>
 					<Text style={styles.secondaryTitle}>
 						Mes créations: {totalCreations}
 					</Text>
 					<MaterialIcons name={arrowIcon} size={45} color="black" />
 				</PressableButton>
-				<ScrollView style={{ height: showCreation ? height / 2 : 0 }}>
+				<ScrollView style={{ height: showCreation ? parchmentHeight / 2 : 0 }}>
 					{creationKeys.map((e: string) => (
 						<View style={styles.rowContainer} key={e}>
 							<Text style={styles.text}>
 								{translate(e, "maj")} : {userCopy.creations[e].length}
 							</Text>
-							<PressableButton
-								action={() => (alert(`voir => ${e}`), updatePage(CREATION))}
-							>
+							<PressableButton action={() => (alert(`voir => ${e}`), updatePage(CREATION))}>
 								<Text style={seeStyle}>voir</Text>
 							</PressableButton>
 						</View>
